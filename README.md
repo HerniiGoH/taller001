@@ -1,8 +1,8 @@
 # Taller 01
-Taller 01 Java
+Taller 01 Java vvvv
 
 ##Integrantes del grupo##
-1. Albornoz, Hern·n
+1. Albornoz, Hern√°n
 2. Moyano, Guillermo
 3. Tomas, Emanuel
 
