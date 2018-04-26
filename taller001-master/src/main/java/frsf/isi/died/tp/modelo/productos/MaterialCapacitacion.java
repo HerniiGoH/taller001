@@ -109,7 +109,16 @@ public abstract class MaterialCapacitacion implements Ordenable {
 		this.costo = costo;
 	}
 
-
+	@Override
+	public boolean equals(Object obj) {
+		if ( obj instanceof MaterialCapacitacion) {
+			return (this.titulo.toLowerCase().equals(((MaterialCapacitacion) obj).titulo.toLowerCase()));
+		}
+		
+		return false;
+	}
+	
+	
 	//TODO 01 implementar los metodos getters y setters y escribir el javadoc
 	// AYUDA: para implementar estos metodos usar un atajo del IDE 
 	// elegir el menu "Source" --> "Generate getters y setters" y elegir alli que metodos generar.
