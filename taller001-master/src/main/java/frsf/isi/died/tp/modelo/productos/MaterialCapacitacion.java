@@ -16,7 +16,7 @@ import frsf.isi.died.tp.util.Ordenable;
  * @author Albornoz Hernan, Moyano Guillermo, Tomas Emanuel 
  * https://github.com/HerniiGoH/taller01
  */
-public abstract class MaterialCapacitacion implements Ordenable {
+public abstract class MaterialCapacitacion implements Ordenable, Comparable {
 	protected Integer id;
 	/**
 	 * @return the id
@@ -152,7 +152,15 @@ public abstract class MaterialCapacitacion implements Ordenable {
 		return str;
 	}
 	
-	
+	@Override
+	public int compareTo(Object obj) {
+		
+		if(this.equals(obj)) {
+			return this.precio().compareTo(((MaterialCapacitacion)obj).precio());
+		}
+		
+		return this.titulo.compareTo(((MaterialCapacitacion)obj).titulo);
+	}
 	//TODO 02: sobrescribir el metodo toString de la clase "Object"
 	//	el método toString retorna un string que representa el material actual
 	//  retornando el titulo, y el precio 	 * usando el formato : 
