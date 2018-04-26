@@ -152,6 +152,7 @@ public abstract class MaterialCapacitacion implements Ordenable {
 		return str;
 	}
 	
+	
 	//TODO 02: sobrescribir el metodo toString de la clase "Object"
 	//	el método toString retorna un string que representa el material actual
 	//  retornando el titulo, y el precio 	 * usando el formato : 
