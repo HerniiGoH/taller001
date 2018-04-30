@@ -5,8 +5,11 @@ package frsf.isi.died.tp.modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+import frsf.isi.died.tp.util.ListasService;
 
 /**
  * @author Guillermo
@@ -60,19 +63,28 @@ public class BibliotecaList implements Biblioteca {
 
 	@Override
 	public Collection<MaterialCapacitacion> materiales() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.materiales;
 	}
 
 	@Override
 	public void imprimir() {
-		// TODO Auto-generated method stub
 		
-	}
+		for(MaterialCapacitacion mat : materiales) {
+			System.out.print(mat.toString());
+			}
+		}
+		
 
 	@Override
 	public void ordenarPorPrecio(Boolean b) {
-		// TODO Auto-generated method stub
+		
+		if(b) {
+			Collections.sort(materiales,(m1, m2) -> ((MaterialCapacitacion)m1).precio().compareTo(((MaterialCapacitacion)m2).precio()));
+		}
+		else {
+			Collections.sort(materiales);
+		}
+		
 		
 	}
 
