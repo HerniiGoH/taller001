@@ -112,10 +112,10 @@ public class BibliotecaList implements Biblioteca {
 			}
 			else {
 				if((materiales.get(centro).getCosto().intValue())>c) {
-					return buscadorBinario(i, centro-1, c);
+					return buscadorBinario(centro+1, f, c);
 				}
 				else {
-					return buscadorBinario(centro+1, f, c);
+					return buscadorBinario(i, centro-1, c);
 				}
 			}
 		}
