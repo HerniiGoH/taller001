@@ -125,6 +125,8 @@ public class BibliotecaABB implements Biblioteca {
 		
 		lista.remove(0);
 		
+		
+		
 		for(MaterialCapacitacion mat : lista) {
 			this.agregar(mat);
 		}
