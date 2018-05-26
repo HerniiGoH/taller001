@@ -91,7 +91,7 @@ public class BibliotecaList implements Biblioteca {
 	
 	@Override
 	public MaterialCapacitacion buscar(Integer precio) {
-	Collections.sort(materiales ,(m1, m2) -> (m2.getCosto().compareTo(m1.getCosto())));
+	Collections.sort(materiales ,(m1, m2) -> (m1.getCosto().compareTo(m2.getCosto())));
 	
 	
 	//((MaterialCapacitacion)m1).getCosto().compareTo(((MaterialCapacitacion)m2).getCosto())
@@ -112,10 +112,10 @@ public class BibliotecaList implements Biblioteca {
 			}
 			else {
 				if((materiales.get(centro).getCosto().intValue())>c) {
-					return buscadorBinario(centro+1, f, c);
+					return buscadorBinario(i, centro-1, c);
 				}
 				else {
-					return buscadorBinario(i, centro-1, c);
+					return buscadorBinario(centro+1, f, c);
 				}
 			}
 		}
