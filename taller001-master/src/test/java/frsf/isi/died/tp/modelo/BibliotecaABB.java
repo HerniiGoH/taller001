@@ -98,12 +98,12 @@ public class BibliotecaABB implements Biblioteca {
 		List<MaterialCapacitacion> lista = new ArrayList<MaterialCapacitacion>();
 		lista= this.materiales.inOrden();
 		
-		lista.sort(comparaPrecio);
+		this.materiales = new ArbolBinarioBusqueda(lista.get(0), comparaPrecio);
 		
-		this.materiales = new ArbolVacio();
+		lista.remove(0);
 		
 		for(MaterialCapacitacion mat : lista) {
-			this.materiales.add(mat);
+			this.agregar(mat);
 		}
 		
 	}
@@ -121,12 +121,12 @@ public class BibliotecaABB implements Biblioteca {
 		List<MaterialCapacitacion> lista = new ArrayList<MaterialCapacitacion>();
 		lista= this.materiales.inOrden();
 		
-		lista.sort(comparaTitulo);
+		this.materiales = new ArbolBinarioBusqueda(lista.get(0), comparaTitulo);
 		
-		this.materiales = new ArbolVacio();
+		lista.remove(0);
 		
 		for(MaterialCapacitacion mat : lista) {
-			this.materiales.add(mat);
+			this.agregar(mat);
 		}
 	}
 
