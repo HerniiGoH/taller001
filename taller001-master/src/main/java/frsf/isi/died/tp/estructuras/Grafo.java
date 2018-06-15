@@ -256,7 +256,7 @@ public class Grafo<T> {
         				visitados.add(this.getNodo(v));
         				List<T> resultado_aux = this.buscarCaminoNSaltos(this.getNodo(v), n2, saltos,visitados);
         				if(resultado_aux.contains(n2.getValor()) && resultado_aux.get(resultado_aux.size()-1).equals(n2.getValor())) {
-        					resultado.add(v); resultado.addAll(resultado_aux); break;
+        					resultado.add(n1.getValor()); resultado.addAll(resultado_aux); break;
         				}
         			}
         		}
