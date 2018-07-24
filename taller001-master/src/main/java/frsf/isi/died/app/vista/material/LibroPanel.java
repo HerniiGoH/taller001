@@ -107,6 +107,12 @@ public class LibroPanel extends JPanel{
 
 
 		btnCancelar= new JButton("Cancelar");
+		btnCancelar.addActionListener(e -> {
+			txtTitulo.setText("");
+			txtCosto.setText("");
+			txtPaginas.setText("");
+			txtPrecioCompra.setText("");
+		});
 		gridConst.gridx=6;
 		gridConst.weightx=1.0;
 		gridConst.anchor = GridBagConstraints.LINE_START;

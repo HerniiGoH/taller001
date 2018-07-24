@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import frsf.isi.died.app.vista.grafo.ControlPanel;
+import frsf.isi.died.app.vista.grafo.GrafoPanel;
 //import frsf.isi.died.app.vista.grafo.ControlPanel;
 //import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
@@ -32,7 +34,7 @@ public class MenuController {
 			videoController.crearPanel();
 			framePrincipal.setContentPane(videoController.getPanelVideo());
 			break;
-		/*case VER_GRAFO:
+		case VER_GRAFO:
 			JPanel panel = new JPanel(new BorderLayout());
 			ControlPanel controlPanel = new ControlPanel();
 			GrafoPanel grafoPanel = new GrafoPanel();
@@ -43,7 +45,7 @@ public class MenuController {
 			framePrincipal.setContentPane(panel);
 			break;			
 		default:
-			break;*/
+			break;
 		}
 		framePrincipal.pack();
 

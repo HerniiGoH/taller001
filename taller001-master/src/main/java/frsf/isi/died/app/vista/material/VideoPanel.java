@@ -72,7 +72,7 @@ public class VideoPanel extends JPanel{
 		this.add(btnAgregar, gridConst);
 		
 		
-		lblCosto= new JLabel("Costo Por Segundo: ");		
+		lblCosto= new JLabel("Costo: ");		
 		gridConst.gridx=0;
 		gridConst.gridy=1;
 		gridConst.weightx=0.0;
@@ -83,7 +83,7 @@ public class VideoPanel extends JPanel{
 		gridConst.gridx=1;
 		this.add(txtCosto, gridConst);
 		
-		lblDuracion= new JLabel("Paginas: ");		
+		lblDuracion= new JLabel("Duracion: ");		
 		gridConst.gridx=4;
 		this.add(lblDuracion, gridConst);
 		
@@ -94,6 +94,11 @@ public class VideoPanel extends JPanel{
 
 
 		btnCancelar= new JButton("Cancelar");
+		btnCancelar.addActionListener(e -> {
+			txtTitulo.setText("");
+			txtCosto.setText("");
+			txtDuracion.setText("");
+		});
 		gridConst.gridx=6;
 		gridConst.weightx=1.0;
 		gridConst.anchor = GridBagConstraints.LINE_START;
