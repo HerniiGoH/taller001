@@ -18,6 +18,10 @@ import frsf.isi.died.tp.util.Ordenable;
  */
 public abstract class MaterialCapacitacion implements Ordenable, Comparable {
 	protected Integer id;
+	protected Integer calificacion;
+	protected Integer cantCalif;
+	protected Date fechaPublic;
+	protected Relevancia relevancia;
 	/**
 	 * @return the id
 	 */
