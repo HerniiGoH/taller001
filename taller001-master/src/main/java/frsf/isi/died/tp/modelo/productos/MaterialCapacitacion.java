@@ -5,9 +5,9 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
-import java.util.ArrayList;
 import java.util.*;
 
+import frsf.isi.died.app.dao.util.CsvRecord;
 import frsf.isi.died.tp.util.Ordenable;
 
 /**
@@ -16,7 +16,7 @@ import frsf.isi.died.tp.util.Ordenable;
  * @author Albornoz Hernan, Moyano Guillermo, Tomas Emanuel 
  * https://github.com/HerniiGoH/taller01
  */
-public abstract class MaterialCapacitacion implements Ordenable, Comparable {
+public abstract class MaterialCapacitacion implements Ordenable, Comparable, CsvRecord {
 	protected Integer id;
 	protected Integer calificacion;
 	protected Integer cantCalif;
@@ -185,6 +185,16 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable {
 	//	el método toString retorna un string que representa el material actual
 	//  retornando el titulo, y el precio 	 * usando el formato : 
 	// [Titulo: <titulo> ; Precio: <precio> ]
+
+	public void loadFromStringRow(List<String> datos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<String> asCsvRow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	// TODO 10: implementar Ordenable

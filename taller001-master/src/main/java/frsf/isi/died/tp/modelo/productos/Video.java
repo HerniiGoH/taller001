@@ -3,6 +3,9 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author admin
  *
@@ -72,5 +75,24 @@ public class Video extends MaterialCapacitacion {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public List<String> asCsvRow() {
+		List<String> lista = new ArrayList<String>();
+		lista.add(this.id+"");
+		lista.add("\""+this.titulo.toString()+"\"");
+		lista.add(this.costo.toString());
+		lista.add(this.duracionVideo.toString());
+		return lista;
+	}
+	
+
+	@Override
+	public void loadFromStringRow(List<String> datos) {
+		this.id =Integer.valueOf(datos.get(0));
+		this.titulo = datos.get(1);
+		this.costo =Double.valueOf(datos.get(2));
+		this.duracionVideo =Integer.valueOf(datos.get(3));
 	}
 }

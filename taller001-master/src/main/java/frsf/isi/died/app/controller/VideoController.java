@@ -2,15 +2,15 @@ package frsf.isi.died.app.controller;
 
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
-import frsf.isi.died.app.vista.material.videoPanel;
-import frsf.isi.died.tp.modelo.productos.video;
+import frsf.isi.died.app.vista.material.VideoPanel;
+import frsf.isi.died.tp.modelo.productos.Video;
 
 public class VideoController {
 
-	private videoPanel panelVideo;
+	private VideoPanel panelVideo;
 	private MaterialCapacitacionDao materialDAO;
 	
-	public videoController(videoPanel panel) {
+	public VideoController(VideoPanel panel) {
 		this.panelVideo = panel;
 		this.panelVideo.setController(this);
 		materialDAO = new MaterialCapacitacionDaoDefault();
@@ -19,20 +19,20 @@ public class VideoController {
 	
 	public void agregarvideo(String titulo,Double costo, Integer duracionVideo) {	
 		Video l = new Video(0,titulo, costo, duracionVideo);
-		materialDAO .agregarvideo(l);
-		this.panelVideo.setListavideos(materialDAO.listavideos(),true);
+		materialDAO .agregarVideo(l);
+		this.panelVideo.setListaVideos(materialDAO.listaVideos(),true);
 	}
 	
 	public void crearPanel() {		
-		this.panelVideo.setListavideos(materialDAO.listavideos(),false);
+		this.panelVideo.setListaVideos(materialDAO.listaVideos(),false);
 		this.panelVideo.construir();
 	}
 
-	public videoPanel getPanelvideo() {
+	public VideoPanel getPanelVideo() {
 		return panelVideo;
 	}
 
-	public void setPanelvideo(videoPanel panelvideo) {
+	public void setPanelvideo(VideoPanel panelvideo) {
 		this.panelVideo = panelvideo;
 	}
 	

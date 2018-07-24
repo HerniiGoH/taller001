@@ -57,7 +57,7 @@ public class VideoPanel extends JPanel{
 			try {
 				Double costo = Double.valueOf(txtCosto.getText());
 				Integer duracion = Integer.valueOf(txtDuracion.getText());
-				controller.agregarVideo(txtTitulo.getText(), costo, duracion);
+				controller.agregarvideo(txtTitulo.getText(), costo, duracion);
 				txtTitulo.setText("");
 				txtCosto.setText("");
 				txtDuracion.setText("");
