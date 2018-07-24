@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import frsf.isi.died.app.vista.grafo.ControlPanel;
 import frsf.isi.died.app.vista.grafo.GrafoPanel;
-//import frsf.isi.died.app.vista.grafo.ControlPanel;
-//import frsf.isi.died.app.vista.grafo.GrafoPanel;
+import frsf.isi.died.app.vista.grafo.ControlPanel;
+import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
 
