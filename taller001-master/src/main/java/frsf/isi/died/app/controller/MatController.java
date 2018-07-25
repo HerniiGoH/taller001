@@ -1,5 +1,7 @@
 package frsf.isi.died.app.controller;
 
+import java.util.Date;
+
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.app.vista.material.MatPanel;
@@ -16,10 +18,17 @@ public class MatController {
 	}
 
 	
-	public void buscarLibro(String titulo,Double costo, Integer duracionMat) {	
-		Mat l = new Mat(0,titulo, costo, duracionMat);
-		materialDAO .agregarMat(l);
-		this.panelMat.setListaMats(materialDAO.listaMateriales(),true);
+	public void busqTitulo(String titulo) {	
+		
+	}
+	public void busqCalif(Integer titulo) {	
+	
+	}
+	public void busqTema(String titulo) {	
+	
+	}
+	public void busqFecha(Date min, Date max) {	
+	
 	}
 	
 	public void crearPanel() {		
@@ -34,6 +43,14 @@ public class MatController {
 
 	public void setPanelmat(MatPanel panelmat) {
 		this.panelMat = panelmat;
+	}
+	
+	public void rePintar() {
+		this.panelMat.rePintar();
+	}
+	
+	public void pintar() {
+		this.panelMat.construir();
 	}
 	
 	
