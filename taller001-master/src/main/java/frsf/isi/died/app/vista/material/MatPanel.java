@@ -19,6 +19,7 @@ import frsf.isi.died.app.controller.Criterios;
 import frsf.isi.died.app.controller.MatController;
 import frsf.isi.died.app.controller.Ordenamiento;
 import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class MatPanel extends JPanel{
@@ -36,16 +37,21 @@ public class MatPanel extends JPanel{
 	private JTextField txtCriterio;
 	private JLabel lblOrdenarPor;
 	private JComboBox btnOrdenam;
+	private JButton btnBuscar;
+	private JTable tabla;
+	private JScrollPane scrollPane;
 	/*	private JButton btnAgregar;
 	private JButton btnCancelar;*/
 
-	//private MatTableModel tableModel;
+	private LibroTableModel libroTableModel;
+	private VideoTableModel videoTableModel;
 
 	private MatController controller;
 	
 	public MatPanel() {
 		this.setLayout(new GridBagLayout());
-		//tableModel = new MatTableModel();
+		libroTableModel = new LibroTableModel();
+		videoTableModel = new VideoTableModel();
 	}
 	
 	public void construir() {
@@ -117,19 +123,41 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridy=3;
 		this.add(btnOrdenam, gridConst);
 		
-		/*lblTitulo = new JLabel("Titulo: ");
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(e -> {
+			try {
+				String criterio = txtCriterio.getText();
+				
+				switch ((Criterios) btnCriterio.getSelectedItem()) {
+				
+				};
+				
+			}catch(Exception ex) {
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos invalido", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		});
+		gridConst.gridwidth=1;
+		gridConst.weightx=1.0;
+		gridConst.anchor = GridBagConstraints.LINE_START;
+		gridConst.gridx=3;
+		this.add(btnBuscar, gridConst);
+		
+		tabla = new JTable(this.videoTableModel);
+		tabla.setFillsViewportHeight(true);
+		scrollPane= new JScrollPane(tabla);
+		
 		gridConst.gridx=0;
-		gridConst.gridy=0;
-		this.add(lblTitulo, gridConst);
+		gridConst.gridwidth=7;	
+		gridConst.gridy=7;
+		gridConst.weighty=1.0;
+		gridConst.weightx=1.0;
+		gridConst.fill=GridBagConstraints.BOTH;
+		gridConst.anchor=GridBagConstraints.PAGE_START;		
+		this.add(scrollPane, gridConst);
 		
-		txtTitulo = new JTextField();
-		txtTitulo.setColumns(40);
-		gridConst.gridx=1;
-		gridConst.gridwidth=5;
-		this.add(txtTitulo, gridConst);
 		
-
-		btnAgregar = new JButton("Agregar");
+		/*btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener( e ->{
 			try {
 				Double costo = Double.valueOf(txtCosto.getText());
@@ -150,37 +178,6 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridx=6;
 		this.add(btnAgregar, gridConst);
 		
-		
-		lblCosto= new JLabel("Costo: ");		
-		gridConst.gridx=0;
-		gridConst.gridy=1;
-		gridConst.weightx=0.0;
-		this.add(lblCosto, gridConst);
-		
-		txtCosto = new JTextField();
-		txtCosto.setColumns(5);
-		gridConst.gridx=1;
-		this.add(txtCosto, gridConst);
-		
-		lblPrecioCompra= new JLabel("Precio Compra: ");
-		gridConst.gridx=2;
-		this.add(lblPrecioCompra, gridConst);
-		
-		txtPrecioCompra = new JTextField();
-		txtPrecioCompra.setColumns(5);
-		gridConst.gridx=3;
-		this.add(txtPrecioCompra, gridConst);
-		
-		lblPaginas= new JLabel("Paginas: ");		
-		gridConst.gridx=4;
-		this.add(lblPaginas, gridConst);
-		
-		txtPaginas = new JTextField();
-		txtPaginas.setColumns(5);
-		gridConst.gridx=5;
-		this.add(txtPaginas, gridConst);
-
-
 		btnCancelar= new JButton("Cancelar");
 		btnCancelar.addActionListener(e -> {
 			txtTitulo.setText("");
@@ -215,9 +212,14 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		this.controller = controller;
 	}
 	
-	//public void setListaMats(List<Mat> matsLista,boolean actualizar) {
-		//this.tableModel.setMats(matsLista);
-		//if(actualizar) this.tableModel.fireTableDataChanged();
-	//}
+	public void setListaLibros(List<Libro> matLista,boolean actualizar) {
+		this.libroTableModel.setLibros(matLista);
+		if(actualizar) this.libroTableModel.fireTableDataChanged();
+	}
+	
+	public void setListaVideos(List<Video> matLista,boolean actualizar) {
+		this.videoTableModel.setVideos(matLista);
+		if(actualizar) this.videoTableModel.fireTableDataChanged();
+	}
 
 }

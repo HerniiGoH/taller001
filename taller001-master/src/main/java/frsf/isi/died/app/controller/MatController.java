@@ -16,14 +16,15 @@ public class MatController {
 	}
 
 	
-	/*public void buscarLibro(String titulo,Double costo, Integer duracionMat) {	
+	public void buscarLibro(String titulo,Double costo, Integer duracionMat) {	
 		Mat l = new Mat(0,titulo, costo, duracionMat);
 		materialDAO .agregarMat(l);
 		this.panelMat.setListaMats(materialDAO.listaMateriales(),true);
-	}*/
+	}
 	
 	public void crearPanel() {		
-		//this.panelMat.setListaMats(materialDAO.listaMateriales(),false);
+		this.panelMat.setListaLibros(materialDAO.listaLibros(),false);
+		this.panelMat.setListaVideos(materialDAO.listaVideos(),false);
 		this.panelMat.construir();
 	}
 
