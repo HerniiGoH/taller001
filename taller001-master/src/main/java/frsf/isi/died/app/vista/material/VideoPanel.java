@@ -1,5 +1,7 @@
 package frsf.isi.died.app.vista.material;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.List;
@@ -35,6 +37,7 @@ public class VideoPanel extends JPanel{
 	public VideoPanel() {
 		this.setLayout(new GridBagLayout());
 		tableModel = new VideoTableModel();
+		
 	}
 	
 	public void construir() {

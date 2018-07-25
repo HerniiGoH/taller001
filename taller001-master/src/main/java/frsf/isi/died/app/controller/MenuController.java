@@ -1,6 +1,8 @@
 package frsf.isi.died.app.controller;
 
 import java.awt.BorderLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.grafo.ControlPanel;
 import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
+import frsf.isi.died.app.vista.material.MatPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
 
 public class MenuController {
@@ -43,12 +46,17 @@ public class MenuController {
 			panel.add(grafoPanel , BorderLayout.CENTER);
 			
 			framePrincipal.setContentPane(panel);
-			break;			
+			break;
+		case BSQ_MAT:
+			MatPanel panelMat = new MatPanel();
+			MatController matController = new MatController(panelMat);
+			matController.crearPanel();
+			framePrincipal.setContentPane(matController.getPanelMat());
+			break;
 		default:
 			break;
 		}
 		framePrincipal.pack();
-
 	}
 	
 }

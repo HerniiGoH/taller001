@@ -1,9 +1,13 @@
 package frsf.isi.died.app.vista;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import frsf.isi.died.app.controller.MenuController;
 import frsf.isi.died.app.controller.TiposAcciones;
@@ -25,6 +29,7 @@ public class Principal {
 	        JMenuBar menuBar;
 	        JMenu menu;
 	        JMenuItem menuItem;
+	        JPopupMenu popup;
 
 	        menuBar = new JMenuBar();
 
@@ -39,6 +44,12 @@ public class Principal {
 	        menu.add(menuItem);
 	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.ABM_VIDEOS));
 	        
+	        menu.addSeparator();
+	        
+	        menuItem = new JMenuItem("Buscar Material");
+	        menu.add(menuItem);
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.BSQ_MAT));
+	      
 	        menu.addSeparator();
 	        
 	        menuItem = new JMenuItem("Salir");
