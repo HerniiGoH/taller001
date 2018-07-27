@@ -103,11 +103,12 @@ public class MatPanel extends JPanel{
 		lblCriterio = new JLabel("Criterio");
 		gridConst.gridx=0;
 		gridConst.gridy=2;
+		gridConst.anchor= GridBagConstraints.LINE_START;
 		this.add(lblCriterio, gridConst);
 		
 		txtCriterio = new JTextField();
-		txtCriterio.setColumns(20);
-		gridConst.gridx=3;
+		txtCriterio.setColumns(15);
+		gridConst.gridx=2;
 		gridConst.gridy=2;
 		this.add(txtCriterio, gridConst);
 		
@@ -152,7 +153,7 @@ public class MatPanel extends JPanel{
 				this.remove(txtFechaMin);
 				this.remove(lblFechaMax);
 				this.remove(txtFechaMax);
-				gridConst.gridx=3;
+				gridConst.gridx=2;
 				gridConst.gridy=2;
 				this.add(txtCriterio, gridConst);
 				this.repaint();
@@ -206,7 +207,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridx=3;
 		this.add(btnBuscar, gridConst);
 		
-		tabla = new JTable(this.videoTableModel);
+		/*tabla = new JTable(this.videoTableModel);
 		tabla.setFillsViewportHeight(true);
 		scrollPane= new JScrollPane(tabla);
 		
@@ -217,7 +218,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.weightx=1.0;
 		gridConst.fill=GridBagConstraints.BOTH;
 		gridConst.anchor=GridBagConstraints.PAGE_START;		
-		this.add(scrollPane, gridConst);
+		this.add(scrollPane, gridConst);*/
 		
 	}
 	
