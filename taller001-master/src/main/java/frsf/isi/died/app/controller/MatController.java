@@ -45,13 +45,5 @@ public class MatController {
 		this.panelMat = panelmat;
 	}
 	
-	public void rePintar() {
-		this.panelMat.rePintar();
-	}
-	
-	public void pintar() {
-		this.panelMat.construir();
-	}
-	
 	
 }

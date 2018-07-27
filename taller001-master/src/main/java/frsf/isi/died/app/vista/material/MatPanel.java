@@ -59,6 +59,7 @@ public class MatPanel extends JPanel{
 		videoTableModel = new VideoTableModel();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void construir() {
 		this.removeAll();
 		GridBagConstraints gridConst= new GridBagConstraints();
@@ -66,7 +67,7 @@ public class MatPanel extends JPanel{
 		lblBusqueda = new JLabel("Busqueda Material");
 		gridConst.gridx=0;
 		gridConst.gridy=0;
-		gridConst.weightx=1.0;
+		gridConst.anchor= GridBagConstraints.LINE_START;
 		this.add(lblBusqueda, gridConst);
 		
 		lblTipo = new JLabel("Tipo: ");
@@ -112,19 +113,49 @@ public class MatPanel extends JPanel{
 		
 		lblFechaMin = new JLabel("Fecha Minima");
 		txtFechaMin = new JTextField();
-		txtFechaMin.setColumns(15);
+		txtFechaMin.setColumns(1);
 		lblFechaMax = new JLabel("Fecha Maxima");
 		txtFechaMax = new JTextField();
-		txtFechaMax.setColumns(15);
+		txtFechaMax.setColumns(1);
 		
 		Criterios[] criterios = {Criterios.Titulo,Criterios.Calificacion,Criterios.Tema,Criterios.RangoFechaDePublicacion};
 		
 		btnCriterio = new JComboBox(criterios);
 		btnCriterio.addActionListener(e ->{
 			switch ((Criterios) btnCriterio.getSelectedItem()) {
-			case RangoFechaDePublicacion: controller.rePintar();	
+			case RangoFechaDePublicacion: 
+				this.remove(txtCriterio);
+				
+				gridConst.gridx=2;
+				gridConst.gridy=2;
+				this.add(lblFechaMin, gridConst);
+				
+				/*gridConst.gridx=3;
+				gridConst.gridy=2;
+				gridConst.weightx=0.0;
+				this.add(txtFechaMin, gridConst);
+			
+				gridConst.gridx=5;
+				gridConst.gridy=2;
+				this.add(lblFechaMax, gridConst);
+				
+				gridConst.gridx=6;
+				gridConst.gridy=2;
+				gridConst.weightx=0.0;
+				gridConst.weighty=0.0;
+				this.add(txtFechaMax, gridConst);*/
+				
+				this.repaint();
 				break;
-			default: controller.pintar();
+			default: 
+				this.remove(lblFechaMin);
+				this.remove(txtFechaMin);
+				this.remove(lblFechaMax);
+				this.remove(txtFechaMax);
+				gridConst.gridx=3;
+				gridConst.gridy=2;
+				this.add(txtCriterio, gridConst);
+				this.repaint();
 				break;
 			};
 		});
