@@ -21,10 +21,10 @@ public class MatController {
 	public void busqTitulo(String titulo) {	
 		
 	}
-	public void busqCalif(Integer titulo) {	
+	public void busqCalif(Integer calificacion) {	
 	
 	}
-	public void busqTema(String titulo) {	
+	public void busqTema(String tema) {	
 	
 	}
 	public void busqFecha(Date min, Date max) {	

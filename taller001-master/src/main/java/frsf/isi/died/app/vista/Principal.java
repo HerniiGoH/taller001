@@ -1,5 +1,6 @@
 package frsf.isi.died.app.vista;
 
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -69,7 +70,7 @@ public class Principal {
 	        f.setJMenuBar(menuBar);
 	        
 	        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        f.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+	        f.setExtendedState(Frame.MAXIMIZED_BOTH);
 	        f.pack();
 	        f.setVisible(true);
 	}

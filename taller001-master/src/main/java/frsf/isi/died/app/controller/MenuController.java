@@ -1,8 +1,10 @@
 package frsf.isi.died.app.controller;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,6 +59,7 @@ public class MenuController {
 			break;
 		}
 		framePrincipal.pack();
+		framePrincipal.setExtendedState(Frame.MAXIMIZED_BOTH);
 	}
 	
 }

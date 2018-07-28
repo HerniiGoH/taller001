@@ -25,8 +25,6 @@ import frsf.isi.died.tp.modelo.productos.Video;
 
 public class MatPanel extends JPanel{
 	
-	/*private JScrollPane scrollPane;
-	private JTable tabla;*/
 	private JLabel lblBusqueda;
 	private JLabel lblTipo;
 	private JLabel lblVideo;
@@ -45,8 +43,6 @@ public class MatPanel extends JPanel{
 	private JButton btnBuscar;
 	private JTable tabla;
 	private JScrollPane scrollPane;
-	/*	private JButton btnAgregar;
-	private JButton btnCancelar;*/
 
 	private LibroTableModel libroTableModel;
 	private VideoTableModel videoTableModel;
@@ -61,13 +57,13 @@ public class MatPanel extends JPanel{
 	
 	@SuppressWarnings("deprecation")
 	public void construir() {
-		this.removeAll();
+		
 		GridBagConstraints gridConst= new GridBagConstraints();
 		
 		lblBusqueda = new JLabel("Busqueda Material");
 		gridConst.gridx=0;
 		gridConst.gridy=0;
-		gridConst.anchor= GridBagConstraints.LINE_START;
+		gridConst.anchor= GridBagConstraints.NORTHWEST;
 		this.add(lblBusqueda, gridConst);
 		
 		lblTipo = new JLabel("Tipo: ");
@@ -75,7 +71,7 @@ public class MatPanel extends JPanel{
 		gridConst.gridy=1;
 		this.add(lblTipo, gridConst);
 		
-		lblLibro = new JLabel("Libro");
+		/*lblLibro = new JLabel("Libro");
 		gridConst.gridx=1;
 		gridConst.gridy=1;
 		this.add(lblLibro, gridConst);
@@ -83,15 +79,15 @@ public class MatPanel extends JPanel{
 		lblVideo = new JLabel("Video");
 		gridConst.gridx=3;
 		gridConst.gridy=1;
-		this.add(lblVideo, gridConst);
+		this.add(lblVideo, gridConst);*/
 		
-		libro = new JRadioButton();
-		gridConst.gridx=2;
+		libro = new JRadioButton("Libro");
+		gridConst.gridx=1;
 		gridConst.gridy=1;
 		this.add(libro, gridConst);
 		
-		video = new JRadioButton();
-		gridConst.gridx=4;
+		video = new JRadioButton("Video");
+		gridConst.gridx=2;
 		gridConst.gridy=1;
 		this.add(video, gridConst);
 		
@@ -103,7 +99,7 @@ public class MatPanel extends JPanel{
 		lblCriterio = new JLabel("Criterio");
 		gridConst.gridx=0;
 		gridConst.gridy=2;
-		gridConst.anchor= GridBagConstraints.LINE_START;
+		gridConst.anchor= GridBagConstraints.NORTHWEST;
 		this.add(lblCriterio, gridConst);
 		
 		txtCriterio = new JTextField();
@@ -114,10 +110,10 @@ public class MatPanel extends JPanel{
 		
 		lblFechaMin = new JLabel("Fecha Minima");
 		txtFechaMin = new JTextField();
-		txtFechaMin.setColumns(1);
+		txtFechaMin.setColumns(6);
 		lblFechaMax = new JLabel("Fecha Maxima");
 		txtFechaMax = new JTextField();
-		txtFechaMax.setColumns(1);
+		txtFechaMax.setColumns(6);
 		
 		Criterios[] criterios = {Criterios.Titulo,Criterios.Calificacion,Criterios.Tema,Criterios.RangoFechaDePublicacion};
 		
@@ -127,36 +123,47 @@ public class MatPanel extends JPanel{
 			case RangoFechaDePublicacion: 
 				this.remove(txtCriterio);
 				
+				gridConst.gridwidth=1;
+				gridConst.gridheight=1;
+				gridConst.weighty=0.0;
+				gridConst.weightx=0.0;
+				gridConst.fill=GridBagConstraints.NONE;
+				gridConst.anchor=GridBagConstraints.NORTHWEST;	
+				
 				gridConst.gridx=2;
 				gridConst.gridy=2;
 				this.add(lblFechaMin, gridConst);
 				
-				/*gridConst.gridx=3;
+				gridConst.gridx=3;
 				gridConst.gridy=2;
-				gridConst.weightx=0.0;
 				this.add(txtFechaMin, gridConst);
 			
-				gridConst.gridx=5;
+				gridConst.gridx=4;
 				gridConst.gridy=2;
 				this.add(lblFechaMax, gridConst);
 				
-				gridConst.gridx=6;
+				gridConst.gridx=5;
 				gridConst.gridy=2;
-				gridConst.weightx=0.0;
-				gridConst.weighty=0.0;
-				this.add(txtFechaMax, gridConst);*/
-				
+				this.add(txtFechaMax, gridConst);
 				this.repaint();
+				this.doLayout();
 				break;
 			default: 
 				this.remove(lblFechaMin);
 				this.remove(txtFechaMin);
 				this.remove(lblFechaMax);
 				this.remove(txtFechaMax);
+				gridConst.gridwidth=1;
+				gridConst.gridheight=1;
+				gridConst.weighty=0.0;
+				gridConst.weightx=0.0;
+				gridConst.fill=GridBagConstraints.NONE;
+				gridConst.anchor=GridBagConstraints.NORTHWEST;	
 				gridConst.gridx=2;
 				gridConst.gridy=2;
 				this.add(txtCriterio, gridConst);
 				this.repaint();
+				this.doLayout();
 				break;
 			};
 		});
@@ -179,173 +186,27 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(e -> {
 			try {
-				String criterio = txtCriterio.getText();
-				
-				Date fechaMinima = Date.valueOf(txtFechaMin.getText());
-				Date fechaMaxima = Date.valueOf(txtFechaMax.getText());
-				
 				switch ((Criterios) btnCriterio.getSelectedItem()) {
-				case Titulo: this.controller.busqTitulo(criterio);
+				case Titulo: 
+					this.controller.busqTitulo(txtCriterio.getText());
 					break;
-				case Calificacion: this.controller.busqCalif(Integer.valueOf(criterio));
+				case Calificacion: this.controller.busqCalif(Integer.valueOf(txtCriterio.getText()));
 					break;
-				case Tema: this.controller.busqTema(criterio);
+				case Tema: this.controller.busqTema(txtCriterio.getText());
 					break;
-				case RangoFechaDePublicacion: this.controller.busqFecha(fechaMinima,fechaMaxima);
+				case RangoFechaDePublicacion: this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
 					break;
 				default: break;
 				};
 				
 			}catch(Exception ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos invalido", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos invalidos", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});
 		gridConst.gridwidth=1;
 		gridConst.weightx=1.0;
-		gridConst.anchor = GridBagConstraints.LINE_START;
-		gridConst.gridx=3;
-		this.add(btnBuscar, gridConst);
-		
-		/*tabla = new JTable(this.videoTableModel);
-		tabla.setFillsViewportHeight(true);
-		scrollPane= new JScrollPane(tabla);
-		
-		gridConst.gridx=0;
-		gridConst.gridwidth=7;	
-		gridConst.gridy=7;
-		gridConst.weighty=1.0;
-		gridConst.weightx=1.0;
-		gridConst.fill=GridBagConstraints.BOTH;
-		gridConst.anchor=GridBagConstraints.PAGE_START;		
-		this.add(scrollPane, gridConst);*/
-		
-	}
-	
-	/*public void rePintar() {
-		
-		this.removeAll();
-		
-		GridBagConstraints gridConst= new GridBagConstraints();
-		
-		lblBusqueda = new JLabel("Busqueda Material");
-		gridConst.gridx=0;
-		gridConst.gridy=0;
-		gridConst.weightx=1.0;
-		this.add(lblBusqueda, gridConst);
-		
-		lblTipo = new JLabel("Tipo: ");
-		gridConst.gridx=0;
-		gridConst.gridy=1;
-		this.add(lblTipo, gridConst);
-		
-		lblLibro = new JLabel("Libro");
-		gridConst.gridx=1;
-		gridConst.gridy=1;
-		this.add(lblLibro, gridConst);
-		
-		lblVideo = new JLabel("Video");
-		gridConst.gridx=3;
-		gridConst.gridy=1;
-		this.add(lblVideo, gridConst);
-		
-		libro = new JRadioButton();
-		gridConst.gridx=2;
-		gridConst.gridy=1;
-		this.add(libro, gridConst);
-		
-		video = new JRadioButton();
-		gridConst.gridx=4;
-		gridConst.gridy=1;
-		this.add(video, gridConst);
-		
-		ButtonGroup btnMats = new ButtonGroup();
-		btnMats.add(libro);
-		btnMats.add(video);
-		libro.setSelected(true);
-		
-		lblCriterio = new JLabel("Criterio");
-		gridConst.gridx=0;
-		gridConst.gridy=2;
-		this.add(lblCriterio, gridConst);
-		
-		Criterios[] criterios = {Criterios.Titulo,Criterios.Calificacion,Criterios.Tema,Criterios.RangoFechaDePublicacion};
-		
-		btnCriterio = new JComboBox(criterios);
-		btnCriterio.addActionListener(e ->{
-			switch ((Criterios) btnCriterio.getSelectedItem()) {
-			case RangoFechaDePublicacion: controller.rePintar();	
-				break;
-			default: controller.pintar();
-				break;
-			};
-		});
-		gridConst.gridx=1;
-		gridConst.gridy=2;
-		this.add(btnCriterio, gridConst);
-		
-		lblFechaMin = new JLabel("Fecha Minima");
-		gridConst.gridx=2;
-		gridConst.gridy=2;
-		this.add(lblFechaMin, gridConst);
-		
-		txtFechaMin = new JTextField();
-		txtFechaMin.setColumns(15);
-		gridConst.gridx=3;
-		gridConst.gridy=2;
-		this.add(txtFechaMin, gridConst);
-		
-		lblFechaMax = new JLabel("Fecha Maxima");
-		gridConst.gridx=4;
-		gridConst.gridy=2;
-		this.add(lblFechaMax, gridConst);
-		
-		txtFechaMax = new JTextField();
-		txtFechaMax.setColumns(15);
-		gridConst.gridx=5;
-		gridConst.gridy=2;
-		this.add(txtFechaMax, gridConst);
-		
-		lblOrdenarPor = new JLabel("Ordenar por");
-		gridConst.gridx=0;
-		gridConst.gridy=3;
-		this.add(lblOrdenarPor, gridConst);
-		
-Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calificacion, Ordenamiento.Precio, Ordenamiento.FechaDePublicacion, Ordenamiento.Relevancia};
-		
-		btnOrdenam = new JComboBox(critOrd);
-		gridConst.gridx=1;
-		gridConst.gridy=3;
-		this.add(btnOrdenam, gridConst);
-		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(e -> {
-			try {
-				String criterio = txtCriterio.getText();
-				
-				Date fechaMinima = Date.valueOf(txtFechaMin.getText());
-				Date fechaMaxima = Date.valueOf(txtFechaMax.getText());
-				
-				switch ((Criterios) btnCriterio.getSelectedItem()) {
-				case Titulo: this.controller.busqTitulo(criterio);
-					break;
-				case Calificacion: this.controller.busqCalif(Integer.valueOf(criterio));
-					break;
-				case Tema: this.controller.busqTema(criterio);
-					break;
-				case RangoFechaDePublicacion: this.controller.busqFecha(fechaMinima,fechaMaxima);
-					break;
-				default: break;
-				};
-				
-			}catch(Exception ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos invalido", JOptionPane.ERROR_MESSAGE);
-			}
-			
-		});
-		gridConst.gridwidth=1;
-		gridConst.weightx=1.0;
-		gridConst.anchor = GridBagConstraints.LINE_START;
+		gridConst.anchor = GridBagConstraints.NORTHWEST;
 		gridConst.gridx=3;
 		this.add(btnBuscar, gridConst);
 		
@@ -362,7 +223,8 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.anchor=GridBagConstraints.PAGE_START;		
 		this.add(scrollPane, gridConst);
 		
-	}*/
+	}
+	
 
 	public MatController getController() {
 		return controller;
