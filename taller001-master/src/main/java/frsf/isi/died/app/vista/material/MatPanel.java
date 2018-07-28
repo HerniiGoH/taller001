@@ -115,7 +115,7 @@ public class MatPanel extends JPanel{
 		txtFechaMax = new JTextField();
 		txtFechaMax.setColumns(6);
 		
-		Criterios[] criterios = {Criterios.Titulo,Criterios.Calificacion,Criterios.Tema,Criterios.RangoFechaDePublicacion};
+		Criterios[] criterios = {Criterios.ID,Criterios.Titulo,Criterios.Calificacion,Criterios.Tema,Criterios.RangoFechaDePublicacion};
 		
 		btnCriterio = new JComboBox(criterios);
 		btnCriterio.addActionListener(e ->{
@@ -187,14 +187,45 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		btnBuscar.addActionListener(e -> {
 			try {
 				switch ((Criterios) btnCriterio.getSelectedItem()) {
-				case Titulo: 
-					this.controller.busqTitulo(txtCriterio.getText());
+				case ID: 
+					if(this.libro.isSelected()) {
+						this.controller.busqID(Integer.valueOf(txtCriterio.getText()));
+					}
+					else {
+						this.controller.busqID1(Integer.valueOf(txtCriterio.getText()));
+					}
 					break;
-				case Calificacion: this.controller.busqCalif(Integer.valueOf(txtCriterio.getText()));
+				case Titulo:
+					if(this.libro.isSelected()) {
+						this.controller.busqTitulo(txtCriterio.getText());
+					}
+					else {
+						this.controller.busqTitulo1(txtCriterio.getText());
+					}
 					break;
-				case Tema: this.controller.busqTema(txtCriterio.getText());
+				case Calificacion: 
+					if(this.libro.isSelected()) {
+						this.controller.busqCalif(Integer.valueOf(txtCriterio.getText()));
+					}
+					else {
+						this.controller.busqCalif1(Integer.valueOf(txtCriterio.getText()));
+					}
 					break;
-				case RangoFechaDePublicacion: this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
+				case Tema: 
+					if(this.libro.isSelected()) {
+						this.controller.busqTema(txtCriterio.getText());
+					}
+					else {
+						this.controller.busqTema1(txtCriterio.getText());
+					}
+					break;
+				case RangoFechaDePublicacion: 
+					if(this.libro.isSelected()) {
+						this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
+					}
+					else {
+						this.controller.busqFecha1(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
+					}
 					break;
 				default: break;
 				};
@@ -212,8 +243,8 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		
 		tabla = new JTable(this.videoTableModel);
 		tabla.setFillsViewportHeight(true);
-		scrollPane= new JScrollPane(tabla);
 		
+		scrollPane = new JScrollPane(tabla);
 		gridConst.gridx=0;
 		gridConst.gridwidth=7;	
 		gridConst.gridy=7;

@@ -50,6 +50,18 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	public String getTitulo() {
 		return titulo;
 	}
+	
+	public Integer getCalificacion() {
+		return this.calificacion/this.cantCalif;
+	}
+	
+	public Relevancia getRelevancia() {
+		return this.relevancia;
+	}
+	
+	public Date getFecha() {
+		return this.fechaPublic;
+	}
 
 	/**
 	 * @param titulo the titulo to set

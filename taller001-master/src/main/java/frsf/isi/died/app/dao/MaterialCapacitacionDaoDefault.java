@@ -2,6 +2,7 @@ package frsf.isi.died.app.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
@@ -105,6 +106,42 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			if(mat.getId().equals(id)) return mat;
 		}
 		return null;
+	}
+	
+	@Override
+	public List<MaterialCapacitacion> findByTitulo(String titulo) {
+		List<MaterialCapacitacion> res = new ArrayList();
+		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getTitulo().contains(titulo)) res.add(mat);
+		}
+		return res;
+	}
+	
+	@Override
+	public List<MaterialCapacitacion> findByTema(String titulo) {
+		List<MaterialCapacitacion> res = new ArrayList();
+		/*for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getTitulo().equals(titulo)) res.add(mat);
+		}*/
+		return res;
+	}
+	
+	@Override
+	public List<MaterialCapacitacion> findByCalif(Integer calif) {
+		List<MaterialCapacitacion> res = new ArrayList();
+		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getCalificacion().equals(calif)) res.add(mat);
+		}
+		return res;
+	}
+	
+	@Override
+	public List<MaterialCapacitacion> findByDate(Date fechaMin, Date fechaMax) {
+		List<MaterialCapacitacion> res = new ArrayList();
+		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getFecha().after(fechaMin)&&mat.getFecha().before(fechaMax)) res.add(mat);
+		}
+		return res;
 	}
 
 	@Override

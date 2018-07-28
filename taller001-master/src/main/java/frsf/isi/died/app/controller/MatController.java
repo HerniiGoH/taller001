@@ -1,10 +1,15 @@
 package frsf.isi.died.app.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.app.vista.material.MatPanel;
+import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+import frsf.isi.died.tp.modelo.productos.Video;
 
 public class MatController {
 
@@ -18,17 +23,102 @@ public class MatController {
 	}
 
 	
-	public void busqTitulo(String titulo) {	
-		
+	public List<Video> busqTitulo1(String titulo) {
+		List<Video> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esVideo()) {
+				res.add((Video) mat);
+			}
+		}
+		return res;
 	}
-	public void busqCalif(Integer calificacion) {	
-	
+	public List<Video> busqCalif1(Integer calificacion) {	
+		List<Video> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esVideo()) {
+				res.add((Video) mat);
+			}
+		}
+		return res;
 	}
-	public void busqTema(String tema) {	
-	
+	public List<Video> busqTema1(String tema) {
+		List<Video> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esVideo()) {
+				res.add((Video) mat);
+			}
+		}
+		return res;
 	}
-	public void busqFecha(Date min, Date max) {	
+	public List<Video> busqFecha1(Date min, Date max) {
+		List<Video> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esVideo()) {
+				res.add((Video) mat);
+			}
+		}
+		return res;
+	}
+	public List<Video> busqID1(Integer Id) {
+		List<Video> res = new ArrayList();
+		MaterialCapacitacion mat = materialDAO.findById(Id);
+		if(mat.esVideo()) {
+			res.add((Video) mat);
+		}
+		return res;
+	}
 	
+	public List<Libro> busqTitulo(String titulo) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esLibro()) {
+				res.add((Libro) mat);
+			}
+		}
+		return res;
+	}
+	public List<Libro> busqCalif(Integer calificacion) {	
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esLibro()) {
+				res.add((Libro) mat);
+			}
+		}
+		return res;
+	}
+	public List<Libro> busqTema(String tema) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esLibro()) {
+				res.add((Libro) mat);
+			}
+		}
+		return res;
+	}
+	public List<Libro> busqFecha(Date min, Date max) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
+		for(MaterialCapacitacion mat : res1) {
+			if(mat.esLibro()) {
+				res.add((Libro) mat);
+			}
+		}
+		return res;
+	}
+	public List<Libro> busqID(Integer Id) {
+		List<Libro> res = new ArrayList();
+		MaterialCapacitacion mat = materialDAO.findById(Id);
+		if(mat.esLibro()) {
+			res.add((Libro) mat);
+		}
+		return res;
 	}
 	
 	public void crearPanel() {		
