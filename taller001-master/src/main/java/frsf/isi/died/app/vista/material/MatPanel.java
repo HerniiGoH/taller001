@@ -186,49 +186,68 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(e -> {
 			try {
-				switch ((Criterios) btnCriterio.getSelectedItem()) {
-				case ID: 
-					if(this.libro.isSelected()) {
-						this.controller.busqID(Integer.valueOf(txtCriterio.getText()));
-					}
-					else {
-						this.controller.busqID1(Integer.valueOf(txtCriterio.getText()));
-					}
-					break;
-				case Titulo:
-					if(this.libro.isSelected()) {
-						this.controller.busqTitulo(txtCriterio.getText());
-					}
-					else {
-						this.controller.busqTitulo1(txtCriterio.getText());
-					}
-					break;
-				case Calificacion: 
-					if(this.libro.isSelected()) {
-						this.controller.busqCalif(Integer.valueOf(txtCriterio.getText()));
-					}
-					else {
-						this.controller.busqCalif1(Integer.valueOf(txtCriterio.getText()));
-					}
-					break;
-				case Tema: 
-					if(this.libro.isSelected()) {
-						this.controller.busqTema(txtCriterio.getText());
-					}
-					else {
-						this.controller.busqTema1(txtCriterio.getText());
-					}
-					break;
-				case RangoFechaDePublicacion: 
-					if(this.libro.isSelected()) {
-						this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
-					}
-					else {
-						this.controller.busqFecha1(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText()));
-					}
-					break;
-				default: break;
-				};
+				if(this.libro.isSelected()) {
+					switch ((Criterios) btnCriterio.getSelectedItem()) {
+					case ID: 
+						this.setListaLibros(this.controller.busqID(Integer.valueOf(txtCriterio.getText())), false);
+						break;
+					case Titulo:
+						this.setListaLibros(this.controller.busqTitulo(txtCriterio.getText()), false);
+						break;
+					case Calificacion: 
+						this.setListaLibros(this.controller.busqCalif(Integer.valueOf(txtCriterio.getText())), false);
+						break;
+					case Tema: 
+						this.setListaLibros(this.controller.busqTema(txtCriterio.getText()), false);
+						break;
+					case RangoFechaDePublicacion: 
+						this.setListaLibros(this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText())), false);
+						break;
+					default: break;
+					};
+					
+					tabla = new JTable(this.libroTableModel);
+					tabla.setFillsViewportHeight(true);
+					
+				}
+				else {
+					switch ((Criterios) btnCriterio.getSelectedItem()) {
+					case ID:
+						this.setListaVideos(this.controller.busqID1(Integer.valueOf(txtCriterio.getText())), false); 
+						break;
+					case Titulo:
+						this.setListaVideos(this.controller.busqTitulo1(txtCriterio.getText()), false);
+						break;
+					case Calificacion:
+						this.setListaVideos(this.controller.busqCalif1(Integer.valueOf(txtCriterio.getText())), false);
+						break;
+					case Tema:
+						this.setListaVideos(this.controller.busqTema1(txtCriterio.getText()), false);
+						break;
+					case RangoFechaDePublicacion:
+						this.setListaVideos(this.controller.busqFecha1(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText())), false);
+						break;
+					default: break;
+					};
+					
+					tabla = new JTable(this.videoTableModel);
+					tabla.setFillsViewportHeight(true);
+					
+				}
+				
+				this.remove(scrollPane);
+				scrollPane = new JScrollPane(tabla);
+				gridConst.gridx=0;
+				gridConst.gridwidth=7;	
+				gridConst.gridy=7;
+				gridConst.weighty=1.0;
+				gridConst.weightx=1.0;
+				gridConst.fill=GridBagConstraints.BOTH;
+				gridConst.anchor=GridBagConstraints.PAGE_START;		
+				this.add(scrollPane, gridConst);
+				
+				this.repaint();
+				this.doLayout();
 				
 			}catch(Exception ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos invalidos", JOptionPane.ERROR_MESSAGE);

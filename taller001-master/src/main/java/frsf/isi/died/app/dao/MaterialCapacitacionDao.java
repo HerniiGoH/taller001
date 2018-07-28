@@ -15,6 +15,7 @@ public interface MaterialCapacitacionDao {
 	public List<Video> listaVideos();
 	public List<MaterialCapacitacion> listaMateriales();
 	public MaterialCapacitacion findById(Integer id);
+	public List<MaterialCapacitacion> findById1(Integer id);
 	public List<MaterialCapacitacion> findByTitulo(String titulo);
 	public List<MaterialCapacitacion> findByCalif(Integer calif);
 	public List<MaterialCapacitacion> findByDate(Date fechaMin, Date fechaMax);

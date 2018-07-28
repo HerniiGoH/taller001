@@ -107,12 +107,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		}
 		return null;
 	}
+	public List<MaterialCapacitacion> findById1(Integer id) {
+		// TODO Auto-generated method stub
+		List<MaterialCapacitacion> res = new ArrayList();
+		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getId().equals(id)) res.add(mat);
+		}
+		return res;
+	}
 	
 	@Override
 	public List<MaterialCapacitacion> findByTitulo(String titulo) {
 		List<MaterialCapacitacion> res = new ArrayList();
 		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
-			if(mat.getTitulo().contains(titulo)) res.add(mat);
+			if(mat.getTitulo().toLowerCase().contains(titulo.toLowerCase())) res.add(mat);
 		}
 		return res;
 	}

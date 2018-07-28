@@ -26,9 +26,11 @@ public class MatController {
 	public List<Video> busqTitulo1(String titulo) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esVideo()) {
-				res.add((Video) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esVideo()) {
+					res.add((Video) mat);
+				}
 			}
 		}
 		return res;
@@ -36,9 +38,11 @@ public class MatController {
 	public List<Video> busqCalif1(Integer calificacion) {	
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esVideo()) {
-				res.add((Video) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esVideo()) {
+					res.add((Video) mat);
+				}
 			}
 		}
 		return res;
@@ -46,9 +50,11 @@ public class MatController {
 	public List<Video> busqTema1(String tema) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esVideo()) {
-				res.add((Video) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esVideo()) {
+					res.add((Video) mat);
+				}
 			}
 		}
 		return res;
@@ -56,18 +62,24 @@ public class MatController {
 	public List<Video> busqFecha1(Date min, Date max) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esVideo()) {
-				res.add((Video) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esVideo()) {
+					res.add((Video) mat);
+				}
 			}
 		}
 		return res;
 	}
 	public List<Video> busqID1(Integer Id) {
 		List<Video> res = new ArrayList();
-		MaterialCapacitacion mat = materialDAO.findById(Id);
-		if(mat.esVideo()) {
-			res.add((Video) mat);
+		List<MaterialCapacitacion> res1 = materialDAO.findById1(Id);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esVideo()) {
+					res.add((Video) mat);
+				}
+			}
 		}
 		return res;
 	}
@@ -75,9 +87,11 @@ public class MatController {
 	public List<Libro> busqTitulo(String titulo) {
 		List<Libro> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esLibro()) {
-				res.add((Libro) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
 			}
 		}
 		return res;
@@ -85,9 +99,11 @@ public class MatController {
 	public List<Libro> busqCalif(Integer calificacion) {	
 		List<Libro> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esLibro()) {
-				res.add((Libro) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
 			}
 		}
 		return res;
@@ -95,9 +111,11 @@ public class MatController {
 	public List<Libro> busqTema(String tema) {
 		List<Libro> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esLibro()) {
-				res.add((Libro) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
 			}
 		}
 		return res;
@@ -105,18 +123,24 @@ public class MatController {
 	public List<Libro> busqFecha(Date min, Date max) {
 		List<Libro> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
-		for(MaterialCapacitacion mat : res1) {
-			if(mat.esLibro()) {
-				res.add((Libro) mat);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
 			}
 		}
 		return res;
 	}
 	public List<Libro> busqID(Integer Id) {
 		List<Libro> res = new ArrayList();
-		MaterialCapacitacion mat = materialDAO.findById(Id);
-		if(mat.esLibro()) {
-			res.add((Libro) mat);
+		List<MaterialCapacitacion> res1 = materialDAO.findById1(Id);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
 		}
 		return res;
 	}
