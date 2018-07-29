@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
+import frsf.isi.died.app.dao.util.CsvRecord;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.modelo.Biblioteca;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
@@ -221,6 +222,46 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<Video> ordenPorRelevancia1(List<Video>lista){
 		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompRelev());
 		 return lista;
+	}
+	
+	public void eliminar(Libro mat) {
+		this.GRAFO_MATERIAL.listaVertices().remove(mat);
+		List<Libro> aux = this.listaLibros();
+		try {
+			this.dataSource.agregarFilaAlPrincipio("libros.csv", aux.remove(0));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Libro lib : aux) {
+			try {
+				this.dataSource.agregarFilaAlFinal("libros.csv", lib);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//this.cargarGrafo();
+	}
+	
+	public void eliminar1(Video mat) {
+		this.GRAFO_MATERIAL.listaVertices().remove(mat);
+		List<Video> aux = this.listaVideos();
+		try {
+			this.dataSource.agregarFilaAlPrincipio("videos.csv", aux.remove(0));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Video lib : aux) {
+			try {
+				this.dataSource.agregarFilaAlFinal("videos.csv", lib);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//this.cargarGrafo();
 	}
 
 

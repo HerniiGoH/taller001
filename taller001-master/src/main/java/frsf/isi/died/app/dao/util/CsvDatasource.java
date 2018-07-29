@@ -132,6 +132,14 @@ public class CsvDatasource {
 		writer.close();
 
 	}
+	
+	public void agregarFilaAlPrincipio(String archivoCsv, CsvRecord fila) throws IOException {
+		FileWriter writer = new FileWriter(archivoCsv,false); 
+		this.writeLine(writer, fila.asCsvRow());
+		writer.flush();
+		writer.close();
+
+	}
 
 	// https://tools.ietf.org/html/rfc4180
 	private static String followCVSformat(String value) {

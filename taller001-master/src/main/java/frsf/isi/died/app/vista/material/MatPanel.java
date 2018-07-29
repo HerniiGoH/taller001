@@ -257,7 +257,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				this.remove(scrollPane);
 				scrollPane = new JScrollPane(tabla);
 				gridConst.gridx=0;
-				gridConst.gridwidth=7;	
+				gridConst.gridwidth=10;	
 				gridConst.gridy=7;
 				gridConst.weighty=1.0;
 				gridConst.weightx=1.0;
@@ -287,11 +287,36 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		btnEliminar.addActionListener(e->{
 			
 			if(this.libro.isSelected()) {
-				libroTableModel.getLibros().get(tabla.getSelectedRow());
+				Libro aux = libroTableModel.getLibros().get(tabla.getSelectedRow());
+				this.controller.eliminar(aux);
+				this.libroTableModel.getLibros().remove(aux);
+				this.setListaLibros(libroTableModel.getLibros(), false);
+				/*tabla = new JTable(this.libroTableModel);
+				tabla.setFillsViewportHeight(true);*/
+				
 			}
 			else{
-				videoTableModel.getVideos().get(tabla.getSelectedRow());
+				Video aux = videoTableModel.getVideos().get(tabla.getSelectedRow());
+				this.controller.eliminar1(aux);
+				this.videoTableModel.getVideos().remove(aux);
+				this.setListaVideos(videoTableModel.getVideos(), false);
+				/*tabla = new JTable(this.videoTableModel);
+				tabla.setFillsViewportHeight(true);*/
 			}
+			
+			/*this.remove(scrollPane);
+			scrollPane = new JScrollPane(tabla);
+			gridConst.gridx=0;
+			gridConst.gridwidth=10;	
+			gridConst.gridy=7;
+			gridConst.weighty=1.0;
+			gridConst.weightx=1.0;
+			gridConst.fill=GridBagConstraints.BOTH;
+			gridConst.anchor=GridBagConstraints.PAGE_START;		
+			this.add(scrollPane, gridConst);*/
+			
+			this.repaint();
+			this.doLayout();
 			
 		});
 		gridConst.gridx=7;

@@ -191,6 +191,16 @@ public class MatController {
 		return res;
 	}
 	
+	public void eliminar(Libro mat) {
+		((MaterialCapacitacionDaoDefault) materialDAO).eliminar(mat);
+		//this.panelMat.setListaLibros(materialDAO.listaLibros(), false);
+	}
+	
+	public void eliminar1(Video mat) {
+		((MaterialCapacitacionDaoDefault) materialDAO).eliminar1(mat);
+		//this.panelMat.setListaVideos(materialDAO.listaVideos(), false);
+	}
+	
 	public void crearPanel() {		
 		this.panelMat.setListaLibros(materialDAO.listaLibros(),false);
 		this.panelMat.setListaVideos(materialDAO.listaVideos(),false);
