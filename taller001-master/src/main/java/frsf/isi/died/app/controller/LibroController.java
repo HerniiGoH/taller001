@@ -1,5 +1,7 @@
 package frsf.isi.died.app.controller;
 
+import java.util.Date;
+
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.app.vista.material.LibroPanel;
@@ -17,8 +19,8 @@ public class LibroController {
 	}
 
 	
-	public void agregarLibro(String titulo,Double costo,Double precio,Integer paginas) {	
-		Libro l = new Libro(0,titulo, costo, precio, paginas) ;
+	public void agregarLibro(String titulo,Double costo,Double precio,Integer paginas, Date fecha, Relevancia rele) {	
+		Libro l = new Libro(0,titulo, costo, precio, paginas,fecha,rele) ;
 		materialDAO .agregarLibro(l);
 		this.panelLibro.setListaLibros(materialDAO.listaLibros(),true);
 	}

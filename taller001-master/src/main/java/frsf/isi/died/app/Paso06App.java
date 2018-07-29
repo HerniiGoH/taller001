@@ -1,5 +1,7 @@
 package frsf.isi.died.app;
 
+import java.util.Date;
+
 import frsf.isi.died.tp.modelo.Biblioteca;
 import frsf.isi.died.tp.modelo.BibliotecaArray;
 import frsf.isi.died.tp.modelo.productos.Libro;
@@ -10,19 +12,19 @@ public class Paso06App {
 	
 	
 	public static void main(String[] args) {
-		Libro l1 = new Libro(1,"Algoritmos 1",50.0,25.0, 310);
+		Libro l1 = new Libro(1,"Algoritmos 1",50.0,25.0, 310,new Date());
 		System.out.println("Libro creado: "+l1.toString());
 
-		Libro l2 = new Libro(2,"Java 1",30.0,40.0, 155);
+		Libro l2 = new Libro(2,"Java 1",30.0,40.0, 155,new Date());
 		System.out.println("Libro creado: "+l2.toString());
 		
-		Libro l3 = new Libro(3,"Python",20.0,100.0, 460);
+		Libro l3 = new Libro(3,"Python",20.0,100.0, 460,new Date());
 		System.out.println("Libro creado: "+l3.toString());
 		
-		Video v1 = new Video(1,"Algoritmos de busqueda",50.0,350);
+		Video v1 = new Video(1,"Algoritmos de busqueda",50.0,350,new Date());
 		System.out.println("Video creado: "+v1.toString());
 
-		Video v2 = new Video(2,"Metodos de ordenamiento",40.0, 740);
+		Video v2 = new Video(2,"Metodos de ordenamiento",40.0, 740,new Date());
 		System.out.println("Video creado: "+v2.toString());
 		
 		System.out.println("Test");
@@ -37,7 +39,7 @@ public class Paso06App {
 			if(mat!=null) System.out.println(mat.toString());
 		}
 		// crear un sexto material de capacitacion que no se agregará porque el arreglo solo tiene capacidad de 5
-		Libro l4 = new Libro(3,"Complejidad y BigO",56.0,35.0, 125);
+		Libro l4 = new Libro(3,"Complejidad y BigO",56.0,35.0, 125,new Date());
 		System.out.println("Libro creado: "+l4.toString());
 		biblioteca.agregar(l4);
 		

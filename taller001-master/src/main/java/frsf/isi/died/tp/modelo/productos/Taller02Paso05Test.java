@@ -2,6 +2,8 @@ package frsf.isi.died.tp.modelo.productos;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,14 +25,14 @@ public class Taller02Paso05Test {
 	@Before
 	public void init() {
 		biblioteca=new BibliotecaList();
-		m1 = new Libro(1, "Libro 1", 100.0, 1.0, 10);
-		m2 = new Libro(2, "Libro 2", 50.0, 1.0, 10);
-		m3 = new Libro(3, "Libro 3", 150.0, 1.0, 10);
-		m4 = new Libro(4, "Libro 4", 175.0, 1.0, 10);
-		m5 = new Video(5, "Video 1", 75.0,1);
-		m6 = new Video(6, "Video 2", 25.0,1);
-		m7 = new Video(7, "Video 3", 275.0,1);
-		m8 = new Video(8, "Video 4", 145.0,1);
+		m1 = new Libro(1, "Libro 1", 100.0, 1.0, 10, new Date());
+		m2 = new Libro(2, "Libro 2", 50.0, 1.0, 10, new Date());
+		m3 = new Libro(3, "Libro 3", 150.0, 1.0, 10, new Date());
+		m4 = new Libro(4, "Libro 4", 175.0, 1.0, 10, new Date());
+		m5 = new Video(5, "Video 1", 75.0,1, new Date());
+		m6 = new Video(6, "Video 2", 25.0,1, new Date());
+		m7 = new Video(7, "Video 3", 275.0,1, new Date());
+		m8 = new Video(8, "Video 4", 145.0,1, new Date());
 	}
 	
 	@Test(expected=RuntimeException.class)

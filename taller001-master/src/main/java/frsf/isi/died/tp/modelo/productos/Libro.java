@@ -7,6 +7,8 @@ package frsf.isi.died.tp.modelo.productos;
 
 import java.util.*;
 
+import frsf.isi.died.app.controller.Relevancia;
+
 /**
  * Representa un libro en el sistema de biblioteca digital
  * @author mdominguez
@@ -33,7 +35,7 @@ public class Libro extends MaterialCapacitacion {
 	 * @param titulo es el titulo del libro
 	 */
 	public Libro(Integer id, String titulo) {
-		this(id, titulo,0.0,0.0,0);
+		this(id, titulo,0.0,0.0,0,new Date());
 	}
 
 	/**
@@ -44,8 +46,14 @@ public class Libro extends MaterialCapacitacion {
 	 * @param precioCompra es el precio al que se adquirió el libro a la editorial
 	 * @param paginas cantidad de paginas del libro
 	 */
-	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		super(id, titulo, costo);
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fecha) {
+		super(id, titulo, costo, fecha);
+		this.precioCompra = precioCompra;
+		this.paginas = paginas;
+	}
+	
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fecha,Relevancia rele) {
+		super(id, titulo, costo, fecha,rele);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}

@@ -2,6 +2,8 @@ package frsf.isi.died.tp.modelo.productos;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +12,7 @@ public class VideoTest {
 
 	@Before
 	public void init() {
-		videoTestear = new Video(1, "Video 1", 100.0, 200);
+		videoTestear = new Video(1, "Video 1", 100.0, 200, new Date());
 	}
 
 	@Test

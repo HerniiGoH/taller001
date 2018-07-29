@@ -7,6 +7,7 @@ package frsf.isi.died.tp.modelo.productos;
 
 import java.util.*;
 
+import frsf.isi.died.app.controller.Relevancia;
 import frsf.isi.died.app.dao.util.CsvRecord;
 import frsf.isi.died.tp.util.Ordenable;
 
@@ -100,7 +101,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0);
+		this(0,"en desarrollo",0.0,new Date());
 	}
 
 	/**
@@ -110,7 +111,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * @param titulo
 	 */
 	public MaterialCapacitacion(Integer id, String titulo) {
-		this(id,titulo,0.0);
+		this(id,titulo,0.0, new Date());
 	}
 
 	/**
@@ -119,10 +120,23 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha) {
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
+		this.calificacion=1;
+		this.cantCalif=1;
+		this.fechaPublic = fecha;
+	}
+	
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha, Relevancia rele) {
+		this.id =id;
+		this.titulo = titulo;
+		this.costo = costo;
+		this.calificacion=1;
+		this.cantCalif=1;
+		this.fechaPublic = fecha;
+		this.relevancia=rele;
 	}
 
 	@Override

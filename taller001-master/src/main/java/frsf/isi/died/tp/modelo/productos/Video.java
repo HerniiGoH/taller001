@@ -4,7 +4,10 @@
 package frsf.isi.died.tp.modelo.productos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import frsf.isi.died.app.controller.Relevancia;
 
 /**
  * @author admin
@@ -37,10 +40,13 @@ public class Video extends MaterialCapacitacion {
 	/**
 	 * Constructor por todos los parametros
 	 */
-	public Video(Integer id, String titulo, Double costo, Integer duracion) {
-		this.id = id;
-		this.titulo = titulo;
-		this.costo = costo;
+	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha) {
+		super(id,titulo,costo,fecha);
+		this.duracionVideo = duracion;
+	}
+	
+	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha,Relevancia rele) {
+		super(id,titulo,costo,fecha,rele);
 		this.duracionVideo = duracion;
 	}
 	

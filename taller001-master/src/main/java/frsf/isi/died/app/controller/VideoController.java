@@ -1,5 +1,7 @@
 package frsf.isi.died.app.controller;
 
+import java.util.Date;
+
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
 import frsf.isi.died.app.vista.material.VideoPanel;
@@ -17,8 +19,8 @@ public class VideoController {
 	}
 
 	
-	public void agregarvideo(String titulo,Double costo, Integer duracionVideo) {	
-		Video l = new Video(0,titulo, costo, duracionVideo);
+	public void agregarvideo(String titulo,Double costo, Integer duracionVideo, Date fecha, Relevancia rele) {	
+		Video l = new Video(0,titulo, costo, duracionVideo, fecha, rele);
 		materialDAO .agregarVideo(l);
 		this.panelVideo.setListaVideos(materialDAO.listaVideos(),true);
 	}

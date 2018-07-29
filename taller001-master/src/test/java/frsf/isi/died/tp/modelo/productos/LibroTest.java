@@ -2,6 +2,8 @@ package frsf.isi.died.tp.modelo.productos;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ public class LibroTest {
 	
 	@Before
 	public void init() {
-		libroTestear = new Libro(1, "Libro 1", 100.0, 200.0, 151);
+		libroTestear = new Libro(1, "Libro 1", 100.0, 200.0, 151, new Date());
 	}
 	
 	@Test

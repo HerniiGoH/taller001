@@ -2,6 +2,7 @@ package frsf.isi.died.tp.taller04;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,12 +31,12 @@ public class TestGrafo {
 	
 	@Before
 	public void init() {
-		matA= new Libro(1, "A", 10.0, 20.0, 10);
-		matB= new Libro(2, "B", 20.0, 10.0, 10);
-		matC= new Libro(3, "C", 30.0, 20.0, 10);
-		matD= new Libro(4, "D", 40.0, 30.0, 10);
-		matE= new Libro(5, "E", 50.0, 25.0, 10);
-		matF= new Libro(6, "F", 60.0, 20.0, 10);
+		matA= new Libro(1, "A", 10.0, 20.0, 10, new Date());
+		matB= new Libro(2, "B", 20.0, 10.0, 10, new Date());
+		matC= new Libro(3, "C", 30.0, 20.0, 10, new Date());
+		matD= new Libro(4, "D", 40.0, 30.0, 10, new Date());
+		matE= new Libro(5, "E", 50.0, 25.0, 10, new Date());
+		matF= new Libro(6, "F", 60.0, 20.0, 10, new Date());
 		grafo = new Grafo();
 		grafo.addNodo(matA);
 		grafo.addNodo(matB);
