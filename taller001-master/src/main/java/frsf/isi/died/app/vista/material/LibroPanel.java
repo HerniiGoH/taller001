@@ -137,7 +137,7 @@ public class LibroPanel extends JPanel{
 		gridConst.gridx=8;
 		this.add(lblRelevancia, gridConst);
 		
-		String[] rele = {"Alta","Media","Baja"};
+		Relevancia[] rele = {Relevancia.Alta,Relevancia.Media,Relevancia.Baja};
 		btnRelevancia = new JComboBox(rele);
 		gridConst.gridx=9;
 		this.add(btnRelevancia, gridConst);
