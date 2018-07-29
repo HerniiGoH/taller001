@@ -5,6 +5,8 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import frsf.isi.died.app.controller.Relevancia;
@@ -129,20 +131,34 @@ public class Libro extends MaterialCapacitacion {
 	public List<String> asCsvRow() {
 		List<String> lista = new ArrayList<String>();
 		lista.add(this.id+"");
-		lista.add("\""+this.titulo.toString()+"\"");
+		lista.add(this.titulo.toString());
 		lista.add(this.costo.toString());
 		lista.add(this.paginas.toString());
 		lista.add(this.precioCompra.toString());
+		lista.add(this.fechaPublic.toString());
+		lista.add(this.calificacion.toString());
+		lista.add(this.cantCalif.toString());
+		lista.add(this.relevancia.toString());
 		return lista;
 	}
 
 	@Override
 	public void loadFromStringRow(List<String> datos) {
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
 		this.id =Integer.valueOf(datos.get(0));
 		this.titulo = datos.get(1);
 		this.costo =Double.valueOf(datos.get(2));
 		this.paginas =Integer.valueOf(datos.get(3));
 		this.precioCompra =Double.valueOf(datos.get(4));
+		try {
+			this.fechaPublic = formatter.parse(datos.get(5));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.calificacion = Integer.valueOf(datos.get(6));
+		this.cantCalif = Integer.valueOf(datos.get(7));
+		this.relevancia = Relevancia.valueOf(datos.get(8));
+		
 	}
 	
 

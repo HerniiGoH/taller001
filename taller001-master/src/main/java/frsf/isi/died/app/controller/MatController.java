@@ -23,7 +23,7 @@ public class MatController {
 	}
 
 	
-	public List<Video> busqTitulo1(String titulo) {
+	public List<Video> busqTitulo1(String titulo, Ordenamiento crit) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
 		if(!res1.isEmpty()) {
@@ -32,10 +32,10 @@ public class MatController {
 					res.add((Video) mat);
 				}
 			}
-		}
-		return res;
+		}	
+		return this.ordenar1(res,crit);
 	}
-	public List<Video> busqCalif1(Integer calificacion) {	
+	public List<Video> busqCalif1(Integer calificacion, Ordenamiento crit) {	
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
 		if(!res1.isEmpty()) {
@@ -45,9 +45,9 @@ public class MatController {
 				}
 			}
 		}
-		return res;
+		return this.ordenar1(res,crit);
 	}
-	public List<Video> busqTema1(String tema) {
+	public List<Video> busqTema1(String tema, Ordenamiento crit) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
 		if(!res1.isEmpty()) {
@@ -57,9 +57,9 @@ public class MatController {
 				}
 			}
 		}
-		return res;
+		return this.ordenar1(res,crit);
 	}
-	public List<Video> busqFecha1(Date min, Date max) {
+	public List<Video> busqFecha1(Date min, Date max, Ordenamiento crit) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
 		if(!res1.isEmpty()) {
@@ -69,9 +69,9 @@ public class MatController {
 				}
 			}
 		}
-		return res;
+		return this.ordenar1(res,crit);
 	}
-	public List<Video> busqID1(Integer Id) {
+	public List<Video> busqID1(Integer Id, Ordenamiento crit) {
 		List<Video> res = new ArrayList();
 		List<MaterialCapacitacion> res1 = materialDAO.findById1(Id);
 		if(!res1.isEmpty()) {
@@ -81,67 +81,113 @@ public class MatController {
 				}
 			}
 		}
+		return this.ordenar1(res,crit);
+	}
+	
+	public List<Libro> busqTitulo(String titulo, Ordenamiento crit) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
+		}
+		return this.ordenar(res,crit);
+	}
+	public List<Libro> busqCalif(Integer calificacion, Ordenamiento crit) {	
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
+		}
+		return this.ordenar(res,crit);
+	}
+	public List<Libro> busqTema(String tema, Ordenamiento crit) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
+		}
+		return this.ordenar(res,crit);
+	}
+	public List<Libro> busqFecha(Date min, Date max, Ordenamiento crit) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
+		}
+		return this.ordenar(res,crit);
+	}
+	public List<Libro> busqID(Integer Id, Ordenamiento crit) {
+		List<Libro> res = new ArrayList();
+		List<MaterialCapacitacion> res1 = materialDAO.findById1(Id);
+		if(!res1.isEmpty()) {
+			for(MaterialCapacitacion mat : res1) {
+				if(mat.esLibro()) {
+					res.add((Libro) mat);
+				}
+			}
+		}
+		return this.ordenar(res,crit);
+	}
+	
+	private List<Libro> ordenar(List<Libro> lis, Ordenamiento criterio){
+		List<Libro> res = new ArrayList();
+		switch(criterio) {
+		case TituloAlfabeticamente: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorTitulo(lis);
+			
+		case Calificacion: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorCalificacion(lis);
+			
+		case Precio: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorPrecio(lis);
+			
+		case FechaDePublicacion: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorFecha(lis);
+			
+		case Relevancia: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorRelevancia(lis);
+			
+		default: break;
+		};
 		return res;
 	}
 	
-	public List<Libro> busqTitulo(String titulo) {
-		List<Libro> res = new ArrayList();
-		List<MaterialCapacitacion> res1 = this.materialDAO.findByTitulo(titulo);
-		if(!res1.isEmpty()) {
-			for(MaterialCapacitacion mat : res1) {
-				if(mat.esLibro()) {
-					res.add((Libro) mat);
-				}
-			}
-		}
-		return res;
-	}
-	public List<Libro> busqCalif(Integer calificacion) {	
-		List<Libro> res = new ArrayList();
-		List<MaterialCapacitacion> res1 = this.materialDAO.findByCalif(calificacion);
-		if(!res1.isEmpty()) {
-			for(MaterialCapacitacion mat : res1) {
-				if(mat.esLibro()) {
-					res.add((Libro) mat);
-				}
-			}
-		}
-		return res;
-	}
-	public List<Libro> busqTema(String tema) {
-		List<Libro> res = new ArrayList();
-		List<MaterialCapacitacion> res1 = this.materialDAO.findByTema(tema);
-		if(!res1.isEmpty()) {
-			for(MaterialCapacitacion mat : res1) {
-				if(mat.esLibro()) {
-					res.add((Libro) mat);
-				}
-			}
-		}
-		return res;
-	}
-	public List<Libro> busqFecha(Date min, Date max) {
-		List<Libro> res = new ArrayList();
-		List<MaterialCapacitacion> res1 = this.materialDAO.findByDate(min, max);
-		if(!res1.isEmpty()) {
-			for(MaterialCapacitacion mat : res1) {
-				if(mat.esLibro()) {
-					res.add((Libro) mat);
-				}
-			}
-		}
-		return res;
-	}
-	public List<Libro> busqID(Integer Id) {
-		List<Libro> res = new ArrayList();
-		List<MaterialCapacitacion> res1 = materialDAO.findById1(Id);
-		if(!res1.isEmpty()) {
-			for(MaterialCapacitacion mat : res1) {
-				if(mat.esLibro()) {
-					res.add((Libro) mat);
-				}
-			}
-		}
+	private List<Video> ordenar1(List<Video> lis, Ordenamiento criterio){
+		List<Video> res = new ArrayList();
+		switch(criterio) {
+		case TituloAlfabeticamente: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorTitulo1(lis);
+			
+		case Calificacion: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorCalificacion1(lis);
+			
+		case Precio: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorPrecio1(lis);
+			
+		case FechaDePublicacion: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorFecha1(lis);
+			
+		case Relevancia: 
+			return ((MaterialCapacitacionDaoDefault) materialDAO).ordenPorRelevancia1(lis);
+			
+		default: break;
+		};
 		return res;
 	}
 	

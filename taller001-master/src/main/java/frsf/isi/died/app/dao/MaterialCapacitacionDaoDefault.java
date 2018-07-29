@@ -2,6 +2,8 @@ package frsf.isi.died.app.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		if(GRAFO_MATERIAL.esVacio()) {
 			cargarGrafo();
 		}
+		/*Collections.sort(GRAFO_MATERIAL.listaVertices(),((BibliotecaABB)biblioteca).getCompID());
+		SECUENCIA_ID = GRAFO_MATERIAL.listaVertices().get(GRAFO_MATERIAL.listaVertices().size()-1).getId();*/
 	}
 
 	private void cargarGrafo() {
@@ -147,7 +151,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<MaterialCapacitacion> findByDate(Date fechaMin, Date fechaMax) {
 		List<MaterialCapacitacion> res = new ArrayList();
 		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
-			if(mat.getFecha().after(fechaMin)&&mat.getFecha().before(fechaMax)) res.add(mat);
+			if(mat.getFecha().after(fechaMin) && mat.getFecha().before(fechaMax)) res.add(mat);
 		}
 		return res;
 	}
@@ -176,6 +180,48 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			e.printStackTrace();
 		}
 	}
-
 	
+	public List<Libro> ordenPorTitulo(List<Libro>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompTit());
+		 return lista;
+	}
+	public List<Libro> ordenPorCalificacion(List<Libro>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompCalif());
+		 return lista;
+	}
+	public List<Libro> ordenPorPrecio(List<Libro>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompPrecio());
+		 return lista;
+	}
+	public List<Libro> ordenPorFecha(List<Libro>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompFecha());
+		 return lista;
+	}
+	public List<Libro> ordenPorRelevancia(List<Libro>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompRelev());
+		 return lista;
+	}
+	
+	public List<Video> ordenPorTitulo1(List<Video>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompTit());
+		 return lista;
+	}
+	public List<Video> ordenPorCalificacion1(List<Video>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompCalif());
+		 return lista;
+	}
+	public List<Video> ordenPorPrecio1(List<Video>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompPrecio());
+		 return lista;
+	}
+	public List<Video> ordenPorFecha1(List<Video>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompFecha());
+		 return lista;
+	}
+	public List<Video> ordenPorRelevancia1(List<Video>lista){
+		 Collections.sort(lista, ((BibliotecaABB) biblioteca).getCompRelev());
+		 return lista;
+	}
+
+
 }

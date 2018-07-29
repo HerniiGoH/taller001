@@ -16,10 +16,55 @@ public class BibliotecaABB implements Biblioteca {
 	private Boolean flagOrdenarPorPrecio;
 	private Comparator<MaterialCapacitacion> comparaTitulo= (mc1,mc2)-> mc1.getTitulo().compareTo(mc2.getTitulo());
 	private Comparator<MaterialCapacitacion> comparaPrecio= (mc1,mc2)-> mc1.precio().intValue()- mc2.precio().intValue();
+	private Comparator<MaterialCapacitacion> comparaCalificacion = (mc1,mc2)-> mc1.getCalificacion().intValue()- mc2.getCalificacion().intValue();
+	private Comparator<MaterialCapacitacion> comparaID = (mc1,mc2)-> mc1.getId().intValue()- mc2.getId().intValue();
+	private Comparator<MaterialCapacitacion> comparaFecha = (mc1,mc2)-> mc1.getFecha().compareTo(mc2.getFecha());
+	private Comparator<MaterialCapacitacion> comparaRelevancia = (mc1,mc2)-> {
+		if(mc1.getRelevancia().toString().equals("Alta")) {
+			return 1;
+		}
+		else {
+			if(mc2.getRelevancia().toString().equals("Alta")) {
+				return -1;
+			}
+			else {
+				if(mc1.getRelevancia().toString().equals("Media")) {
+					return 1;
+				}
+				else {
+					if(mc2.getRelevancia().toString().equals("Media")) {
+						return -1;
+					}
+					else {
+						return 1;
+					}
+				}
+			}
+		}
+	};
 	
 	public BibliotecaABB() {
 		this.materiales = new ArbolVacio();
 		flagOrdenarPorPrecio= false;
+	}
+	
+	public Comparator<MaterialCapacitacion> getCompTit(){
+		return this.comparaTitulo;
+	}
+	public Comparator<MaterialCapacitacion> getCompID(){
+		return this.comparaID;
+	}
+	public Comparator<MaterialCapacitacion> getCompPrecio(){
+		return this.comparaPrecio;
+	}
+	public Comparator<MaterialCapacitacion> getCompCalif(){
+		return this.comparaCalificacion;
+	}
+	public Comparator<MaterialCapacitacion> getCompFecha(){
+		return this.comparaFecha;
+	}
+	public Comparator<MaterialCapacitacion> getCompRelev(){
+		return this.comparaRelevancia;
 	}
 	
 	@Override

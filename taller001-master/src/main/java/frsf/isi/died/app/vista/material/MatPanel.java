@@ -2,7 +2,9 @@ package frsf.isi.died.app.vista.material;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +45,9 @@ public class MatPanel extends JPanel{
 	private JButton btnBuscar;
 	private JTable tabla;
 	private JScrollPane scrollPane;
+	private JButton btnActualizar;
+	private JButton btnEliminar;
+	private JButton btnWishlist;
 
 	private LibroTableModel libroTableModel;
 	private VideoTableModel videoTableModel;
@@ -59,6 +64,8 @@ public class MatPanel extends JPanel{
 	public void construir() {
 		
 		GridBagConstraints gridConst= new GridBagConstraints();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		
 		lblBusqueda = new JLabel("Busqueda Material");
 		gridConst.gridx=0;
@@ -189,19 +196,25 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				if(this.libro.isSelected()) {
 					switch ((Criterios) btnCriterio.getSelectedItem()) {
 					case ID: 
-						this.setListaLibros(this.controller.busqID(Integer.valueOf(txtCriterio.getText())), false);
+						this.setListaLibros(this.controller.busqID(Integer.valueOf(txtCriterio.getText()), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case Titulo:
-						this.setListaLibros(this.controller.busqTitulo(txtCriterio.getText()), false);
+						this.setListaLibros(this.controller.busqTitulo(txtCriterio.getText(), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case Calificacion: 
-						this.setListaLibros(this.controller.busqCalif(Integer.valueOf(txtCriterio.getText())), false);
+						this.setListaLibros(this.controller.busqCalif(Integer.valueOf(txtCriterio.getText()), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case Tema: 
-						this.setListaLibros(this.controller.busqTema(txtCriterio.getText()), false);
+						this.setListaLibros(this.controller.busqTema(txtCriterio.getText(), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case RangoFechaDePublicacion: 
-						this.setListaLibros(this.controller.busqFecha(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText())), false);
+						//try {
+							Date fechaMin = formatter.parse(txtFechaMin.getText());
+							Date fechaMax = formatter.parse(txtFechaMax.getText());
+							this.setListaLibros(this.controller.busqFecha(fechaMin,fechaMax, (Ordenamiento) btnOrdenam.getSelectedItem()), false);
+						//} catch (ParseException g) {
+						//	g.printStackTrace();
+						//}
 						break;
 					default: break;
 					};
@@ -213,19 +226,25 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				else {
 					switch ((Criterios) btnCriterio.getSelectedItem()) {
 					case ID:
-						this.setListaVideos(this.controller.busqID1(Integer.valueOf(txtCriterio.getText())), false); 
+						this.setListaVideos(this.controller.busqID1(Integer.valueOf(txtCriterio.getText()), (Ordenamiento) btnOrdenam.getSelectedItem()), false); 
 						break;
 					case Titulo:
-						this.setListaVideos(this.controller.busqTitulo1(txtCriterio.getText()), false);
+						this.setListaVideos(this.controller.busqTitulo1(txtCriterio.getText(), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case Calificacion:
-						this.setListaVideos(this.controller.busqCalif1(Integer.valueOf(txtCriterio.getText())), false);
+						this.setListaVideos(this.controller.busqCalif1(Integer.valueOf(txtCriterio.getText()), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case Tema:
-						this.setListaVideos(this.controller.busqTema1(txtCriterio.getText()), false);
+						this.setListaVideos(this.controller.busqTema1(txtCriterio.getText(), (Ordenamiento) btnOrdenam.getSelectedItem()), false);
 						break;
 					case RangoFechaDePublicacion:
-						this.setListaVideos(this.controller.busqFecha1(Date.valueOf(txtFechaMin.getText()),Date.valueOf(txtFechaMax.getText())), false);
+						//try {
+							Date fechaMin = formatter.parse(txtFechaMin.getText());
+							Date fechaMax = formatter.parse(txtFechaMax.getText());
+							this.setListaVideos(this.controller.busqFecha1(fechaMin,fechaMax, (Ordenamiento) btnOrdenam.getSelectedItem()), false);
+						//} catch (ParseException g) {
+							//g.printStackTrace();
+						//}
 						break;
 					default: break;
 					};
@@ -257,15 +276,39 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridwidth=1;
 		gridConst.weightx=1.0;
 		gridConst.anchor = GridBagConstraints.NORTHWEST;
-		gridConst.gridx=3;
+		gridConst.gridx=5;
 		this.add(btnBuscar, gridConst);
+		
+		btnActualizar = new JButton("Actualizar");
+		gridConst.gridx=6;
+		this.add(btnActualizar, gridConst);
+		
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(e->{
+			
+			if(this.libro.isSelected()) {
+				libroTableModel.getLibros().get(tabla.getSelectedRow());
+			}
+			else{
+				videoTableModel.getVideos().get(tabla.getSelectedRow());
+			}
+			
+		});
+		gridConst.gridx=7;
+		this.add(btnEliminar, gridConst);
+		
+		btnWishlist = new JButton("Agregar a Wishlist");
+		gridConst.gridx=8;
+		this.add(btnWishlist, gridConst);
 		
 		tabla = new JTable(this.videoTableModel);
 		tabla.setFillsViewportHeight(true);
 		
+		//
+		
 		scrollPane = new JScrollPane(tabla);
 		gridConst.gridx=0;
-		gridConst.gridwidth=7;	
+		gridConst.gridwidth=10;	
 		gridConst.gridy=7;
 		gridConst.weighty=1.0;
 		gridConst.weightx=1.0;

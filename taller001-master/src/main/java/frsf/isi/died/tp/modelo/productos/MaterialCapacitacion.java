@@ -5,6 +5,7 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+import java.text.ParseException;
 import java.util.*;
 
 import frsf.isi.died.app.controller.Relevancia;
@@ -212,7 +213,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	//  retornando el titulo, y el precio 	 * usando el formato : 
 	// [Titulo: <titulo> ; Precio: <precio> ]
 
-	public void loadFromStringRow(List<String> datos) {
+	public void loadFromStringRow(List<String> datos) throws ParseException {
 		// TODO Auto-generated method stub
 		
 	}
