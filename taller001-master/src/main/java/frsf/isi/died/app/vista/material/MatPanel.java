@@ -1,5 +1,6 @@
 package frsf.isi.died.app.vista.material;
 
+import java.awt.Dialog.ModalityType;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javax.swing.*;
 import frsf.isi.died.app.controller.Criterios;
 import frsf.isi.died.app.controller.MatController;
 import frsf.isi.died.app.controller.Ordenamiento;
+import frsf.isi.died.app.controller.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -48,6 +50,7 @@ public class MatPanel extends JPanel{
 	private JButton btnActualizar;
 	private JButton btnEliminar;
 	private JButton btnWishlist;
+	private JDialog emergente;
 
 	private LibroTableModel libroTableModel;
 	private VideoTableModel videoTableModel;
@@ -89,11 +92,21 @@ public class MatPanel extends JPanel{
 		this.add(lblVideo, gridConst);*/
 		
 		libro = new JRadioButton("Libro");
+		libro.addActionListener(e->{
+			this.btnActualizar.setEnabled(false);
+			this.btnEliminar.setEnabled(false);
+			this.btnWishlist.setEnabled(false);
+		});
 		gridConst.gridx=1;
 		gridConst.gridy=1;
 		this.add(libro, gridConst);
 		
 		video = new JRadioButton("Video");
+		video.addActionListener(e->{
+			this.btnActualizar.setEnabled(false);
+			this.btnEliminar.setEnabled(false);
+			this.btnWishlist.setEnabled(false);
+		});
 		gridConst.gridx=2;
 		gridConst.gridy=1;
 		this.add(video, gridConst);
@@ -253,7 +266,9 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 					tabla.setFillsViewportHeight(true);
 					
 				}
-				
+				this.btnActualizar.setEnabled(true);
+				this.btnEliminar.setEnabled(true);
+				this.btnWishlist.setEnabled(true);
 				this.remove(scrollPane);
 				scrollPane = new JScrollPane(tabla);
 				gridConst.gridx=0;
@@ -280,6 +295,115 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		this.add(btnBuscar, gridConst);
 		
 		btnActualizar = new JButton("Actualizar");
+		btnActualizar.addActionListener(e->{
+			if(tabla.getSelectedRow()!=-1) {
+				emergente = new JDialog(); GridBagConstraints gridConst1 = new GridBagConstraints();
+				
+				emergente.setSize(900, 300);
+				emergente.setAlwaysOnTop(true);
+				emergente.setModal(true);
+				emergente.setLocationRelativeTo(null);
+				
+				JPanel pan = new JPanel();
+				pan.setLayout(new GridBagLayout());
+				JLabel lbltit = new JLabel("Titulo");
+				gridConst1.gridx = 0;
+				gridConst1.gridy = 0;
+				gridConst1.anchor = GridBagConstraints.LINE_START;
+				pan.add(lbltit,gridConst1);
+				
+				JTextField txttit = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 1).toString());
+				txttit.setColumns(20);
+				gridConst1.gridx = 1;
+				gridConst1.gridwidth = 6;
+				pan.add(txttit,gridConst1);
+				
+				JLabel lblprecom = new JLabel("Precio Compra");
+				gridConst1.gridwidth = 1;
+				gridConst1.gridx = 0;
+				gridConst1.gridy = 1;
+				pan.add(lblprecom,gridConst1);
+				
+				JTextField txtprecom = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 2).toString());
+				txtprecom.setColumns(5);
+				gridConst1.gridx = 1;
+				pan.add(txtprecom,gridConst1);
+				
+				if(this.libro.isSelected()) {
+					JLabel lblcostopub = new JLabel("Costo Publicacion");
+					gridConst1.gridx = 2;
+					gridConst1.gridy = 1;
+					pan.add(lblcostopub,gridConst1);
+					
+					JLabel lblpaginas = new JLabel("Paginas");
+					gridConst1.gridx = 4;
+					gridConst1.gridy = 1;
+					pan.add(lblpaginas,gridConst1);
+				}
+				else {
+					JLabel lblcostopub = new JLabel("Costo Por Segundo");
+					gridConst1.gridx = 2;
+					gridConst1.gridy = 1;
+					pan.add(lblcostopub,gridConst1);
+					
+					JLabel lblpaginas = new JLabel("Duracion");
+					gridConst1.gridx = 4;
+					gridConst1.gridy = 1;
+					pan.add(lblpaginas,gridConst1);
+				}
+				
+				JTextField txtcostopub = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 3).toString());
+				txtcostopub.setColumns(5);
+				gridConst1.gridx = 3;
+				gridConst1.gridy = 1;
+				pan.add(txtcostopub,gridConst1);
+				
+				JTextField txtpaginas = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 4).toString());
+				txtpaginas.setColumns(5);
+				gridConst1.gridx = 5;
+				gridConst1.gridy = 1;
+				pan.add(txtpaginas,gridConst1);
+				
+				JLabel lblfecha = new JLabel("Fecha de Publicacion");
+				gridConst1.gridx = 6;
+				gridConst1.gridy = 1;
+				pan.add(lblfecha,gridConst1);
+				
+				JTextField txtfecha = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 6).toString());
+				txtfecha.setColumns(6);
+				gridConst1.gridx = 7;
+				pan.add(txtfecha,gridConst1);
+				
+				JLabel lblrel = new JLabel("Relevancia");
+				gridConst1.gridx = 8;
+				gridConst1.gridy = 1;
+				pan.add(lblrel,gridConst1);
+				
+				Relevancia[] rele = {Relevancia.Alta,Relevancia.Media,Relevancia.Baja};
+				
+				JComboBox btnrel = new JComboBox(rele);
+				gridConst1.gridx = 9;
+				pan.add(btnrel,gridConst1);
+				
+				JButton btnactualizar = new JButton("Actualizar");
+				gridConst1.gridx = 4;
+				gridConst1.gridy = 2;
+				pan.add(btnactualizar,gridConst1);
+				
+				JButton btncancelar = new JButton("Cancelar");
+				btncancelar.addActionListener(e1->{
+					emergente.dispose();
+				});
+				gridConst1.gridx = 5;
+				gridConst1.gridy = 2;
+				pan.add(btncancelar,gridConst1);
+				
+				emergente.add(pan);
+				
+				emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				emergente.setVisible(true);
+			}
+		});
 		gridConst.gridx=6;
 		this.add(btnActualizar, gridConst);
 		
@@ -290,30 +414,14 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				Libro aux = libroTableModel.getLibros().get(tabla.getSelectedRow());
 				this.controller.eliminar(aux);
 				this.libroTableModel.getLibros().remove(aux);
-				this.setListaLibros(libroTableModel.getLibros(), false);
-				/*tabla = new JTable(this.libroTableModel);
-				tabla.setFillsViewportHeight(true);*/
-				
+				this.setListaLibros(libroTableModel.getLibros(), false);	
 			}
 			else{
 				Video aux = videoTableModel.getVideos().get(tabla.getSelectedRow());
 				this.controller.eliminar1(aux);
 				this.videoTableModel.getVideos().remove(aux);
 				this.setListaVideos(videoTableModel.getVideos(), false);
-				/*tabla = new JTable(this.videoTableModel);
-				tabla.setFillsViewportHeight(true);*/
 			}
-			
-			/*this.remove(scrollPane);
-			scrollPane = new JScrollPane(tabla);
-			gridConst.gridx=0;
-			gridConst.gridwidth=10;	
-			gridConst.gridy=7;
-			gridConst.weighty=1.0;
-			gridConst.weightx=1.0;
-			gridConst.fill=GridBagConstraints.BOTH;
-			gridConst.anchor=GridBagConstraints.PAGE_START;		
-			this.add(scrollPane, gridConst);*/
 			
 			this.repaint();
 			this.doLayout();
@@ -326,10 +434,8 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridx=8;
 		this.add(btnWishlist, gridConst);
 		
-		tabla = new JTable(this.videoTableModel);
+		tabla = new JTable(this.libroTableModel);
 		tabla.setFillsViewportHeight(true);
-		
-		//
 		
 		scrollPane = new JScrollPane(tabla);
 		gridConst.gridx=0;

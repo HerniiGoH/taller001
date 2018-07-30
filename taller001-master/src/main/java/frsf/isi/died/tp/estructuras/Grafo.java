@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+
 public class Grafo<T> {
 
 	protected List<Arista<T>> aristas;
@@ -124,7 +126,13 @@ public class Grafo<T> {
 		System.out.println(this.aristas.toString());
 	}
 
-
+	public void borrarMat(MaterialCapacitacion mat) {
+		for(Vertice v : vertices) {
+			if(v.getValor().equals(mat)) {
+				vertices.remove(v);
+			}
+		}
+	}
         
 	/**
 	 * @param v1

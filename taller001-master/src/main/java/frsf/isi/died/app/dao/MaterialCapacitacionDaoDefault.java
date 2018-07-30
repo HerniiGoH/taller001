@@ -29,8 +29,9 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		if(GRAFO_MATERIAL.esVacio()) {
 			cargarGrafo();
 		}
-		/*Collections.sort(GRAFO_MATERIAL.listaVertices(),((BibliotecaABB)biblioteca).getCompID());
-		SECUENCIA_ID = GRAFO_MATERIAL.listaVertices().get(GRAFO_MATERIAL.listaVertices().size()-1).getId();*/
+		List<MaterialCapacitacion> aux = GRAFO_MATERIAL.listaVertices();
+		Collections.sort(aux,((BibliotecaABB)biblioteca).getCompID());
+		SECUENCIA_ID = aux.get(aux.size()-1).getId();
 	}
 
 	private void cargarGrafo() {
@@ -225,7 +226,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	}
 	
 	public void eliminar(Libro mat) {
-		this.GRAFO_MATERIAL.listaVertices().remove(mat);
+		this.GRAFO_MATERIAL.borrarMat(mat);
 		List<Libro> aux = this.listaLibros();
 		try {
 			this.dataSource.agregarFilaAlPrincipio("libros.csv", aux.remove(0));
@@ -245,7 +246,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	}
 	
 	public void eliminar1(Video mat) {
-		this.GRAFO_MATERIAL.listaVertices().remove(mat);
+		this.GRAFO_MATERIAL.borrarMat(mat);
 		List<Video> aux = this.listaVideos();
 		try {
 			this.dataSource.agregarFilaAlPrincipio("videos.csv", aux.remove(0));
