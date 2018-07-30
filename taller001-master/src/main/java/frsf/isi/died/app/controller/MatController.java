@@ -215,5 +215,13 @@ public class MatController {
 		this.panelMat = panelmat;
 	}
 	
+	public void editarLibro(String titulo,Double costo,Double precio,Integer paginas, Date fecha, Relevancia rele) {
+		
+	}
+	
+	public void editarVideo(String titulo,Double costo, Integer duracionVideo, Date fecha, Relevancia rele) {
+		
+	}
+	
 	
 }

@@ -69,7 +69,6 @@ public class LibroPanel extends JPanel{
 				Double costo = Double.valueOf(txtCosto.getText());
 				Double precio = Double.valueOf(txtPrecioCompra.getText());
 				Integer paginas = Integer.valueOf(txtPaginas.getText());
-				//String relevan = btnRelevancia.getSelectedItem().toString();
 				String date = txtFecha.getText();
 				Date fecha;
 				if(esValido(date)) {

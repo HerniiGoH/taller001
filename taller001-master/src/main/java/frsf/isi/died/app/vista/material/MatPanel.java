@@ -4,6 +4,7 @@ import java.awt.Dialog.ModalityType;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -329,6 +330,12 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				gridConst1.gridx = 1;
 				pan.add(txtprecom,gridConst1);
 				
+				JTextField txtcostopub = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 3).toString());
+				txtcostopub.setColumns(5);
+				gridConst1.gridx = 3;
+				gridConst1.gridy = 1;
+				pan.add(txtcostopub,gridConst1);
+				
 				if(this.libro.isSelected()) {
 					JLabel lblcostopub = new JLabel("Costo Publicacion");
 					gridConst1.gridx = 2;
@@ -350,13 +357,9 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 					gridConst1.gridx = 4;
 					gridConst1.gridy = 1;
 					pan.add(lblpaginas,gridConst1);
+					
+					txtcostopub.setEnabled(false);
 				}
-				
-				JTextField txtcostopub = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 3).toString());
-				txtcostopub.setColumns(5);
-				gridConst1.gridx = 3;
-				gridConst1.gridy = 1;
-				pan.add(txtcostopub,gridConst1);
 				
 				JTextField txtpaginas = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 4).toString());
 				txtpaginas.setColumns(5);
@@ -368,8 +371,8 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				gridConst1.gridx = 6;
 				gridConst1.gridy = 1;
 				pan.add(lblfecha,gridConst1);
-				
-				JTextField txtfecha = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 6).toString());
+				 //this.tabla.getValueAt(this.tabla.getSelectedRow(), 6).toString()
+				JTextField txtfecha = new JTextField(DateFormat.getDateInstance().format(this.tabla.getValueAt(this.tabla.getSelectedRow(), 6)));
 				txtfecha.setColumns(6);
 				gridConst1.gridx = 7;
 				pan.add(txtfecha,gridConst1);
@@ -386,6 +389,51 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				pan.add(btnrel,gridConst1);
 				
 				JButton btnactualizar = new JButton("Actualizar");
+				btnactualizar.addActionListener(e2->{
+					try {
+						Double costo = Double.valueOf(txtprecom.getText());
+						Double precio = Double.valueOf(txtprecom.getText());
+						Integer paginas = Integer.valueOf(txtpaginas.getText());
+						String date = txtfecha.getText();
+						Date fecha = inicializar(date);
+						if(esValido(date)) {
+							fecha = inicializar(date);
+						}
+						else {
+							throw new Exception("Fecha invalida");
+						}
+						if(this.libro.isSelected()) {
+						controller.editarLibro(txttit.getText(), costo, precio, paginas, fecha, (Relevancia) btnrel.getSelectedItem());
+						Libro aux = libroTableModel.getLibros().get(tabla.getSelectedRow());
+						List<Libro> aux1 = this.libroTableModel.getLibros();
+						aux1.remove(aux);
+						aux.setTitulo(txttit.getText());
+						aux.setCosto(costo);
+						aux.setPrecioCompra(precio);
+						aux.setPaginas(paginas);
+						aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
+						aux1.add(aux);
+						this.setListaLibros(aux1, false);
+						}
+						else {
+							controller.editarVideo(txttit.getText(), costo, paginas, fecha, (Relevancia) btnrel.getSelectedItem());
+							Video aux = videoTableModel.getVideos().get(tabla.getSelectedRow());
+							List<Video> aux1 = this.videoTableModel.getVideos();
+							aux1.remove(aux);
+							aux.setTitulo(txttit.getText());
+							aux.setCosto(costo);
+							aux.setDuracion(paginas);
+							aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
+							aux1.add(aux);
+							this.setListaVideos(aux1, false);
+						}
+						emergente.dispose();
+						this.repaint();
+						this.doLayout();
+					}catch(Exception ex) {
+					    JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+					}
+				});
 				gridConst1.gridx = 4;
 				gridConst1.gridy = 2;
 				pan.add(btnactualizar,gridConst1);
@@ -466,6 +514,33 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 	public void setListaVideos(List<Video> matLista,boolean actualizar) {
 		this.videoTableModel.setVideos(matLista);
 		if(actualizar) this.videoTableModel.fireTableDataChanged();
+	}
+	
+	private boolean esValido(String s) {
+		Integer mes,dia,ano;
+		dia = Integer.valueOf(s.substring(0, 2));
+		mes = Integer.valueOf(s.substring(3,5));
+		ano = Integer.valueOf(s.substring(6, 10));
+		if(mes >0 && mes<13 && dia >=1 && dia <=31) {
+			if((mes == 4 || mes == 6 || mes == 9 || mes == 11)) {
+				if(dia <=30 ) {return true;}
+				else return false;
+			}
+			else {
+				if(mes == 2) {
+					if(dia<=28) {return true;}
+					else return false;
+				}
+				else return true;
+			}
+		}
+		else return false;
+	}
+	
+	private Date inicializar(String s) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date fecha = formatter.parse(s); 
+        return fecha;
 	}
 
 }

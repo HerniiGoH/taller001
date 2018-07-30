@@ -32,6 +32,10 @@ public class Video extends MaterialCapacitacion {
 		this.costo = 0.0;
 		this.duracionVideo = 0;
 	}
+	
+	public void setDuracion(Integer dur) {
+		this.duracionVideo=dur;
+	}
 	/**
 	 * Constructor por dos parametros
 	 */

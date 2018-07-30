@@ -27,6 +27,9 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	/**
 	 * @return the id
 	 */
+	public void setRelevancia(Relevancia rele) {
+		this.relevancia=rele;
+	}
 	public Integer getId() {
 		return id;
 	}
