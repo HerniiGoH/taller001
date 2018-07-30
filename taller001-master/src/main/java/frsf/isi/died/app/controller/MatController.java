@@ -215,12 +215,20 @@ public class MatController {
 		this.panelMat = panelmat;
 	}
 	
-	public void editarLibro(String titulo,Double costo,Double precio,Integer paginas, Date fecha, Relevancia rele) {
-		
+	public void editarLibro(Libro viejo, Libro nuevo) {
+		((MaterialCapacitacionDaoDefault) materialDAO).actualizar(viejo, nuevo);
 	}
 	
-	public void editarVideo(String titulo,Double costo, Integer duracionVideo, Date fecha, Relevancia rele) {
-		
+	public void editarVideo(Video viejo, Video nuevo) {
+		((MaterialCapacitacionDaoDefault) materialDAO).actualizar1(viejo, nuevo);
+	}
+	
+	public void addWishlist(Libro lib) {
+		((MaterialCapacitacionDaoDefault) materialDAO).addWishlist(lib);
+	}
+	
+	public void addWishlist1(Video vid) {
+		((MaterialCapacitacionDaoDefault) materialDAO).addWishlist1(vid);
 	}
 	
 	

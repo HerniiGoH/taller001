@@ -130,6 +130,16 @@ public class Grafo<T> {
 		for(Vertice v : vertices) {
 			if(v.getValor().equals(mat)) {
 				vertices.remove(v);
+				break;
+			}
+		}
+	}
+	
+	public void actualizar(MaterialCapacitacion viejo, MaterialCapacitacion nuevo) {
+		for(Vertice v : vertices) {
+			if(v.getValor().equals(viejo)) {
+				v.setValor(nuevo);
+				break;
 			}
 		}
 	}

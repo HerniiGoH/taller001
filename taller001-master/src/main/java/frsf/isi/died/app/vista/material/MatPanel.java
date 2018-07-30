@@ -391,7 +391,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				JButton btnactualizar = new JButton("Actualizar");
 				btnactualizar.addActionListener(e2->{
 					try {
-						Double costo = Double.valueOf(txtprecom.getText());
+						Double costo = Double.valueOf(txtcostopub.getText());
 						Double precio = Double.valueOf(txtprecom.getText());
 						Integer paginas = Integer.valueOf(txtpaginas.getText());
 						String date = txtfecha.getText();
@@ -403,8 +403,8 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 							throw new Exception("Fecha invalida");
 						}
 						if(this.libro.isSelected()) {
-						controller.editarLibro(txttit.getText(), costo, precio, paginas, fecha, (Relevancia) btnrel.getSelectedItem());
 						Libro aux = libroTableModel.getLibros().get(tabla.getSelectedRow());
+						Libro aux2 = aux;
 						List<Libro> aux1 = this.libroTableModel.getLibros();
 						aux1.remove(aux);
 						aux.setTitulo(txttit.getText());
@@ -414,10 +414,13 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 						aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
 						aux1.add(aux);
 						this.setListaLibros(aux1, false);
+						controller.editarLibro(aux2,aux);
+						
 						}
 						else {
-							controller.editarVideo(txttit.getText(), costo, paginas, fecha, (Relevancia) btnrel.getSelectedItem());
+							
 							Video aux = videoTableModel.getVideos().get(tabla.getSelectedRow());
+							Video aux2 = aux;
 							List<Video> aux1 = this.videoTableModel.getVideos();
 							aux1.remove(aux);
 							aux.setTitulo(txttit.getText());
@@ -426,6 +429,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 							aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
 							aux1.add(aux);
 							this.setListaVideos(aux1, false);
+							controller.editarVideo(aux2,aux);
 						}
 						emergente.dispose();
 						this.repaint();
@@ -479,6 +483,14 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		this.add(btnEliminar, gridConst);
 		
 		btnWishlist = new JButton("Agregar a Wishlist");
+		btnWishlist.addActionListener(e->{
+			if(this.libro.isSelected()) {
+				this.controller.addWishlist(libroTableModel.getLibros().get(tabla.getSelectedRow()));
+			}
+			else {
+				this.controller.addWishlist1(videoTableModel.getVideos().get(tabla.getSelectedRow()));
+			}
+		});
 		gridConst.gridx=8;
 		this.add(btnWishlist, gridConst);
 		

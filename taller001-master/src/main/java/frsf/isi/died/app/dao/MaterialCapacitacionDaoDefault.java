@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
 import frsf.isi.died.app.dao.util.CsvRecord;
@@ -21,6 +23,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	private static Grafo<MaterialCapacitacion> GRAFO_MATERIAL  = new Grafo<MaterialCapacitacion>();
 	private static Integer SECUENCIA_ID=0;
 	private static Biblioteca biblioteca = new BibliotecaABB();
+	private static PriorityQueue<Libro> wishlistLibro = new PriorityQueue();
+	private static PriorityQueue<Video> wishlistVideo = new PriorityQueue();
 	
 	private CsvDatasource dataSource;
 	
@@ -35,6 +39,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	}
 
 	private void cargarGrafo() {
+		
 		List<List<String>> libros = dataSource.readFile("libros.csv");
 		for(List<String> filaLibro : libros) {
 			Libro aux = new Libro();
@@ -52,6 +57,19 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			MaterialCapacitacion n1 = this.findById(Integer.valueOf(filaArista.get(0)));
 			MaterialCapacitacion n2 = this.findById(Integer.valueOf(filaArista.get(2)));
 			GRAFO_MATERIAL.conectar(n1, n2);
+		}
+		
+		libros = dataSource.readFile("wishlistLibros.csv");
+		for(List<String> filaLibro : libros) {
+			Libro aux = new Libro();
+			aux.loadFromStringRow(filaLibro);
+			this.wishlistLibro.add(aux);
+		}
+		videos = dataSource.readFile("wishlistVideos.csv");
+		for(List<String> filaVideo : videos) {
+			Video aux = new Video();
+			aux.loadFromStringRow(filaVideo);
+			this.wishlistVideo.add(aux);
 		}
  	}
 	
@@ -263,6 +281,63 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			}
 		}
 		//this.cargarGrafo();
+	}
+	
+	public void actualizar(Libro viejo, Libro nuevo) {
+		this.GRAFO_MATERIAL.actualizar(viejo, nuevo);
+		List<Libro> aux = this.listaLibros();
+		try {
+			this.dataSource.agregarFilaAlPrincipio("libros.csv", aux.remove(0));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Libro lib : aux) {
+			try {
+				this.dataSource.agregarFilaAlFinal("libros.csv", lib);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void actualizar1(Video viejo, Video nuevo) {
+		this.GRAFO_MATERIAL.actualizar(viejo, nuevo);
+		List<Video> aux = this.listaVideos();
+		try {
+			this.dataSource.agregarFilaAlPrincipio("videos.csv", aux.remove(0));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Video lib : aux) {
+			try {
+				this.dataSource.agregarFilaAlFinal("videos.csv", lib);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addWishlist(Libro lib) {
+		this.wishlistLibro.add(lib);
+		try {
+			this.dataSource.agregarFilaAlFinal("wishlistLibros.csv", lib);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void addWishlist1(Video vid) {
+		this.wishlistVideo.add(vid);
+		try {
+			this.dataSource.agregarFilaAlFinal("wishlistVideos.csv", vid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
