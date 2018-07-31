@@ -16,6 +16,7 @@ import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
 import frsf.isi.died.app.vista.material.MatPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
+import frsf.isi.died.app.vista.material.WishPanel;
 
 public class MenuController {
 	
@@ -54,6 +55,12 @@ public class MenuController {
 			MatController matController = new MatController(panelMat);
 			matController.crearPanel();
 			framePrincipal.setContentPane(matController.getPanelMat());
+			break;
+		case VER_WISH:
+			WishPanel panelWish = new WishPanel();
+			WishController wishController = new WishController(panelWish);
+			wishController.crearPanel();
+			framePrincipal.setContentPane(wishController.getPanelWish());
 			break;
 		default:
 			break;

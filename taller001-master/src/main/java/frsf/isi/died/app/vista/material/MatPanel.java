@@ -64,7 +64,6 @@ public class MatPanel extends JPanel{
 		videoTableModel = new VideoTableModel();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void construir() {
 		
 		GridBagConstraints gridConst= new GridBagConstraints();
@@ -484,11 +483,15 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		
 		btnWishlist = new JButton("Agregar a Wishlist");
 		btnWishlist.addActionListener(e->{
+			try {
 			if(this.libro.isSelected()) {
 				this.controller.addWishlist(libroTableModel.getLibros().get(tabla.getSelectedRow()));
 			}
 			else {
 				this.controller.addWishlist1(videoTableModel.getVideos().get(tabla.getSelectedRow()));
+			}
+		}catch(Exception ex) {
+		    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		gridConst.gridx=8;

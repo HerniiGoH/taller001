@@ -23,8 +23,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	private static Grafo<MaterialCapacitacion> GRAFO_MATERIAL  = new Grafo<MaterialCapacitacion>();
 	private static Integer SECUENCIA_ID=0;
 	private static Biblioteca biblioteca = new BibliotecaABB();
-	private static PriorityQueue<Libro> wishlistLibro = new PriorityQueue();
-	private static PriorityQueue<Video> wishlistVideo = new PriorityQueue();
+	private static Queue<Libro> wishlistLibro = new PriorityQueue(MaterialCapacitacion.comparador);
+	private static Queue<Video> wishlistVideo = new PriorityQueue(MaterialCapacitacion.comparador);
 	
 	private CsvDatasource dataSource;
 	
@@ -36,6 +36,13 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		List<MaterialCapacitacion> aux = GRAFO_MATERIAL.listaVertices();
 		Collections.sort(aux,((BibliotecaABB)biblioteca).getCompID());
 		SECUENCIA_ID = aux.get(aux.size()-1).getId();
+	}
+	
+	public Queue<Libro> getWishlistLibros(){
+		return this.wishlistLibro;
+	}
+	public Queue<Video> getWishlistVideos(){
+		return this.wishlistVideo;
 	}
 
 	private void cargarGrafo() {
@@ -260,7 +267,19 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				e.printStackTrace();
 			}
 		}
-		//this.cargarGrafo();
+		if(this.wishlistLibro.contains(mat)) {
+			List<Libro> aux1 = new ArrayList(this.wishlistLibro);
+			this.wishlistLibro=new PriorityQueue();
+			aux1.remove(mat);
+			for(Libro lib : aux1) {
+				try {
+					this.addWishlist(lib);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void eliminar1(Video mat) {
@@ -280,7 +299,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				e.printStackTrace();
 			}
 		}
-		//this.cargarGrafo();
+		
+		if(this.wishlistVideo.contains(mat)) {
+			List<Video> aux1 = new ArrayList(this.wishlistVideo);
+			this.wishlistVideo=new PriorityQueue();
+			aux1.remove(mat);
+			for(Video vid : aux1) {
+				try {
+					this.addWishlist1(vid);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void actualizar(Libro viejo, Libro nuevo) {
@@ -298,6 +330,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+		if(this.wishlistLibro.contains(viejo)) {
+			List<Libro> aux1 = new ArrayList(this.wishlistLibro);
+			this.wishlistLibro=new PriorityQueue();
+			aux1.remove(viejo);
+			aux1.add(nuevo);
+			for(Libro lib : aux1) {
+				try {
+					this.addWishlist(lib);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -319,24 +365,71 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void addWishlist(Libro lib) {
-		this.wishlistLibro.add(lib);
-		try {
-			this.dataSource.agregarFilaAlFinal("wishlistLibros.csv", lib);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(this.wishlistVideo.contains(viejo)) {
+			List<Video> aux1 = new ArrayList(this.wishlistVideo);
+			this.wishlistVideo=new PriorityQueue();
+			aux1.remove(viejo);
+			aux.add(nuevo);
+			for(Video vid : aux1) {
+				try {
+					this.addWishlist1(vid);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-	public void addWishlist1(Video vid) {
-		this.wishlistVideo.add(vid);
-		try {
-			this.dataSource.agregarFilaAlFinal("wishlistVideos.csv", vid);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+	public void addWishlist(Libro libr) throws Exception {
+		
+		if(!this.wishlistLibro.contains(libr)) {
+			
+			this.wishlistLibro.add(libr);
+			Queue<Libro> aux = new PriorityQueue(this.wishlistLibro);
+		
+			try {
+				this.dataSource.agregarFilaAlPrincipio("wishlistLibros.csv", aux.poll());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			while(!aux.isEmpty()) {
+				try {
+					this.dataSource.agregarFilaAlFinal("wishlistLibros.csv", aux.poll());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			throw new Exception("Material ya se encuentra en la wishlist");
+		}
+	}
+	public void addWishlist1(Video vide) throws Exception {
+		if(!this.wishlistVideo.contains(vide)) {
+			
+			this.wishlistVideo.add(vide);
+			Queue<Video> aux = new PriorityQueue(this.wishlistVideo);
+	
+			try {
+				this.dataSource.agregarFilaAlPrincipio("wishlistVideos.csv", aux.poll());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			while(!aux.isEmpty()) {
+				try {
+					this.dataSource.agregarFilaAlFinal("wishlistVideos.csv", aux.poll());
+				} catch (IOException e) {
+				// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			throw new Exception("Material ya se encuentra en la wishlist");
 		}
 	}
 

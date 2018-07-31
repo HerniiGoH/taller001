@@ -223,11 +223,11 @@ public class MatController {
 		((MaterialCapacitacionDaoDefault) materialDAO).actualizar1(viejo, nuevo);
 	}
 	
-	public void addWishlist(Libro lib) {
+	public void addWishlist(Libro lib) throws Exception {
 		((MaterialCapacitacionDaoDefault) materialDAO).addWishlist(lib);
 	}
 	
-	public void addWishlist1(Video vid) {
+	public void addWishlist1(Video vid) throws Exception {
 		((MaterialCapacitacionDaoDefault) materialDAO).addWishlist1(vid);
 	}
 	
