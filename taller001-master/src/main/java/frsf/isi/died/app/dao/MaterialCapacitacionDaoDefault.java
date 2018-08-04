@@ -34,8 +34,10 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			cargarGrafo();
 		}
 		List<MaterialCapacitacion> aux = GRAFO_MATERIAL.listaVertices();
-		Collections.sort(aux,((BibliotecaABB)biblioteca).getCompID());
-		SECUENCIA_ID = aux.get(aux.size()-1).getId();
+		if(!aux.isEmpty()) {
+			Collections.sort(aux,((BibliotecaABB)biblioteca).getCompID());
+			SECUENCIA_ID = aux.get(aux.size()-1).getId();
+			}
 	}
 	
 	public Queue<Libro> getWishlistLibros(){
@@ -157,11 +159,11 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	}
 	
 	@Override
-	public List<MaterialCapacitacion> findByTema(String titulo) {
+	public List<MaterialCapacitacion> findByTema(String tema) {
 		List<MaterialCapacitacion> res = new ArrayList();
-		/*for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
-			if(mat.getTitulo().equals(titulo)) res.add(mat);
-		}*/
+		for(MaterialCapacitacion mat : GRAFO_MATERIAL.listaVertices()) {
+			if(mat.getTema().toLowerCase().contains(tema.toLowerCase())) res.add(mat);
+		}
 		return res;
 	}
 	

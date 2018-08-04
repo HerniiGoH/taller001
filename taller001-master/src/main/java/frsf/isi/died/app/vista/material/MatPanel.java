@@ -52,6 +52,8 @@ public class MatPanel extends JPanel{
 	private JButton btnEliminar;
 	private JButton btnWishlist;
 	private JDialog emergente;
+	private JButton btnRelaciones;
+	private JButton btnArbol;
 
 	private LibroTableModel libroTableModel;
 	private VideoTableModel videoTableModel;
@@ -497,12 +499,20 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		gridConst.gridx=8;
 		this.add(btnWishlist, gridConst);
 		
+		btnRelaciones = new JButton("Asignar Relaciones");
+		gridConst.gridx = 9;
+		this.add(btnRelaciones,gridConst);
+		
+		btnArbol = new JButton("Agregar Datos");
+		gridConst.gridx = 10;
+		this.add(btnArbol,gridConst);
+		
 		tabla = new JTable(this.libroTableModel);
 		tabla.setFillsViewportHeight(true);
 		
 		scrollPane = new JScrollPane(tabla);
 		gridConst.gridx=0;
-		gridConst.gridwidth=10;	
+		gridConst.gridwidth=11;	
 		gridConst.gridy=7;
 		gridConst.weighty=1.0;
 		gridConst.weightx=1.0;

@@ -132,7 +132,7 @@ public class Libro extends MaterialCapacitacion {
 	public List<String> asCsvRow() {
 		List<String> lista = new ArrayList<String>();
 		lista.add(this.id+"");
-		lista.add(this.tema.toString());
+		lista.add(this.titulo.toString());
 		lista.add(this.costo.toString());
 		lista.add(this.paginas.toString());
 		lista.add(this.precioCompra.toString());
@@ -140,7 +140,8 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.calificacion.toString());
 		lista.add(this.cantCalif.toString());
 		lista.add(this.relevancia.toString());
-		lista.add(this.titulo.toString());
+		lista.add(this.tema.toString());
+		
 		return lista;
 	}
 
@@ -160,6 +161,7 @@ public class Libro extends MaterialCapacitacion {
 		this.calificacion = Integer.valueOf(datos.get(6));
 		this.cantCalif = Integer.valueOf(datos.get(7));
 		this.relevancia = Relevancia.valueOf(datos.get(8));
+		this.tema = datos.get(9);
 		
 	}
 	

@@ -9,7 +9,7 @@ import frsf.isi.died.tp.modelo.productos.Video;
 public class VideoTableModel  extends AbstractTableModel {
 
 	private List<Video> videos;
-	private String[] columnas = {"ID","Titulo","Precio Compra","Costo Por Segundo","Duracion","Precio Suscripcion","Fecha de publicacion", "Calificacion", "Relevancia"};
+	private String[] columnas = {"ID","Titulo","Tema","Precio Compra","Costo Por Segundo","Duracion","Precio Suscripcion","Fecha de publicacion", "Calificacion", "Relevancia"};
 	
 	
 	@Override
@@ -46,24 +46,27 @@ public class VideoTableModel  extends AbstractTableModel {
 			valor = this.videos.get(rowIndex).getTitulo();
 			break;
 		case 2:
-			valor = this.videos.get(rowIndex).getCosto();
+			valor = this.videos.get(rowIndex).getTema();
 			break;
 		case 3:
-			valor = this.videos.get(rowIndex).costoPorSeg;
+			valor = this.videos.get(rowIndex).getCosto();
 			break;
 		case 4:
-			valor = this.videos.get(rowIndex).duracionVideo;
+			valor = this.videos.get(rowIndex).costoPorSeg;
 			break;
 		case 5:
-			valor = this.videos.get(rowIndex).precio();
+			valor = this.videos.get(rowIndex).duracionVideo;
 			break;
 		case 6:
-			valor = this.videos.get(rowIndex).getFecha();
+			valor = this.videos.get(rowIndex).precio();
 			break;
 		case 7:
-			valor = this.videos.get(rowIndex).getCalificacion();
+			valor = this.videos.get(rowIndex).getFecha();
 			break;
 		case 8:
+			valor = this.videos.get(rowIndex).getCalificacion();
+			break;
+		case 9:
 			valor = this.videos.get(rowIndex).getRelevancia();
 			break;
 		default:

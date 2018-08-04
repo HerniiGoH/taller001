@@ -123,5 +123,6 @@ public class Video extends MaterialCapacitacion {
 		this.calificacion = Integer.valueOf(datos.get(5));
 		this.cantCalif = Integer.valueOf(datos.get(6));
 		this.relevancia = Relevancia.valueOf(datos.get(7));
+		this.tema = datos.get(8);
 	}
 }
