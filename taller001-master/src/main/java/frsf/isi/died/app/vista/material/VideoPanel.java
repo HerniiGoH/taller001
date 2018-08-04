@@ -38,6 +38,8 @@ public class VideoPanel extends JPanel{
 	private JTextField txtFecha;
 	private JLabel lblRelevancia;
 	private JComboBox btnRelevancia;
+	private JLabel lblTema;
+	private JTextField txtTema;
 
 	private VideoTableModel tableModel;
 
@@ -63,6 +65,18 @@ public class VideoPanel extends JPanel{
 		gridConst.gridwidth=6;
 		this.add(txtTitulo, gridConst);
 		
+		lblTema = new JLabel("Tema: ");
+		gridConst.gridx=7;
+		gridConst.gridwidth=1;
+		gridConst.anchor=GridBagConstraints.LINE_END;
+		this.add(lblTema, gridConst);
+		
+		txtTema = new JTextField();
+		txtTema.setColumns(8);
+		gridConst.gridx = 8;
+		gridConst.anchor=GridBagConstraints.LINE_START;
+		this.add(txtTema, gridConst);
+		
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener( e ->{
@@ -78,7 +92,8 @@ public class VideoPanel extends JPanel{
 				else {
 					throw new Exception("Fecha invalida");
 				}
-				controller.agregarvideo(txtTitulo.getText(), costo, duracion,fecha,(Relevancia) btnRelevancia.getSelectedItem());
+				String tema = txtTema.getText();
+				controller.agregarvideo(txtTitulo.getText(), costo, duracion,fecha,(Relevancia) btnRelevancia.getSelectedItem(),tema);
 				txtTitulo.setText("");
 				txtCosto.setText("");
 				txtDuracion.setText("");
@@ -90,7 +105,7 @@ public class VideoPanel extends JPanel{
 		gridConst.gridwidth=1;
 		gridConst.weightx=1.0;
 		gridConst.anchor = GridBagConstraints.LINE_START;
-		gridConst.gridx=8;
+		gridConst.gridx=9;
 		this.add(btnAgregar, gridConst);
 		
 		
@@ -138,7 +153,7 @@ public class VideoPanel extends JPanel{
 			txtCosto.setText("");
 			txtDuracion.setText("");
 		});
-		gridConst.gridx=8;
+		gridConst.gridx=9;
 		gridConst.weightx=1.0;
 		gridConst.anchor = GridBagConstraints.LINE_START;
 		this.add(btnCancelar, gridConst);
@@ -148,7 +163,7 @@ public class VideoPanel extends JPanel{
 		scrollPane= new JScrollPane(tabla);
 		
 		gridConst.gridx=0;
-		gridConst.gridwidth=9;	
+		gridConst.gridwidth=10;	
 		gridConst.gridy=2;
 		gridConst.weighty=1.0;
 		gridConst.weightx=1.0;

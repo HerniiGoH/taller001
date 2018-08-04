@@ -19,8 +19,8 @@ public class VideoController {
 	}
 
 	
-	public void agregarvideo(String titulo,Double costo, Integer duracionVideo, Date fecha, Relevancia rele) {	
-		Video l = new Video(0,titulo, costo, duracionVideo, fecha, rele);
+	public void agregarvideo(String titulo,Double costo, Integer duracionVideo, Date fecha, Relevancia rele,String tema) {	
+		Video l = new Video(0,titulo, costo, duracionVideo, fecha, rele,tema);
 		materialDAO .agregarVideo(l);
 		this.panelVideo.setListaVideos(materialDAO.listaVideos(),true);
 	}

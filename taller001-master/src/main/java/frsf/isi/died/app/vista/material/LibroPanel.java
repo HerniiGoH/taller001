@@ -38,6 +38,8 @@ public class LibroPanel extends JPanel{
 	private JTextField txtFecha;
 	private JLabel lblRelevancia;
 	private JComboBox btnRelevancia;
+	private JLabel lblTema;
+	private JTextField txtTema;
 
 	private LibroTableModel tableModel;
 
@@ -62,6 +64,18 @@ public class LibroPanel extends JPanel{
 		gridConst.gridwidth=6;
 		this.add(txtTitulo, gridConst);
 		
+		lblTema = new JLabel("Tema: ");
+		gridConst.gridx=7;
+		gridConst.gridwidth=1;
+		gridConst.anchor=GridBagConstraints.LINE_END;
+		this.add(lblTema, gridConst);
+		
+		txtTema = new JTextField();
+		txtTema.setColumns(8);
+		gridConst.gridx = 8;
+		gridConst.anchor=GridBagConstraints.LINE_START;
+		this.add(txtTema, gridConst);
+		
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener( e ->{
@@ -77,7 +91,8 @@ public class LibroPanel extends JPanel{
 				else {
 					throw new Exception("Fecha invalida");
 				}
-				controller.agregarLibro(txtTitulo.getText(), costo, precio, paginas, fecha, (Relevancia) btnRelevancia.getSelectedItem());
+				String tema = txtTema.getText();
+				controller.agregarLibro(txtTitulo.getText(), costo, precio, paginas, fecha, (Relevancia) btnRelevancia.getSelectedItem(),tema);
 				txtTitulo.setText("");
 				txtCosto.setText("");
 				txtPrecioCompra.setText("");

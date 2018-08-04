@@ -19,8 +19,8 @@ public class LibroController {
 	}
 
 	
-	public void agregarLibro(String titulo,Double costo,Double precio,Integer paginas, Date fecha, Relevancia rele) {	
-		Libro l = new Libro(0,titulo, costo, precio, paginas,fecha,rele) ;
+	public void agregarLibro(String titulo,Double costo,Double precio,Integer paginas, Date fecha, Relevancia rele, String tema) {	
+		Libro l = new Libro(0,titulo, costo, precio, paginas,fecha,rele,tema) ;
 		materialDAO .agregarLibro(l);
 		this.panelLibro.setListaLibros(materialDAO.listaLibros(),true);
 	}

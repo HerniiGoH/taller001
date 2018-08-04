@@ -53,9 +53,10 @@ public class Video extends MaterialCapacitacion {
 		this.duracionVideo = duracion;
 	}
 	
-	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha,Relevancia rele) {
+	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha,Relevancia rele,String tema) {
 		super(id,titulo,costo,fecha,rele);
 		this.duracionVideo = duracion;
+		this.tema=tema;
 	}
 	
 	@Override
@@ -102,6 +103,7 @@ public class Video extends MaterialCapacitacion {
 		lista.add(this.calificacion.toString());
 		lista.add(this.cantCalif.toString());
 		lista.add(this.relevancia.toString());
+		lista.add(this.tema.toString());
 		return lista;
 	}
 	

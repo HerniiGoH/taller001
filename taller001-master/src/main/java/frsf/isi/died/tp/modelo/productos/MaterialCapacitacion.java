@@ -25,6 +25,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	protected Date fechaPublic;
 	protected Relevancia relevancia;
 	public static Comparator<MaterialCapacitacion> comparador= (mat1,mat2)-> mat1.compareTo(mat2);
+	protected String tema;
 	/**
 	 * @return the id
 	 */
@@ -58,61 +59,6 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 			}
 		}
 	}
-	
-	/*public int compareTo(MaterialCapacitacion mat) {
-		if(this.relevancia.toString().toLowerCase().equals("alta")) {
-			if(mat.getRelevancia().toString().toLowerCase().equals("alta")) {
-				if(this.getCalificacion().equals(mat.getCalificacion())) {
-					return this.precio().compareTo(mat.precio());
-					//return this.precio().intValue() - mat.precio().intValue();
-				}
-				else {
-					return this.getCalificacion().compareTo(mat.getCalificacion());
-					//return this.getCalificacion().intValue() - mat.getCalificacion().intValue();
-				}
-			}
-			else {
-				return 1;
-			}
-		}
-		else {
-			if(mat.getRelevancia().toString().toLowerCase().equals("alta")) {
-				return -1;
-			}
-			else {
-				if(this.relevancia.toString().toLowerCase().equals("media")) {
-					if(mat.getRelevancia().toString().toLowerCase().equals("media")){
-						if(this.getCalificacion().equals(mat.getCalificacion())) {
-							return this.precio().compareTo(mat.precio());
-							//return this.precio().intValue() - mat.precio().intValue();
-						}
-						else {
-							return this.getCalificacion().compareTo(mat.getCalificacion());
-							//return this.getCalificacion().intValue() - mat.getCalificacion().intValue();
-						}
-					}
-					else {
-						return 1;
-					}
-				}
-				else {
-					if(mat.getRelevancia().toString().toLowerCase().equals("media")) {
-						return -1;
-					}
-					else {
-						if(this.getCalificacion().equals(mat.getCalificacion())) {
-							return this.precio().compareTo(mat.precio());
-							//return this.precio().intValue() - mat.precio().intValue();
-						}
-						else {
-							return this.getCalificacion().compareTo(mat.getCalificacion());
-							//return this.getCalificacion().intValue() - mat.getCalificacion().intValue();
-						}
-					}
-				}
-			}			
-		}
-	}*/
 
 	@Override
 	public final Double valor() {
@@ -127,6 +73,14 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 */
 	public String getTitulo() {
 		return titulo;
+	}
+	
+	public String getTema() {
+		return this.tema;
+	}
+	
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 	
 	public Integer getCalificacion() {
