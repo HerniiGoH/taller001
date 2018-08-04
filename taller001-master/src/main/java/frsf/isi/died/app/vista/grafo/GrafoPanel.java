@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -42,19 +43,29 @@ public class GrafoPanel extends JPanel {
     private List<AristaView> aristas;
 
     private AristaView auxiliar;
+    
+    private Random rand;
 
     public GrafoPanel() {
         this.framePadre = (JFrame) this.getParent();
         
         this.vertices = new ArrayList<>();
         this.aristas = new ArrayList<>();
-
+        
+        rand = new Random();
         
         this.colaColores = new LinkedList<Color>();
         this.colaColores.add(Color.RED);
         this.colaColores.add(Color.BLUE);
         this.colaColores.add(Color.ORANGE);
         this.colaColores.add(Color.CYAN);
+        this.colaColores.add(Color.GREEN);
+        this.colaColores.add(Color.MAGENTA);
+        this.colaColores.add(Color.PINK);
+        
+        /*Color aux = colaColores.remove();
+        controller.crearVertice(rand.nextInt(50), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
+        colaColores.add(aux);*/
 
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {

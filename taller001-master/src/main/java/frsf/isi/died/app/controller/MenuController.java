@@ -47,11 +47,10 @@ public class MenuController {
 			GrafoController grfController = new GrafoController(grafoPanel,controlPanel);
 			panel.add(controlPanel , BorderLayout.PAGE_START);
 			panel.add(grafoPanel , BorderLayout.CENTER);
-			
 			framePrincipal.setContentPane(panel);
 			break;
 		case BSQ_MAT:
-			MatPanel panelMat = new MatPanel();
+			MatPanel panelMat = new MatPanel(this);
 			MatController matController = new MatController(panelMat);
 			matController.crearPanel();
 			framePrincipal.setContentPane(matController.getPanelMat());

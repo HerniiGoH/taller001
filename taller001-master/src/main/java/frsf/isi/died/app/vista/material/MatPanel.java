@@ -22,8 +22,10 @@ import javax.swing.*;
 
 import frsf.isi.died.app.controller.Criterios;
 import frsf.isi.died.app.controller.MatController;
+import frsf.isi.died.app.controller.MenuController;
 import frsf.isi.died.app.controller.Ordenamiento;
 import frsf.isi.died.app.controller.Relevancia;
+import frsf.isi.died.app.controller.TiposAcciones;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -59,11 +61,13 @@ public class MatPanel extends JPanel{
 	private VideoTableModel videoTableModel;
 
 	private MatController controller;
+	private MenuController menu;
 	
-	public MatPanel() {
+	public MatPanel(MenuController menu) {
 		this.setLayout(new GridBagLayout());
 		libroTableModel = new LibroTableModel();
 		videoTableModel = new VideoTableModel();
+		this.menu = menu;
 	}
 	
 	public void construir() {
@@ -500,6 +504,9 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		this.add(btnWishlist, gridConst);
 		
 		btnRelaciones = new JButton("Asignar Relaciones");
+		btnRelaciones.addActionListener(e->{
+			this.menu.showView(TiposAcciones.VER_GRAFO);
+		});
 		gridConst.gridx = 9;
 		this.add(btnRelaciones,gridConst);
 		
