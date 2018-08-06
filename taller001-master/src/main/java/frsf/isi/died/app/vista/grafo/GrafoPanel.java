@@ -36,15 +36,14 @@ import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 public class GrafoPanel extends JPanel {
 
     private JFrame framePadre;
-    private Queue<Color> colaColores;
+    private List<Color> colaColores;
     private GrafoController controller;
 
     private List<VerticeView> vertices;
     private List<AristaView> aristas;
+    private List<MaterialCapacitacion> mates;
 
     private AristaView auxiliar;
-    
-    private Random rand;
 
     public GrafoPanel() {
         this.framePadre = (JFrame) this.getParent();
@@ -52,28 +51,21 @@ public class GrafoPanel extends JPanel {
         this.vertices = new ArrayList<>();
         this.aristas = new ArrayList<>();
         
-        rand = new Random();
-        
-        this.colaColores = new LinkedList<Color>();
+        this.colaColores = new ArrayList<Color>();
         this.colaColores.add(Color.RED);
         this.colaColores.add(Color.BLUE);
-        this.colaColores.add(Color.ORANGE);
-        this.colaColores.add(Color.CYAN);
-        this.colaColores.add(Color.GREEN);
-        this.colaColores.add(Color.MAGENTA);
-        this.colaColores.add(Color.PINK);
         
-        /*Color aux = colaColores.remove();
-        controller.crearVertice(rand.nextInt(50), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
-        colaColores.add(aux);*/
-
+        mates = new ArrayList();
+                
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
-                    Object[] mats = controller.listaVertices().toArray();
+                    List<MaterialCapacitacion> aux = controller.listaVertices();
+                    aux.removeAll(mates);
+                    Object[] mats = aux.toArray();
                     //String text = JOptionPane.showInputDialog(, "ID del nodo");
-                    Object verticeMatSeleccionado= (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
+                    MaterialCapacitacion verticeMatSeleccionado= (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
                             "Que material corresponde con el vertice?",
                             "Agregar Vertice",
                             JOptionPane.QUESTION_MESSAGE, 
@@ -82,11 +74,10 @@ public class GrafoPanel extends JPanel {
                             mats[0]);
 
                     if (verticeMatSeleccionado != null) {
-                        // quito un color de la cola
-                        Color aux = colaColores.remove();
-                        controller.crearVertice(event.getX(), event.getY(), aux,(MaterialCapacitacion) verticeMatSeleccionado);
-                        // pongo el color al final de la cola
-                        colaColores.add(aux);
+                    	if(!mates.contains(verticeMatSeleccionado)) {
+                    		mates.add(verticeMatSeleccionado);
+                    	}
+                        controller.crearVertice(event.getX(), event.getY(), colaColores.get(verticeMatSeleccionado.esLibro().compareTo(false)),verticeMatSeleccionado);
                     }
                 }
             }

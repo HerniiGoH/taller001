@@ -231,5 +231,8 @@ public class MatController {
 		((MaterialCapacitacionDaoDefault) materialDAO).addWishlist1(vid);
 	}
 	
+	public void setTema(String tema) {
+		((MaterialCapacitacionDaoDefault) materialDAO).setTema(tema);
+	}
 	
 }

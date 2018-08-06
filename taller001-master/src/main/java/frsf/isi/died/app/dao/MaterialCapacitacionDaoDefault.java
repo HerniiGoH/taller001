@@ -25,6 +25,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	private static Biblioteca biblioteca = new BibliotecaABB();
 	private static Queue<Libro> wishlistLibro = new PriorityQueue(MaterialCapacitacion.comparador);
 	private static Queue<Video> wishlistVideo = new PriorityQueue(MaterialCapacitacion.comparador);
+	private static String Tema;
 	
 	private CsvDatasource dataSource;
 	
@@ -131,6 +132,16 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		// TODO Auto-generated method stub
 		return GRAFO_MATERIAL.listaVertices();
 	}
+	
+	public List<MaterialCapacitacion> listaMateriales1(){
+		List<MaterialCapacitacion>aux = new ArrayList();
+		for(MaterialCapacitacion mat : this.listaMateriales()) {
+			if(mat.getTema().toLowerCase().equals(Tema.toLowerCase())) {
+				aux.add(mat);
+			}
+		}
+		return aux;
+	}
 
 	@Override
 	public MaterialCapacitacion findById(Integer id) {
@@ -196,17 +207,18 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public void crearCamino(Integer idOrigen, Integer idDestino) {
 		MaterialCapacitacion n1 = this.findById(idOrigen);
 		MaterialCapacitacion n2 = this.findById(idDestino);
-		GRAFO_MATERIAL.conectar(n1, n2);
-		List<String> fila = new ArrayList<>();
-		fila.add(n1.getId()+"");
-		fila.add(n1.getTitulo());
-		fila.add(n2.getId()+"");
-		fila.add(n2.getTitulo());
-		try {
-			dataSource.agregarFilaAlFinal("aristas.csv", fila);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(GRAFO_MATERIAL.conectar(n1, n2)) {
+			List<String> fila = new ArrayList<>();
+			fila.add(n1.getId()+"");
+			fila.add(n1.getTitulo());
+			fila.add(n2.getId()+"");
+			fila.add(n2.getTitulo());
+			try {
+				dataSource.agregarFilaAlFinal("aristas.csv", fila);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -434,6 +446,9 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			throw new Exception("Material ya se encuentra en la wishlist");
 		}
 	}
-
-
+	
+	public void setTema(String tema) {
+		this.Tema = tema;
+	}
+	
 }

@@ -53,6 +53,6 @@ public class GrafoController {
 
 
 	public List<MaterialCapacitacion> listaVertices() {
-		return materialDao.listaMateriales();
+		return ((MaterialCapacitacionDaoDefault)materialDao).listaMateriales1();
 	}
 }

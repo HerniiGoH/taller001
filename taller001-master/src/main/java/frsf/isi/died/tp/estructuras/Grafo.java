@@ -49,8 +49,8 @@ public class Grafo<T> {
 	 * @param n1
 	 * @param n2
 	 */
-	public void conectar(T n1,T n2){
-		this.conectar(getNodo(n1), getNodo(n2), 0.0);
+	public boolean conectar(T n1,T n2){
+		return this.conectar(getNodo(n1), getNodo(n2), 0.0);
 	}
 
         /**
@@ -68,8 +68,8 @@ public class Grafo<T> {
 	 * @param n2
 	 * @param valor
 	 */
-	public void conectar(T n1,T n2,Number valor){
-		this.conectar(getNodo(n1), getNodo(n2), valor);
+	public boolean conectar(T n1,T n2,Number valor){
+		return this.conectar(getNodo(n1), getNodo(n2), valor);
 	}
 
 	/**
@@ -77,8 +77,15 @@ public class Grafo<T> {
 	 * @param nodo2
 	 * @param valor
 	 */
-	public void conectar(Vertice<T> nodo1,Vertice<T> nodo2,Number valor){
-		this.aristas.add(new Arista<T>(nodo1,nodo2,valor));
+	public boolean conectar(Vertice<T> nodo1,Vertice<T> nodo2,Number valor){
+		Arista aux = new Arista<T>(nodo1,nodo2,valor);
+		for(Arista ar : this.aristas) {
+			if(ar.equals(aux)) {
+				return false;
+			}
+		}
+		aristas.add(aux);
+		return true;
 	}
 	
 	/**
@@ -124,6 +131,10 @@ public class Grafo<T> {
 	 */
 	public void imprimirAristas(){
 		System.out.println(this.aristas.toString());
+	}
+	
+	public List<Arista<T>> getAristas(){
+		return this.aristas;
 	}
 
 	public void borrarMat(MaterialCapacitacion mat) {

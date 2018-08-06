@@ -102,6 +102,8 @@ public class MatPanel extends JPanel{
 			this.btnActualizar.setEnabled(false);
 			this.btnEliminar.setEnabled(false);
 			this.btnWishlist.setEnabled(false);
+			this.btnArbol.setEnabled(false);
+			this.btnRelaciones.setEnabled(false);
 		});
 		gridConst.gridx=1;
 		gridConst.gridy=1;
@@ -112,6 +114,8 @@ public class MatPanel extends JPanel{
 			this.btnActualizar.setEnabled(false);
 			this.btnEliminar.setEnabled(false);
 			this.btnWishlist.setEnabled(false);
+			this.btnArbol.setEnabled(false);
+			this.btnRelaciones.setEnabled(false);
 		});
 		gridConst.gridx=2;
 		gridConst.gridy=1;
@@ -275,10 +279,12 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				this.btnActualizar.setEnabled(true);
 				this.btnEliminar.setEnabled(true);
 				this.btnWishlist.setEnabled(true);
+				this.btnArbol.setEnabled(true);
+				this.btnRelaciones.setEnabled(true);
 				this.remove(scrollPane);
 				scrollPane = new JScrollPane(tabla);
 				gridConst.gridx=0;
-				gridConst.gridwidth=10;	
+				gridConst.gridwidth=11;	
 				gridConst.gridy=7;
 				gridConst.weighty=1.0;
 				gridConst.weightx=1.0;
@@ -505,7 +511,17 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		
 		btnRelaciones = new JButton("Asignar Relaciones");
 		btnRelaciones.addActionListener(e->{
-			this.menu.showView(TiposAcciones.VER_GRAFO);
+			try {
+				if(this.libro.isSelected()) {
+					this.controller.setTema(this.libroTableModel.getLibros().get(tabla.getSelectedRow()).getTema());
+				}
+				else {
+					this.controller.setTema(this.videoTableModel.getVideos().get(tabla.getSelectedRow()).getTema());
+				}
+				this.menu.showView(TiposAcciones.VER_GRAFO);
+			}catch(Exception ex2) {
+				JOptionPane.showMessageDialog(this, ex2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		gridConst.gridx = 9;
 		this.add(btnRelaciones,gridConst);
