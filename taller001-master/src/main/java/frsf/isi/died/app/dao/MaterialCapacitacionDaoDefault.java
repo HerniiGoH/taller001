@@ -11,6 +11,7 @@ import java.util.Queue;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
 import frsf.isi.died.app.dao.util.CsvRecord;
+import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.modelo.Biblioteca;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
@@ -449,6 +450,16 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	
 	public void setTema(String tema) {
 		this.Tema = tema;
+	}
+	
+	public List<MaterialCapacitacion> obtenerAristas(){ 
+		List<MaterialCapacitacion> aux2 = new ArrayList();
+		for(MaterialCapacitacion mat : this.listaMateriales1()) {
+			for(MaterialCapacitacion mat1 : this.GRAFO_MATERIAL.getAdyacentes(mat)) {
+				aux2.add(mat); aux2.add(mat1);
+			}
+		}
+		return aux2;
 	}
 	
 }

@@ -42,6 +42,8 @@ public class GrafoPanel extends JPanel {
     private List<VerticeView> vertices;
     private List<AristaView> aristas;
     private List<MaterialCapacitacion> mates;
+    
+    private Random rand=new Random();
 
     private AristaView auxiliar;
 
@@ -56,7 +58,7 @@ public class GrafoPanel extends JPanel {
         this.colaColores.add(Color.BLUE);
         
         mates = new ArrayList();
-                
+              
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2 && !event.isConsumed()) {
@@ -77,7 +79,7 @@ public class GrafoPanel extends JPanel {
                     	if(!mates.contains(verticeMatSeleccionado)) {
                     		mates.add(verticeMatSeleccionado);
                     	}
-                        controller.crearVertice(event.getX(), event.getY(), colaColores.get(verticeMatSeleccionado.esLibro().compareTo(false)),verticeMatSeleccionado);
+                        controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(550)+50, colaColores.get(verticeMatSeleccionado.esLibro().compareTo(false)),verticeMatSeleccionado);
                     }
                 }
             }
@@ -110,6 +112,14 @@ public class GrafoPanel extends JPanel {
     
     public void agregar(VerticeView vert){
         this.vertices.add(vert);
+    }
+    
+    public List<VerticeView> getVertices(){
+    	return this.vertices;
+    }
+    
+    public List<AristaView> getAristas(){
+    	return this.aristas;
     }
 
     public void caminoPintar(List<MaterialCapacitacion> camino){
@@ -185,6 +195,11 @@ public class GrafoPanel extends JPanel {
 
     public void setController(GrafoController controller) {
         this.controller = controller;
+        List<MaterialCapacitacion> aux = controller.listaVertices();
+        for(MaterialCapacitacion mat: aux) {
+        	controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(150)+50, colaColores.get(mat.esLibro().compareTo(false)),mat);
+        }
+        controller.dibujarAristas();
     }
     
     

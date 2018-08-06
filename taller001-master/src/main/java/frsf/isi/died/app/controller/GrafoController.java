@@ -24,11 +24,11 @@ public class GrafoController {
 
 	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl) {
 		this.vistaGrafo = panelGrf;
-		this.vistaGrafo.setController(this);
 		this.vistaControl = panelCtrl;
 		this.vistaControl.setController(this);
 		this.materialDao = new MaterialCapacitacionDaoDefault();
-		this.vistaControl.armarPanel(materialDao.listaMateriales());
+		this.vistaControl.armarPanel(((MaterialCapacitacionDaoDefault) materialDao).listaMateriales1());
+		this.vistaGrafo.setController(this);
 	}
 
 	public void crearVertice(Integer coordenadaX, Integer coordenadaY, Color color, MaterialCapacitacion mc) {
@@ -54,5 +54,30 @@ public class GrafoController {
 
 	public List<MaterialCapacitacion> listaVertices() {
 		return ((MaterialCapacitacionDaoDefault)materialDao).listaMateriales1();
+	}
+	
+	public void dibujarAristas() {
+		int id;
+		AristaView aux = new AristaView();
+		List<MaterialCapacitacion> mats = ((MaterialCapacitacionDaoDefault)materialDao).obtenerAristas();
+		List<VerticeView> vertices = this.vistaGrafo.getVertices();
+		while(!mats.isEmpty()) {
+			id = mats.get(0).getId();
+			for(VerticeView ver : vertices) {
+				if(ver.getId().equals(id)) {
+					aux.setOrigen(ver);
+					//break;
+				}
+			}
+			id = mats.get(1).getId();
+			for(VerticeView ver : vertices) {
+				if(ver.getId().equals(id)) {
+					aux.setDestino(ver);
+					//break;
+				}
+			}
+			this.crearArista(aux);
+			mats.remove(0); mats.remove(0);
+		}
 	}
 }
