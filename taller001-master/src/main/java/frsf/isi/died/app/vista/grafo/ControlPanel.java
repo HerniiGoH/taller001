@@ -8,6 +8,7 @@ package frsf.isi.died.app.vista.grafo;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -32,32 +33,56 @@ public class ControlPanel extends JPanel {
     private GrafoController controller;
     private List<MaterialCapacitacion> listaVertices;
     private JButton btnRepintar;
+    private JButton btnSiguiente;
+    private List<List<MaterialCapacitacion>> caminos;
         
     public void armarPanel( List<MaterialCapacitacion> listaVertices){
+    	this.caminos= new ArrayList();
     	this.listaVertices = listaVertices;
-    	this.btnRepintar = new JButton("Redistribuir");
+    	this.btnRepintar = new JButton("Redistribuir Nodos");
     	btnRepintar.addActionListener(e->{
-    		this.controller.getPanel().repintar();
+    		this.btnSiguiente.setEnabled(false);
+    		this.controller.getPanel().repintar(true);
     	});
     	this.cmbVertice1 = new JComboBox(listaVertices.toArray()); 
         this.cmbVertice2 = new JComboBox(listaVertices.toArray()); 
-        this.txtLongitudCamino = new JTextField(5); 
-        this.btnBuscarCamino = new JButton("Buscar Camino");
+        this.txtLongitudCamino = new JTextField(2);
+        this.btnBuscarCamino = new JButton("Buscar Camino(s)");
+        this.btnSiguiente = new JButton("Siguiente Camino");
+        this.btnSiguiente.addActionListener(e->{
+        	this.controller.getPanel().repintar(false);
+        	this.controller.getPanel().caminoPintar(caminos.remove(0));
+        	if(caminos.isEmpty()) {
+        		this.btnSiguiente.setEnabled(false);
+        	}
+        });
+        this.btnSiguiente.setEnabled(false);
         this.btnBuscarCamino.addActionListener(
-                e -> { 
+                e -> {
+                	this.controller.getPanel().repintar(false);
+                	try {
                     Integer n =Integer.parseInt(txtLongitudCamino.getText());
                     Integer idOrigen = this.listaVertices.get(cmbVertice1.getSelectedIndex()).getId();
                     Integer idDestino= this.listaVertices.get(cmbVertice2.getSelectedIndex()).getId();
-                    controller.buscarCamino(idOrigen,idDestino,n); 
+                    controller.buscarCamino(idOrigen,idDestino,n);
+                    }catch(NumberFormatException ex) {
+                    	Integer idOrigen = this.listaVertices.get(cmbVertice1.getSelectedIndex()).getId();
+                        Integer idDestino= this.listaVertices.get(cmbVertice2.getSelectedIndex()).getId();
+                        this.caminos = controller.buscarCamino(idOrigen,idDestino);
+                        if(!caminos.isEmpty()) {
+                        this.btnSiguiente.setEnabled(true);
+                        }
+                    } 
                 }
         );
         this.add(new JLabel("Vertice Origen"));        
     	this.add(cmbVertice1);
     	this.add(new JLabel("Vertice Destino"));
     	this.add(cmbVertice2);
-    	this.add(new JLabel("Cantidad de saltos"));        
+    	this.add(new JLabel("Cantidad de saltos(Vacio para ver todos)"));        
     	this.add(txtLongitudCamino);        
-    	this.add(btnBuscarCamino);  
+    	this.add(btnBuscarCamino);
+    	this.add(btnSiguiente);
     	this.add(btnRepintar);
     }
 

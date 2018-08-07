@@ -19,6 +19,7 @@ import java.awt.geom.Point2D;
  * @author martdominguez
  */
 public class VerticeView {
+	private Color original;
     private Paint color;
     private Color colorBase;
 
@@ -35,6 +36,7 @@ public class VerticeView {
 
     public VerticeView(Integer coordenadaX, Integer coordenadaY,Color color) {
         this.colorBase = color;
+        this.original = color;
         this.coordenadaX = coordenadaX;
         this.coordenadaY = coordenadaY;
         this.nodo= new Ellipse2D.Double(coordenadaX,coordenadaY,RADIO,RADIO);
@@ -43,6 +45,8 @@ public class VerticeView {
     public void setCoordenadas(Integer x, Integer y) {
     	this.coordenadaX=x;
     	this.coordenadaY=y;
+    	this.color=original;
+    	this.colorBase=original;
     	this.nodo = new Ellipse2D.Double(coordenadaX,coordenadaY,RADIO,RADIO);
     }
 

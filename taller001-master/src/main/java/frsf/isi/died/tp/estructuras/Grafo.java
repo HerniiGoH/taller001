@@ -294,6 +294,40 @@ public class Grafo<T> {
                        
         return resultado;
     }
+    
+    public List<List<T>> buscarCaminos(T o, T d){
+    	Vertice<T> origen = this.getNodo(o);
+		Vertice<T> destino= this.getNodo(d);
+		ArrayList<Vertice<T>> visitados = new ArrayList<Vertice<T>>();
+		visitados.add(this.getNodo(o));
+		List<List<T>> resultado = new ArrayList();
+        this.buscarCaminos(origen, destino, visitados,resultado);
+        return resultado;
+    }
+    
+    public void buscarCaminos(Vertice<T> o, Vertice<T> d, ArrayList<Vertice<T>> visitados, List<List<T>>resultado){
+    	//List<List<T>> resultado = new ArrayList();
+    	ArrayList<Vertice<T>> adyacentes = (ArrayList) this.getAdyacentes(o);
+    	ArrayList<Vertice<T>> visitados2 = new ArrayList();
+    	List<T> aux = new ArrayList();
+    	for(int i=0; i<adyacentes.size(); i++) {
+    		if(d.equals(adyacentes.get(i))) {
+    			visitados2 = new ArrayList<Vertice<T>>(visitados);
+    			visitados2.add(adyacentes.get(i));
+    			for(Vertice<T> v : visitados2) {
+    				aux.add(v.getValor());
+    			}
+    			resultado.add(aux);
+    		}
+    		else {
+    			if(!visitados.contains(adyacentes.get(i))) {
+    				visitados2 = new ArrayList<Vertice<T>>(visitados);
+    				visitados2.add(adyacentes.get(i));
+    				this.buscarCaminos(adyacentes.get(i), d, visitados2,resultado);
+    			}
+    		}
+    	}
+    }
 
 
 }

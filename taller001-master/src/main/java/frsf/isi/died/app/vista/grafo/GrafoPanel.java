@@ -142,9 +142,9 @@ public class GrafoPanel extends JPanel {
     			idDestino = mat.getId();
     			for(AristaView av : this.aristas) {
     				if(av.getOrigen().getId().equals(idOrigen) && av.getDestino().getId().equals(idDestino) ) {
-    	    			av.setColor(Color.RED);
-    	    			av.getOrigen().setColor(Color.BLUE);
-    	    			av.getDestino().setColor(Color.BLUE);
+    	    			av.setColor(Color.YELLOW);
+    	    			av.getOrigen().setColor(Color.YELLOW);
+    	    			av.getDestino().setColor(Color.YELLOW);
     				}
     			}
     			idOrigen = idDestino;
@@ -206,14 +206,21 @@ public class GrafoPanel extends JPanel {
         this.controller = controller;
         List<MaterialCapacitacion> aux = controller.listaVertices();
         for(MaterialCapacitacion mat: aux) {
-        	controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(150)+50, colaColores.get(mat.esLibro().compareTo(false)),mat);
+        	controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(250)+150, colaColores.get(mat.esLibro().compareTo(false)),mat);
         }
         controller.dibujarAristas();
     }
     
-    public void repintar() {
-    	for(VerticeView v : vertices) {
-    		v.setCoordenadas(rand.nextInt(650)+350,rand.nextInt(150)+50);
+    public void repintar(boolean b) {
+    	if(b) {
+    		for(VerticeView v : vertices) {
+    			v.setCoordenadas(rand.nextInt(650)+350,rand.nextInt(150)+50);
+    		}
+    	}
+    	else {
+    		for(VerticeView v : vertices) {
+    			v.setCoordenadas(v.getCoordenadaX(),v.getCoordenadaY());
+    		}
     	}
     	aristas.clear();
     	controller.dibujarAristas();
