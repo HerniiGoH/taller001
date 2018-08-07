@@ -69,7 +69,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			MaterialCapacitacion n2 = this.findById(Integer.valueOf(filaArista.get(2)));
 			GRAFO_MATERIAL.conectar(n1, n2);
 		}
-		
 		libros = dataSource.readFile("wishlistLibros.csv");
 		for(List<String> filaLibro : libros) {
 			Libro aux = new Libro();

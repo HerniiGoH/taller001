@@ -1,6 +1,7 @@
 package frsf.isi.died.app.controller;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,26 +59,31 @@ public class GrafoController {
 	
 	public void dibujarAristas() {
 		int id;
-		AristaView aux = new AristaView();
-		List<MaterialCapacitacion> mats = ((MaterialCapacitacionDaoDefault)materialDao).obtenerAristas();
-		List<VerticeView> vertices = this.vistaGrafo.getVertices();
+		VerticeView v,v1;
+		v = v1 = new VerticeView();
+		List<MaterialCapacitacion> mats = new ArrayList(((MaterialCapacitacionDaoDefault)materialDao).obtenerAristas());
+		List<VerticeView> vertices = new ArrayList(this.vistaGrafo.getVertices());
 		while(!mats.isEmpty()) {
-			id = mats.get(0).getId();
+			id = mats.remove(0).getId();
 			for(VerticeView ver : vertices) {
 				if(ver.getId().equals(id)) {
-					aux.setOrigen(ver);
-					//break;
+					v = (ver);
+					break;
 				}
 			}
-			id = mats.get(1).getId();
-			for(VerticeView ver : vertices) {
-				if(ver.getId().equals(id)) {
-					aux.setDestino(ver);
-					//break;
+			id = mats.remove(0).getId();
+			for(VerticeView ver1 : vertices) {
+				if(ver1.getId().equals(id)) {
+					v1 = (ver1);
+					break;
 				}
 			}
-			this.crearArista(aux);
-			mats.remove(0); mats.remove(0);
+			this.crearArista(new AristaView(v,v1));
+			//mats.remove(0); mats.remove(0);
 		}
+	}
+	
+	public GrafoPanel getPanel() {
+		return this.vistaGrafo;
 	}
 }

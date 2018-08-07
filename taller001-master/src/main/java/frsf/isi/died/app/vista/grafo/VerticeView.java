@@ -39,13 +39,19 @@ public class VerticeView {
         this.coordenadaY = coordenadaY;
         this.nodo= new Ellipse2D.Double(coordenadaX,coordenadaY,RADIO,RADIO);
     }
+    
+    public void setCoordenadas(Integer x, Integer y) {
+    	this.coordenadaX=x;
+    	this.coordenadaY=y;
+    	this.nodo = new Ellipse2D.Double(coordenadaX,coordenadaY,RADIO,RADIO);
+    }
 
     public boolean pertenece(Point2D p){
         return this.nodo.contains(p);
     }
 
     public Paint getColor() {
-        if(color==null) color = new GradientPaint(coordenadaX,coordenadaY,colorBase,coordenadaX+RADIO, coordenadaY+RADIO,Color.WHITE);
+        if(color==null) color = new GradientPaint(coordenadaX,coordenadaY,colorBase,coordenadaX+RADIO, coordenadaY+RADIO,colorBase);
         return color;
     }
 

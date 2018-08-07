@@ -7,6 +7,7 @@ package frsf.isi.died.app.vista.grafo;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -82,6 +83,14 @@ public class GrafoPanel extends JPanel {
                         controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(550)+50, colaColores.get(verticeMatSeleccionado.esLibro().compareTo(false)),verticeMatSeleccionado);
                     }
                 }
+                /*else {
+                	if(event.getClickCount()==1 && !event.isConsumed()) {
+                		event.consume();
+                		for(AristaView a : aristas) {
+                			a.setColor(new GradientPaint(a.getOrigen().getCoordenadaX() + 10,a.getOrigen().getCoordenadaY() + 10,Color.ORANGE,a.getDestino().getCoordenadaX() + 10, a.getDestino().getCoordenadaY() + 10,Color.GREEN));
+                		}
+                	}
+                }*/
             }
 
             public void mouseReleased(MouseEvent event) {
@@ -200,6 +209,14 @@ public class GrafoPanel extends JPanel {
         	controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(150)+50, colaColores.get(mat.esLibro().compareTo(false)),mat);
         }
         controller.dibujarAristas();
+    }
+    
+    public void repintar() {
+    	for(VerticeView v : vertices) {
+    		v.setCoordenadas(rand.nextInt(650)+350,rand.nextInt(150)+50);
+    	}
+    	aristas.clear();
+    	controller.dibujarAristas();
     }
     
     

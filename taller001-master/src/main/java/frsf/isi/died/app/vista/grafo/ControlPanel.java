@@ -31,9 +31,14 @@ public class ControlPanel extends JPanel {
     private JButton btnBuscarCamino; 
     private GrafoController controller;
     private List<MaterialCapacitacion> listaVertices;
+    private JButton btnRepintar;
         
     public void armarPanel( List<MaterialCapacitacion> listaVertices){
     	this.listaVertices = listaVertices;
+    	this.btnRepintar = new JButton("Redistribuir");
+    	btnRepintar.addActionListener(e->{
+    		this.controller.getPanel().repintar();
+    	});
     	this.cmbVertice1 = new JComboBox(listaVertices.toArray()); 
         this.cmbVertice2 = new JComboBox(listaVertices.toArray()); 
         this.txtLongitudCamino = new JTextField(5); 
@@ -52,7 +57,8 @@ public class ControlPanel extends JPanel {
     	this.add(cmbVertice2);
     	this.add(new JLabel("Cantidad de saltos"));        
     	this.add(txtLongitudCamino);        
-    	this.add(btnBuscarCamino);        
+    	this.add(btnBuscarCamino);  
+    	this.add(btnRepintar);
     }
 
     public GrafoController getController() {
