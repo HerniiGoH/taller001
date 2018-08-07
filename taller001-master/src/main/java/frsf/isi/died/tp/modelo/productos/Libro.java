@@ -49,13 +49,13 @@ public class Libro extends MaterialCapacitacion {
 	 * @param paginas cantidad de paginas del libro
 	 */
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fecha) {
-		super(id, titulo, costo, fecha);
+		super(id, titulo, costo, fecha,0.0);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
 	
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Date fecha,Relevancia rele, String tema) {
-		super(id, titulo, costo, fecha,rele);
+		super(id, titulo, costo, fecha,rele,0.0);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 		this.tema = tema;
@@ -116,7 +116,9 @@ public class Libro extends MaterialCapacitacion {
 	 */
 	@Override
 	public Double precio() {
-		return this.getCosto()+(this.precioCompra*(1+((this.paginas/150)*0.03)));
+		Double x = this.getCosto()+(this.precioCompra*(1+((this.paginas/150)*0.03)));
+		x=Double.valueOf(Math.round(x * 100d) / 100d);
+		return x;
 	}
 	
 	@Override
@@ -141,6 +143,7 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.cantCalif.toString());
 		lista.add(this.relevancia.toString());
 		lista.add(this.tema.toString());
+		lista.add(this.PageRanking.toString());
 		
 		return lista;
 	}
@@ -162,6 +165,7 @@ public class Libro extends MaterialCapacitacion {
 		this.cantCalif = Integer.valueOf(datos.get(7));
 		this.relevancia = Relevancia.valueOf(datos.get(8));
 		this.tema = datos.get(9);
+		this.PageRanking=Double.valueOf(datos.get(10));
 		
 	}
 	

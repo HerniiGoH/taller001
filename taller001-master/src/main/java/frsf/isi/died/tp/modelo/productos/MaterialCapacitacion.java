@@ -26,6 +26,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	protected Relevancia relevancia;
 	public static Comparator<MaterialCapacitacion> comparador= (mat1,mat2)-> mat1.compareTo(mat2);
 	protected String tema;
+	protected Double PageRanking;
 	/**
 	 * @return the id
 	 */
@@ -41,6 +42,14 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public void setPageRank(Double pr) {
+		this.PageRanking=pr;
+	}
+	
+	public Double getPageRank() {
+		return this.PageRanking;
 	}
 	
 	public int compareTo(MaterialCapacitacion mat) {
@@ -132,7 +141,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0,new Date());
+		this(0,"en desarrollo",0.0,new Date(),0.0);
 	}
 
 	/**
@@ -142,7 +151,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * @param titulo
 	 */
 	public MaterialCapacitacion(Integer id, String titulo) {
-		this(id,titulo,0.0, new Date());
+		this(id,titulo,0.0, new Date(),0.0);
 	}
 
 	/**
@@ -151,16 +160,17 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha, Double pr) {
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
 		this.calificacion=1;
 		this.cantCalif=1;
 		this.fechaPublic = fecha;
+		this.PageRanking=pr;
 	}
 	
-	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha, Relevancia rele) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Date fecha, Relevancia rele,Double pr) {
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
@@ -168,6 +178,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 		this.cantCalif=1;
 		this.fechaPublic = fecha;
 		this.relevancia=rele;
+		this.PageRanking=pr;
 	}
 
 	@Override

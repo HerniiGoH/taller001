@@ -49,12 +49,12 @@ public class Video extends MaterialCapacitacion {
 	 * Constructor por todos los parametros
 	 */
 	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha) {
-		super(id,titulo,costo,fecha);
+		super(id,titulo,costo,fecha,0.0);
 		this.duracionVideo = duracion;
 	}
 	
 	public Video(Integer id, String titulo, Double costo, Integer duracion, Date fecha,Relevancia rele,String tema) {
-		super(id,titulo,costo,fecha,rele);
+		super(id,titulo,costo,fecha,rele,0.0);
 		this.duracionVideo = duracion;
 		this.tema=tema;
 	}
@@ -62,7 +62,9 @@ public class Video extends MaterialCapacitacion {
 	@Override
 	public Double precio() {
 		// TODO Auto-generated method stub
-		return this.costo+(this.duracionVideo*this.costoPorSeg);
+		Double x = this.costo+(this.duracionVideo*this.costoPorSeg);
+		x=Double.valueOf(Math.round(x * 100d) / 100d);
+		return x;
 	}
 
 	/* (non-Javadoc)
@@ -104,6 +106,7 @@ public class Video extends MaterialCapacitacion {
 		lista.add(this.cantCalif.toString());
 		lista.add(this.relevancia.toString());
 		lista.add(this.tema.toString());
+		lista.add(this.PageRanking.toString());
 		return lista;
 	}
 	
@@ -124,5 +127,6 @@ public class Video extends MaterialCapacitacion {
 		this.cantCalif = Integer.valueOf(datos.get(6));
 		this.relevancia = Relevancia.valueOf(datos.get(7));
 		this.tema = datos.get(8);
+		this.PageRanking=Double.valueOf(datos.get(9));
 	}
 }
