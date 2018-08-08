@@ -11,6 +11,7 @@ import java.util.Queue;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
 import frsf.isi.died.app.dao.util.CsvRecord;
+import frsf.isi.died.app.vista.arbol.Nodo;
 import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.modelo.Biblioteca;
@@ -27,6 +28,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	private static Queue<Libro> wishlistLibro = new PriorityQueue(MaterialCapacitacion.comparador);
 	private static Queue<Video> wishlistVideo = new PriorityQueue(MaterialCapacitacion.comparador);
 	private static String Tema;
+	private static String Titulo;
 	
 	private CsvDatasource dataSource;
 	
@@ -457,6 +459,14 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		this.Tema = tema;
 	}
 	
+	public void setTitulo(String titulo) {
+		this.Titulo=titulo;
+	}
+	
+	public String getTitulo() {
+		return this.Titulo;
+	}
+	
 	public List<MaterialCapacitacion> obtenerAristas(){ 
 		List<MaterialCapacitacion> aux2 = new ArrayList();
 		for(MaterialCapacitacion mat : this.listaMateriales1()) {
@@ -526,6 +536,54 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		
 		mats.add(mat);
 		return res;
+	}
+
+	@Override
+	public List<String> getCapitulos(String titulo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getSecciones(String titulo, String capitulo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addMetadato(String titulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addResumen(String titulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCapitulo(String titulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCapSeccion(String titulo, String capitulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCapSeccionParrafo(String titulo, String capitulo, String seccion, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCapMetadato(String titulo, String capitulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

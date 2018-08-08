@@ -529,6 +529,15 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 		this.add(btnRelaciones,gridConst);
 		
 		btnArbol = new JButton("Agregar Datos");
+		btnArbol.addActionListener(e->{
+			if(this.libro.isSelected()) {
+				this.controller.setTitulo(this.libroTableModel.getLibros().get(tabla.getSelectedRow()).getTitulo());
+			}
+			else {
+				this.controller.setTitulo(this.videoTableModel.getVideos().get(tabla.getSelectedRow()).getTitulo());
+			}
+			this.menu.showView(TiposAcciones.VER_ARBOL);
+		});
 		gridConst.gridx = 10;
 		this.add(btnArbol,gridConst);
 		

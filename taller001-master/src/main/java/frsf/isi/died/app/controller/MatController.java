@@ -235,4 +235,8 @@ public class MatController {
 		((MaterialCapacitacionDaoDefault) materialDAO).setTema(tema);
 	}
 	
+	public void setTitulo(String titulo) {
+		((MaterialCapacitacionDaoDefault) materialDAO).setTitulo(titulo);
+	}
+	
 }
