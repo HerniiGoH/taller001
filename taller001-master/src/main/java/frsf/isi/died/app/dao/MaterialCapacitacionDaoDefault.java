@@ -460,11 +460,72 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<MaterialCapacitacion> obtenerAristas(){ 
 		List<MaterialCapacitacion> aux2 = new ArrayList();
 		for(MaterialCapacitacion mat : this.listaMateriales1()) {
-			for(MaterialCapacitacion mat1 : this.GRAFO_MATERIAL.getAdyacentes(mat)) {
-				aux2.add(mat); aux2.add(mat1);
+			List<MaterialCapacitacion> ady = this.GRAFO_MATERIAL.getAdyacentes(mat);
+			if(!ady.isEmpty()) {
+				for(MaterialCapacitacion mat1 : ady) {
+					aux2.add(mat); aux2.add(mat1);
+				}
 			}
 		}
 		return aux2;
+	}
+	
+	public void actualizarPR(List<MaterialCapacitacion>mats) {
+		List<MaterialCapacitacion> matsNueva = new ArrayList(mats);
+		List<MaterialCapacitacion> matsAux;
+		Double diferencia = 0.01;
+		boolean fin = false;
+		
+		while(!fin) {
+			
+			fin = true;
+			
+			matsAux = new ArrayList(matsNueva);
+			
+			for(MaterialCapacitacion m: matsNueva) {
+				m.setPageRank(this.calcularPR(m,matsAux));
+			}
+			
+			for(int i=0; i<matsNueva.size(); i++) {
+				if(matsNueva.get(i).getPageRank()-matsAux.get(i).getPageRank() > diferencia) {
+					fin=false; break;
+				}
+			}
+			
+		}
+		
+		for(int i=0; i<mats.size(); i++) {
+			if(mats.get(i).esLibro()) {
+				this.actualizar((Libro)mats.get(i), (Libro)matsNueva.get(i));
+			}
+			else {
+				this.actualizar1((Video)mats.get(i), (Video)matsNueva.get(i));
+			}
+		}
+	}
+	
+	public Double calcularPR(MaterialCapacitacion mat, List<MaterialCapacitacion>mats) {
+		MaterialCapacitacion aux = mat;
+		mats.remove(mat);
+		
+		Double sum = 0.0;
+		
+		for(MaterialCapacitacion m : mats) {
+			List<MaterialCapacitacion> ady = this.GRAFO_MATERIAL.getAdyacentes(m);
+			if(!ady.isEmpty() && ady.contains(mat)) {
+				if(m.getPageRank()==0.0) {
+					sum += 1.0/this.GRAFO_MATERIAL.gradoSalida(m);
+				}
+				else {
+					sum += m.getPageRank()/this.GRAFO_MATERIAL.gradoSalida(m);
+				}
+			}
+		}
+		
+		Double res = 0.5 + 0.5*sum;
+		
+		mats.add(mat);
+		return res;
 	}
 	
 }

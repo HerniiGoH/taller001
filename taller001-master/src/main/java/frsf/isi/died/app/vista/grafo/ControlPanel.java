@@ -51,8 +51,10 @@ public class ControlPanel extends JPanel {
         this.btnSiguiente = new JButton("Siguiente Camino");
         this.btnSiguiente.addActionListener(e->{
         	this.controller.getPanel().repintar(false);
-        	this.controller.getPanel().caminoPintar(caminos.remove(0));
-        	if(caminos.isEmpty()) {
+        	List<MaterialCapacitacion> aux = caminos.remove(0);
+        	this.controller.getPanel().caminoPintar(aux);
+        	caminos.add(aux);
+        	if(caminos.size()==1) {
         		this.btnSiguiente.setEnabled(false);
         	}
         });
@@ -65,11 +67,12 @@ public class ControlPanel extends JPanel {
                     Integer idOrigen = this.listaVertices.get(cmbVertice1.getSelectedIndex()).getId();
                     Integer idDestino= this.listaVertices.get(cmbVertice2.getSelectedIndex()).getId();
                     controller.buscarCamino(idOrigen,idDestino,n);
+                    this.btnSiguiente.setEnabled(false);
                     }catch(NumberFormatException ex) {
                     	Integer idOrigen = this.listaVertices.get(cmbVertice1.getSelectedIndex()).getId();
                         Integer idDestino= this.listaVertices.get(cmbVertice2.getSelectedIndex()).getId();
                         this.caminos = controller.buscarCamino(idOrigen,idDestino);
-                        if(!caminos.isEmpty()) {
+                        if(!caminos.isEmpty() && caminos.size()!=1) {
                         this.btnSiguiente.setEnabled(true);
                         }
                     } 

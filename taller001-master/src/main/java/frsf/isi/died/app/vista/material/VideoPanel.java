@@ -98,6 +98,7 @@ public class VideoPanel extends JPanel{
 				txtCosto.setText("");
 				txtDuracion.setText("");
 				txtFecha.setText("");
+				txtTema.setText("");
 			}catch(Exception ex) {
 			    JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
 			}
@@ -133,7 +134,7 @@ public class VideoPanel extends JPanel{
 		gridConst.gridx=4;
 		this.add(lblFecha,gridConst);
 		
-		txtFecha = new JTextField();
+		txtFecha = new JTextField("dd/mm/aaaa");
 		txtFecha.setColumns(6);
 		gridConst.gridx = 5;
 		this.add(txtFecha, gridConst);
@@ -152,6 +153,7 @@ public class VideoPanel extends JPanel{
 			txtTitulo.setText("");
 			txtCosto.setText("");
 			txtDuracion.setText("");
+			txtTema.setText("");
 		});
 		gridConst.gridx=9;
 		gridConst.weightx=1.0;

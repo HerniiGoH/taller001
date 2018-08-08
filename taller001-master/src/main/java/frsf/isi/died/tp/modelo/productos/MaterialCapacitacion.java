@@ -52,6 +52,10 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 		return this.PageRanking;
 	}
 	
+	public void setFecha(Date fecha) {
+		this.fechaPublic=fecha;
+	}
+	
 	public int compareTo(MaterialCapacitacion mat) {
 		int rele = this.relevancia.compareTo(mat.getRelevancia());
 		int calif = -this.getCalificacion().compareTo(mat.getCalificacion());

@@ -22,13 +22,15 @@ public class GrafoController {
 	private GrafoPanel vistaGrafo;
 	private ControlPanel vistaControl;
 	private MaterialCapacitacionDao materialDao;
+	private List<MaterialCapacitacion> materiales;
 
 	public GrafoController(GrafoPanel panelGrf, ControlPanel panelCtrl) {
 		this.vistaGrafo = panelGrf;
 		this.vistaControl = panelCtrl;
 		this.vistaControl.setController(this);
 		this.materialDao = new MaterialCapacitacionDaoDefault();
-		this.vistaControl.armarPanel(((MaterialCapacitacionDaoDefault) materialDao).listaMateriales1());
+		this.materiales = ((MaterialCapacitacionDaoDefault) materialDao).listaMateriales1();
+		this.vistaControl.armarPanel(new ArrayList(materiales));
 		this.vistaGrafo.setController(this);
 	}
 
@@ -40,8 +42,11 @@ public class GrafoController {
 		this.vistaGrafo.repaint();
 	}
 
-	public void crearArista(AristaView arista) {
+	public void crearArista(AristaView arista, boolean b) {
 		this.materialDao.crearCamino(arista.getOrigen().getId(), arista.getDestino().getId());
+		if(b) {
+			((MaterialCapacitacionDaoDefault) this.materialDao).actualizarPR(this.materiales);
+		}
 		this.vistaGrafo.agregar(arista);
 		this.vistaGrafo.repaint();
 	}
@@ -54,14 +59,16 @@ public class GrafoController {
 	
 	public List<List<MaterialCapacitacion>> buscarCamino(Integer nodo1, Integer nodo2) {
 		List<List<MaterialCapacitacion>> camino = ((MaterialCapacitacionDaoDefault) materialDao).buscarCamino(nodo1, nodo2);
-		this.vistaGrafo.caminoPintar(camino.remove(0));
+		List<MaterialCapacitacion>aux = camino.remove(0);
+		this.vistaGrafo.caminoPintar(aux);
 		this.vistaGrafo.repaint();
+		camino.add(aux);
 		return camino;
 	}
 
 
 	public List<MaterialCapacitacion> listaVertices() {
-		return ((MaterialCapacitacionDaoDefault)materialDao).listaMateriales1();
+		return materiales;
 	}
 	
 	public void dibujarAristas() {
@@ -70,23 +77,25 @@ public class GrafoController {
 		v = v1 = new VerticeView();
 		List<MaterialCapacitacion> mats = new ArrayList(((MaterialCapacitacionDaoDefault)materialDao).obtenerAristas());
 		List<VerticeView> vertices = new ArrayList(this.vistaGrafo.getVertices());
-		while(!mats.isEmpty()) {
-			id = mats.remove(0).getId();
-			for(VerticeView ver : vertices) {
-				if(ver.getId().equals(id)) {
-					v = (ver);
-					break;
+		if(!mats.isEmpty()) {
+			while(!mats.isEmpty()) {
+				id = mats.remove(0).getId();
+				for(VerticeView ver : vertices) {
+					if(ver.getId().equals(id)) {
+						v = (ver);
+						break;
+					}
 				}
-			}
-			id = mats.remove(0).getId();
-			for(VerticeView ver1 : vertices) {
-				if(ver1.getId().equals(id)) {
-					v1 = (ver1);
-					break;
+				id = mats.remove(0).getId();
+				for(VerticeView ver1 : vertices) {
+					if(ver1.getId().equals(id)) {
+						v1 = (ver1);
+						break;
+					}
 				}
-			}
-			this.crearArista(new AristaView(v,v1));
+				this.crearArista(new AristaView(v,v1),false);
 			//mats.remove(0); mats.remove(0);
+			}
 		}
 	}
 	

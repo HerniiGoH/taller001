@@ -1,5 +1,6 @@
 package frsf.isi.died.app.vista.material;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -11,6 +12,7 @@ public class VideoTableModel  extends AbstractTableModel {
 	private List<Video> videos;
 	private String[] columnas = {"ID","Titulo","Tema","Precio Compra","Costo Por Segundo","Duracion","Precio Suscripcion","Fecha de publicacion", "Calificacion", "Relevancia"};
 	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Override
 	public String getColumnName(int indice) {
@@ -61,7 +63,7 @@ public class VideoTableModel  extends AbstractTableModel {
 			valor = this.videos.get(rowIndex).precio();
 			break;
 		case 7:
-			valor = this.videos.get(rowIndex).getFecha();
+			valor = dateFormat.format(this.videos.get(rowIndex).getFecha());
 			break;
 		case 8:
 			valor = this.videos.get(rowIndex).getCalificacion();

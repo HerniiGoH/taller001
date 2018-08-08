@@ -336,12 +336,12 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				gridConst1.gridy = 1;
 				pan.add(lblprecom,gridConst1);
 				
-				JTextField txtprecom = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 2).toString());
+				JTextField txtprecom = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 3).toString());
 				txtprecom.setColumns(5);
 				gridConst1.gridx = 1;
 				pan.add(txtprecom,gridConst1);
 				
-				JTextField txtcostopub = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 3).toString());
+				JTextField txtcostopub = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 4).toString());
 				txtcostopub.setColumns(5);
 				gridConst1.gridx = 3;
 				gridConst1.gridy = 1;
@@ -372,7 +372,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 					txtcostopub.setEnabled(false);
 				}
 				
-				JTextField txtpaginas = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 4).toString());
+				JTextField txtpaginas = new JTextField(this.tabla.getValueAt(this.tabla.getSelectedRow(), 5).toString());
 				txtpaginas.setColumns(5);
 				gridConst1.gridx = 5;
 				gridConst1.gridy = 1;
@@ -383,7 +383,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 				gridConst1.gridy = 1;
 				pan.add(lblfecha,gridConst1);
 				 //this.tabla.getValueAt(this.tabla.getSelectedRow(), 6).toString()
-				JTextField txtfecha = new JTextField(DateFormat.getDateInstance().format(this.tabla.getValueAt(this.tabla.getSelectedRow(), 6)));
+				JTextField txtfecha = new JTextField((String) (this.tabla.getValueAt(this.tabla.getSelectedRow(), 7)));
 				txtfecha.setColumns(6);
 				gridConst1.gridx = 7;
 				pan.add(txtfecha,gridConst1);
@@ -423,6 +423,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 						aux.setPrecioCompra(precio);
 						aux.setPaginas(paginas);
 						aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
+						aux.setFecha(fecha);
 						aux1.add(aux);
 						this.setListaLibros(aux1, false);
 						controller.editarLibro(aux2,aux);
@@ -439,6 +440,7 @@ Ordenamiento[] critOrd = {Ordenamiento.TituloAlfabeticamente, Ordenamiento.Calif
 							aux.setDuracion(paginas);
 							aux.setRelevancia((Relevancia) btnrel.getSelectedItem());
 							aux1.add(aux);
+							aux.setFecha(fecha);
 							this.setListaVideos(aux1, false);
 							controller.editarVideo(aux2,aux);
 						}

@@ -97,7 +97,7 @@ public class GrafoPanel extends JPanel {
                 VerticeView vDestino = clicEnUnNodo(event.getPoint());
                 if (auxiliar!=null && vDestino != null) {
                     auxiliar.setDestino(vDestino);
-                    controller.crearArista(auxiliar);
+                    controller.crearArista(auxiliar,true);
                     auxiliar = null;
                 }
             }
@@ -222,8 +222,10 @@ public class GrafoPanel extends JPanel {
     			v.setCoordenadas(v.getCoordenadaX(),v.getCoordenadaY());
     		}
     	}
-    	aristas.clear();
-    	controller.dibujarAristas();
+    	if(!aristas.isEmpty()) {
+    		aristas.clear();
+    		controller.dibujarAristas();
+    	}
     }
     
     

@@ -98,6 +98,7 @@ public class LibroPanel extends JPanel{
 				txtPrecioCompra.setText("");
 				txtPaginas.setText("");
 				txtFecha.setText("");
+				txtTema.setText("");
 			}catch(Exception ex) {
 			    JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
 			}
@@ -142,7 +143,7 @@ public class LibroPanel extends JPanel{
 		gridConst.gridx=6;
 		this.add(lblFecha,gridConst);
 		
-		txtFecha = new JTextField();
+		txtFecha = new JTextField("dd/mm/aaaa");
 		txtFecha.setColumns(6);
 		gridConst.gridx = 7;
 		this.add(txtFecha, gridConst);
@@ -163,6 +164,7 @@ public class LibroPanel extends JPanel{
 			txtPaginas.setText("");
 			txtPrecioCompra.setText("");
 			txtFecha.setText("");
+			txtTema.setText("");
 		});
 		gridConst.gridx=10;
 		gridConst.weightx=1.0;
