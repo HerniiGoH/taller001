@@ -45,7 +45,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	}
 	
 	public void setPageRank(Double pr) {
-		this.PageRanking=pr;
+		this.PageRanking=Double.valueOf(Math.round(pr * 1000d) / 1000d);;
 	}
 	
 	public Double getPageRank() {
@@ -239,7 +239,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable, Csv
 	@Override
 	public String toString() {
 		
-		String str = "Titulo: "+this.titulo+" ; Precio: "+this.precio();
+		String str = "Titulo: "+this.titulo+" ; Precio: "+this.precio()+" ; PageRank: "+this.getPageRank();
 		
 		return str;
 	}

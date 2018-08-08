@@ -473,7 +473,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public void actualizarPR(List<MaterialCapacitacion>mats) {
 		List<MaterialCapacitacion> matsNueva = new ArrayList(mats);
 		List<MaterialCapacitacion> matsAux;
-		Double diferencia = 0.01;
+		Double diferencia = 0.0001;
 		boolean fin = false;
 		
 		while(!fin) {

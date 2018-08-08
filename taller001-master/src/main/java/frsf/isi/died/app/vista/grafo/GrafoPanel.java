@@ -61,7 +61,7 @@ public class GrafoPanel extends JPanel {
         mates = new ArrayList();
               
         addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent event) {
+           /*public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
                     List<MaterialCapacitacion> aux = controller.listaVertices();
@@ -83,15 +83,7 @@ public class GrafoPanel extends JPanel {
                         controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(550)+50, colaColores.get(verticeMatSeleccionado.esLibro().compareTo(false)),verticeMatSeleccionado);
                     }
                 }
-                /*else {
-                	if(event.getClickCount()==1 && !event.isConsumed()) {
-                		event.consume();
-                		for(AristaView a : aristas) {
-                			a.setColor(new GradientPaint(a.getOrigen().getCoordenadaX() + 10,a.getOrigen().getCoordenadaY() + 10,Color.ORANGE,a.getDestino().getCoordenadaX() + 10, a.getDestino().getCoordenadaY() + 10,Color.GREEN));
-                		}
-                	}
-                }*/
-            }
+            }*/
 
             public void mouseReleased(MouseEvent event) {
                 VerticeView vDestino = clicEnUnNodo(event.getPoint());
@@ -206,7 +198,7 @@ public class GrafoPanel extends JPanel {
         this.controller = controller;
         List<MaterialCapacitacion> aux = controller.listaVertices();
         for(MaterialCapacitacion mat: aux) {
-        	controller.crearVertice(rand.nextInt(650)+350, rand.nextInt(250)+150, colaColores.get(mat.esLibro().compareTo(false)),mat);
+        	controller.crearVertice(rand.nextInt(1050)+150, rand.nextInt(450)+150, colaColores.get(mat.esLibro().compareTo(false)),mat);
         }
         controller.dibujarAristas();
     }
@@ -214,7 +206,7 @@ public class GrafoPanel extends JPanel {
     public void repintar(boolean b) {
     	if(b) {
     		for(VerticeView v : vertices) {
-    			v.setCoordenadas(rand.nextInt(650)+350,rand.nextInt(150)+50);
+    			v.setCoordenadas(rand.nextInt(1050)+150, rand.nextInt(450)+50);
     		}
     	}
     	else {
