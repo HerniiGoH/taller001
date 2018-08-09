@@ -15,16 +15,29 @@ public class ArbolN extends Arbol {
 		
 		raiz = r;
 		
+		switch((TipoArbol)r.getTipo()) {
+		case Titulo:{
+			Nodo n1 = new Nodo("Metadatos",TipoArbol.Metadatos);
+			this.add(n1);
+			Nodo n2 = new Nodo("Resumen", TipoArbol.Resumen);		
+			this.add(n2);
+			break;
+		}
+		case Capitulos:{
+			Nodo n1 = new Nodo("Metadatos",TipoArbol.Metadatos);
+			this.add(n1);
+			break;
+		}
+		default: break;
+		}
+		
+		
+		
 	}
 	
 	public ArbolN(String titulo) {
 		
-		Nodo n = new Nodo(titulo, TipoArbol.Titulo);
-		raiz = n;
-		Nodo n1 = new Nodo("Metadatos",TipoArbol.Metadatos);
-		this.add(n1);
-		Nodo n2 = new Nodo("Resumen", TipoArbol.Resumen);		
-		this.add(n2);
+		
 		
 	}
 
@@ -48,6 +61,10 @@ public class ArbolN extends Arbol {
 	public List<Arbol> getHijos() {
 		return hijos;
 	}
+	
+	public List<Arbol> Hijos() {
+		return hijos;
+	}
 
 
 	public void setHijos(List<Arbol> hijos) {
@@ -57,7 +74,7 @@ public class ArbolN extends Arbol {
 
 	@Override
 	public void add(Nodo nodo) {
-		this.hijos.add(new ArbolN(nodo));
+		this.hijos.add(new ArbolVacio(nodo));
 	}
 
 
@@ -73,7 +90,7 @@ public class ArbolN extends Arbol {
 			return true;
 		} else {
 			for(Arbol aux : hijos) {
-				aux.contiene(unValor);
+				return aux.contiene(unValor);
 			}
 		}
 		return false;
@@ -83,7 +100,7 @@ public class ArbolN extends Arbol {
 
 	@Override
 	public boolean equals(Arbol unArbol) {
-		if(this.raiz == ((ArbolN)unArbol).raiz && this.hijos.equals(unArbol.hijos()))
+		if(!unArbol.esVacio() && this.raiz.getValor().toLowerCase().equals(unArbol.getRaiz().getValor().toLowerCase()) && this.hijos.equals(unArbol.hijos()))
 			return true;
 		else
 			return false;
@@ -103,74 +120,117 @@ public class ArbolN extends Arbol {
 		boolean encontrado = false;
 		if(!n.getTipo().equals(TipoArbol.Autor)) {
 			for(Arbol aux : this.hijos.get(0).hijos()) {
-				if(((ArbolN)aux).raiz.getTipo().equals(n.getTipo())) {
+				if((aux).getRaiz().getTipo().equals(n.getTipo())) {
 					encontrado = true;
 					break;
 				}
 			}
-			if(!encontrado)
-				this.hijos.get(0).add(n);
-		
+			if(!encontrado) {
+				if(this.hijos.get(0).esVacio()) {
+					hijos.add(0, new ArbolN(hijos.remove(0).getRaiz()));
+					this.hijos.get(0).add(n);
+				}
+				else{
+					this.hijos.get(0).add(n);
+				}
+			}
 		}else {
-			this.hijos.get(0).add(n);
+			if(this.hijos.get(0).esVacio()) {
+				hijos.add(0, new ArbolN(hijos.remove(0).getRaiz()));
+				this.hijos.get(0).add(n);
+			}
+			else{
+				this.hijos.get(0).add(n);
+			}
 		}
 
 	}
+	
 	public void addResumen(Nodo n) {
-		this.hijos.get(1).add(n);
+		if(this.hijos.get(1).esVacio()) {
+			hijos.add(1, new ArbolN(hijos.remove(1).getRaiz()));
+			this.hijos.get(1).add(n);
+		}
+		else{
+			this.hijos.get(1).add(n);
+		}
 	}
+	
 	public void addCapitulo(Nodo n) {
 		this.add(n);
-		Nodo nodo = new Nodo("Metadato", TipoArbol.Metadatos);
+		/*Nodo nodo = new Nodo("Metadato", TipoArbol.Metadatos);
 		for(Arbol aux : hijos) {
 			if(((ArbolN)aux).raiz.getValor().toLowerCase().equals(n.getValor().toLowerCase())){
 				aux.add(nodo);
 			}
-		}
+		}*/
 	}
 	public void addCapSeccion (String cap, Nodo n) {
 		
-		for(Arbol aux : hijos) {
-			if(((ArbolN)aux).getRaiz().getValor().toLowerCase().equals(cap.toLowerCase())) {
-				((ArbolN)aux).add(n);
+		for(int i=0; i<hijos.size(); i++) {
+			if((hijos.get(i)).getRaiz().getValor().toLowerCase().equals(cap.toLowerCase())) {
+				if(hijos.get(i).esVacio()) {
+					hijos.add(i, new ArbolN(hijos.remove(i).getRaiz()));
+					hijos.get(i).add(n);
+				}
+				else {
+					hijos.get(i).add(n);
+				}
+				//System.out.println(hijos.get(i).hijos().get(1).getRaiz().getValor());
 			}
 		}
 		
 	}
+	
 	public void addCapSeccionParrafo(String cap,String sec,Nodo n) {
 		
 		for(Arbol aux : hijos) {
-			if(((ArbolN)aux).raiz.getValor().toLowerCase().equals(cap.toLowerCase())) {
+			if((aux).getRaiz().getValor().toLowerCase().equals(cap.toLowerCase())) {
 				
-				for(Arbol aux1 : ((ArbolN)aux).hijos)
-					if(((ArbolN)aux1).raiz.getValor().toLowerCase().equals(sec.toLowerCase())) {
+				for(int i=0; i<aux.hijos().size(); i++) {
+					if((aux.hijos().get(i)).getRaiz().getValor().toLowerCase().equals(sec.toLowerCase())) {
 					
-						((ArbolN)aux1).add(n);
+						if(aux.hijos().get(i).esVacio()) {
+							aux.hijos().add(i, new ArbolN(aux.hijos().remove(i).getRaiz()));
+							aux.hijos().get(i).add(n);
+						}
+						else {
+							aux.hijos().get(i).add(n);
+						}
+						
 						break;
-					
+					}
 				}
 			}
 		}
 	}
+	
 	public void addCapMetadatos (String cap, Nodo n) {
 		
 		boolean encontrado = false;
 		
 		for(Arbol aux : hijos) {
-			if(((ArbolN)aux).raiz.getValor().toLowerCase().equals(cap.toLowerCase())) {
+			if((aux).getRaiz().getValor().toLowerCase().equals(cap.toLowerCase())) {
 				if(n.getTipo().equals(TipoArbol.Palabras_Claves)) {
-					for(Arbol aux1 : ((ArbolN)aux).hijos.get(0).hijos())
-					if(((ArbolN)aux1).raiz.getTipo().equals(TipoArbol.Palabras_Claves)) {
+					for(Arbol aux1 : (aux).hijos().get(0).hijos())
+					if((aux1).getRaiz().getTipo().equals(TipoArbol.Palabras_Claves)) {
 						encontrado = true;
 						break;
 					}
 				}
-					if(!encontrado)
-						((ArbolN)aux).hijos.get(0).add(n);
-			}else {
-				((ArbolN)aux).hijos.get(0).add(n);
+				if(!encontrado) {
+					if((aux).hijos().get(0).esVacio()) {
+						(aux).hijos().add(0, new ArbolN((aux).hijos().remove(0).getRaiz()));
+						(aux).hijos().get(0).add(n);
+					}
+					else{
+						(aux).hijos().get(0).add(n);
+					}
+					(aux).hijos().get(0).add(n);
+				}
 			}
 		}
 	}
+	
 }
 	

@@ -383,7 +383,7 @@ public class ArbolDatosPanel extends JPanel{
 											wrapper3.add(btnAgregarSeccion,gridConst);
 											btnAgregarSeccion.addActionListener(e2 -> {
 												
-												Nodo n1 = new Nodo(txtSeccion.getText(), (TipoArbol)btnElejir.getSelectedItem());
+												Nodo n1 = new Nodo(txtSeccion.getText(), TipoArbol.Seccion);
 												controller.addCapSeccion(titulo, btnNodos.getSelectedItem().toString(),n1);
 												
 											});
@@ -432,8 +432,8 @@ public class ArbolDatosPanel extends JPanel{
 											wrapper3.add(btnAgregar31,gridConst);
 											btnAgregar31.addActionListener(e2 ->{
 												
-												Nodo n = new Nodo(txtParrafo31.getText(), (TipoArbol)btnElejir.getSelectedItem());
-												controller.addCapSeccionParrafo(titulo, btnNodos.getSelectedItem().toString(),btnNodos2.getSelectedItem().toString(),n);
+												Nodo n = new Nodo(txtParrafo31.getText(), TipoArbol.Parrafo);
+												controller.addCapSeccionParrafo(titulo, btnNodos.getSelectedItem().toString(),btnElejir.getSelectedItem().toString(),n);
 												
 											});
 											
@@ -480,7 +480,7 @@ public class ArbolDatosPanel extends JPanel{
 								wrapper2.add(lblSeleccionarNodo,gridConst);
 								
 								List<String> caps = new ArrayList();
-								//caps=controller.getCapitulos(titulo);
+								caps=controller.getCapitulos(titulo);
 								btnNodos = new JComboBox(caps.toArray());
 								gridConst.gridx=1;gridConst.gridy=6;
 								wrapper2.add(btnNodos,gridConst);

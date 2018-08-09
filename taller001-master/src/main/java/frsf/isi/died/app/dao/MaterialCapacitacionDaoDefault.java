@@ -94,7 +94,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);	
 		biblioteca.agregar(mat);
-		this.Arboles.add(new ArbolN(this.Titulo));
+		Nodo n = new Nodo(mat.getTitulo(),TipoArbol.Titulo);
+		this.Arboles.add(new ArbolN(n));
 		try {
 			dataSource.agregarFilaAlFinal("libros.csv", mat);
 		} catch (IOException e) {
@@ -108,7 +109,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);				
 		biblioteca.agregar(mat);
-		this.Arboles.add(new ArbolN(this.Titulo));
+		this.Arboles.add(new ArbolN(new Nodo(this.Titulo,TipoArbol.Titulo)));;
 		try {
 			dataSource.agregarFilaAlFinal("videos.csv", mat);
 		} catch (IOException e) {
@@ -548,11 +549,14 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<String> getCapitulos(String titulo) {
 		List<String> resultado = new ArrayList();
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				for(Arbol b : ((ArbolN)a).hijos()) {
-					if(((ArbolN)b).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Capitulos.toString().toLowerCase())) {
-						resultado.add(((ArbolN)b).getRaiz().getValor().toString());
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				/*for(Arbol b : (a).hijos()) {
+					if((b).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Capitulos.toString().toLowerCase())) {
+						resultado.add((b).getRaiz().getValor().toString());
 					}
+				}*/
+				for(int i=2; i<a.hijos().size();i++) {
+					resultado.add(a.hijos().get(i).getRaiz().getValor());
 				}
 			}
 		}
@@ -564,13 +568,16 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		List<String> resultado = new ArrayList();
 		
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				for(Arbol b : ((ArbolN)a).hijos()) {
-					if(((ArbolN)b).getRaiz().getValor().toString().toLowerCase().equals(capitulo.toLowerCase())) {
-						for(Arbol c : ((ArbolN)b).hijos()) {
-							if(((ArbolN)c).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Seccion.toString().toLowerCase())) {
-								resultado.add((((ArbolN)c).getRaiz().getValor().toString()));
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				for(Arbol b : (a).hijos()) {
+					if((b).getRaiz().getValor().toString().toLowerCase().equals(capitulo.toLowerCase())) {
+						/*for(Arbol c : (b).hijos()) {
+							if((c).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Seccion.toString().toLowerCase())) {
+								resultado.add(((c).getRaiz().getValor().toString()));
 							}
+						}*/
+						for(int i=1; i<b.hijos().size(); i++) {
+							resultado.add(b.hijos().get(i).getRaiz().getValor());
 						}
 					}
 				}
@@ -583,8 +590,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addMetadato(String titulo, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addMetadato(n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addMetadato(n);
 			}
 		}
 		
@@ -593,8 +600,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addResumen(String titulo, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addResumen(n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addResumen(n);
 			}
 		}
 	}
@@ -602,8 +609,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addCapitulo(String titulo, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addCapitulo(n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addCapitulo(n);
 			}
 		}
 	}
@@ -611,8 +618,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addCapSeccion(String titulo, String capitulo, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addCapSeccion(capitulo,n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addCapSeccion(capitulo,n);
 			}
 		}
 	}
@@ -620,8 +627,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addCapSeccionParrafo(String titulo, String capitulo, String seccion, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addCapSeccionParrafo(capitulo,seccion,n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addCapSeccionParrafo(capitulo,seccion,n);
 			}
 		}
 	}
@@ -629,8 +636,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	@Override
 	public void addCapMetadato(String titulo, String capitulo, Nodo n) {
 		for(Arbol a : Arboles) {
-			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
-				((ArbolN)a).addCapMetadatos(capitulo,n);
+			if((a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				(a).addCapMetadatos(capitulo,n);
 			}
 		}
 	}

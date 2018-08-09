@@ -7,8 +7,12 @@ import java.util.List;
 
 
 public class ArbolVacio extends Arbol {
-
-    public ArbolVacio() {    }
+	
+	private Nodo raiz;
+	
+    public ArbolVacio(Nodo n) {    
+    	raiz = n;
+    }
 
     @Override
     public boolean esVacio() {
@@ -17,12 +21,12 @@ public class ArbolVacio extends Arbol {
 
     @Override
     public boolean contiene(Nodo unValor) {
-        return false;
+        return raiz.getValor().toLowerCase().equals(unValor.getValor().toLowerCase());
     }
 
     @Override
     public boolean equals(Arbol unArbol) {
-        return unArbol.esVacio();
+        return unArbol.esVacio() && unArbol.getRaiz().getValor().toLowerCase().equals(raiz.getValor().toLowerCase());
     }
 
     @Override
@@ -40,6 +44,10 @@ public class ArbolVacio extends Arbol {
 		return (new ArrayList<Arbol>());
 	}
     
+	@Override
+	public Nodo getRaiz() {
+		return this.raiz;
+	}
 
 
 }

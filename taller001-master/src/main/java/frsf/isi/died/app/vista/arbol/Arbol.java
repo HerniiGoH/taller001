@@ -17,4 +17,39 @@ public abstract class Arbol {
 	public abstract boolean equals(Arbol unArbol);
 
 	public abstract Integer profundidad();
+
+	public Nodo getRaiz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addMetadato(Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addResumen(Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addCapitulo(Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addCapSeccion(String capitulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addCapSeccionParrafo(String capitulo, String seccion, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addCapMetadatos(String capitulo, Nodo n) {
+		// TODO Auto-generated method stub
+		
+	}
 }
