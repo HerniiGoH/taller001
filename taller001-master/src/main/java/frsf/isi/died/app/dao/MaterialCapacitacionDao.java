@@ -3,7 +3,9 @@ package frsf.isi.died.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import frsf.isi.died.app.vista.arbol.Arbol;
 import frsf.isi.died.app.vista.arbol.Nodo;
+import frsf.isi.died.app.vista.filtro.Filtro;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -31,4 +33,5 @@ public interface MaterialCapacitacionDao {
 	public void addCapSeccion(String titulo, String capitulo, Nodo n);
 	public void addCapSeccionParrafo(String titulo, String capitulo, String seccion, Nodo n);
 	public void addCapMetadato(String titulo, String capitulo, Nodo n);
+	public List<Arbol> filtrar(List<Filtro> filtrar);
 }

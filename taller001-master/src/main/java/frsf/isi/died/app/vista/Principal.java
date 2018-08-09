@@ -59,6 +59,12 @@ public class Principal {
 	      
 	        menu.addSeparator();
 	        
+	        menuItem = new JMenuItem("Buscar Documento");
+	        menu.add(menuItem);
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.VER_DOC));
+	      
+	        menu.addSeparator();
+	        
 	        menuItem = new JMenuItem("Salir");
 	        menuItem.addActionListener(e->System.exit(99));
 	        menu.add(menuItem);

@@ -8,24 +8,19 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.*;
 
 import frsf.isi.died.app.controller.ArbolController;
+import frsf.isi.died.app.controller.BusquedaController;
 import frsf.isi.died.app.controller.Criterios;
 import frsf.isi.died.app.controller.MatController;
 import frsf.isi.died.app.controller.Ordenamiento;
 import frsf.isi.died.app.controller.Relevancia;
 import frsf.isi.died.app.controller.TipoArbol;
+import frsf.isi.died.app.vista.filtro.Filtro;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Video;
@@ -47,18 +42,18 @@ public class BusquedaPanel extends JPanel{
 
 	// Boton agregar
 	private JButton btnAgregar;
+	private JButton btnBuscarDocumento;
 	
-	private LibroTableModel libroTableModel;
-	private VideoTableModel videoTableModel;
-
-	private MatController controller;
+	//Paneles
+	private JPanel wrapper= new JPanel();
+	private JPanel wrapper2= new JPanel();
+	
+	private BusquedaController controller;
 	
 	public BusquedaPanel() {
 		this.setLayout(new GridBagLayout());
-		libroTableModel = new LibroTableModel();
-		videoTableModel = new VideoTableModel();
+
 	}
-	
 	public void construir() {
 		
 		GridBagConstraints gridConst= new GridBagConstraints();
@@ -88,10 +83,15 @@ public class BusquedaPanel extends JPanel{
 			
 			case Metadatos:{
 				
+				this.remove(wrapper);
+				
+				wrapper = new JPanel(new GridBagLayout());
+				
 				lblFiltro1 = new JLabel("Filtrar por:");
+				gridConst.gridwidth = 1;
 				gridConst.gridx = 0;
 				gridConst.gridy = 2;
-				this.add(lblFiltro1, gridConst);
+				wrapper.add(lblFiltro1, gridConst);
 				
 				TipoArbol[] criterio2 = {TipoArbol.Autor, TipoArbol.Editorial, TipoArbol.Fecha_Publicacion, TipoArbol.Palabras_Claves};
 				
@@ -99,100 +99,241 @@ public class BusquedaPanel extends JPanel{
 				gridConst.gridx = 1;
 				gridConst.gridy = 2;
 				gridConst.gridwidth = 2;
-				this.add(btnBox2, gridConst);
+				wrapper.add(btnBox2, gridConst);
 				
 				lblContenido1 = new JLabel("Contenido:");
+				gridConst.gridwidth = 1;
 				gridConst.gridx = 0;
 				gridConst.gridy = 3;
-				this.add(lblContenido1, gridConst);
+				wrapper.add(lblContenido1, gridConst);
 				
 				txtDatos1 = new JTextField();
+				txtDatos1.setColumns(10);
 				gridConst.gridx = 1;
 				gridConst.gridy = 3;
-				gridConst.gridwidth = 2;
-				this.add(txtDatos1, gridConst);
+				wrapper.add(txtDatos1, gridConst);
+				
+				btnBuscarDocumento = new JButton("Buscar Material");
+				gridConst.gridx = 1;
+				gridConst.gridy = 4;
+				wrapper.add(btnBuscarDocumento, gridConst);
+				btnBuscarDocumento.addActionListener(e1 -> {
+					
+					List<MaterialCapacitacion> listaVertices = controller.filtrar();
+					
+					JDialog emergente = new JDialog(); 
+		        	GridBagConstraints gridConst1 = new GridBagConstraints();
+					emergente.setSize(500,300);
+					emergente.setAlwaysOnTop(true);
+					emergente.setModal(true); emergente.setLocationRelativeTo(null);
+					
+					JPanel pan = new JPanel(); pan.setLayout(new GridBagLayout());
+					
+					JList list = new JList(listaVertices.toArray());
+					list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+					//list.setLayoutOrientation(JList.HORIZONTAL_WRAP); 
+					JScrollPane listScroller = new JScrollPane(list);
+					listScroller.setBounds(list.getX(), list.getY(), 220, 80);
+					listScroller.setAlignmentX(CENTER_ALIGNMENT);
+					pan.add(listScroller);
+					
+					emergente.add(pan); emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); emergente.setVisible(true);
+					
+				});
+				
 				
 				btnAgregar = new JButton("Agregar");
 				gridConst.gridx = 0;
-				gridConst.gridy = 5;
-				this.add(btnAgregar, gridConst);
+				gridConst.gridy = 4;
+				wrapper.add(btnAgregar, gridConst);
 				btnAgregar.addActionListener(e1 -> {
 					
 					Filtro f = new Filtro(txtDatos1.getText(),box1.getSelectedItem().toString(),btnBox2.getSelectedItem().toString());
 					controller.addFiltro(f);
 					
 				});
+				
+				gridConst.gridx=0;
+				gridConst.gridy=3;
+				gridConst.gridwidth=4;
+				this.add(wrapper,gridConst);
+				
+				this.repaint();
+				wrapper.repaint();
+				
+				this.doLayout();
+				wrapper.doLayout();
+				
 				break;}
 			case Resumen:{
 				
+				this.remove(wrapper);
+				
+				wrapper = new JPanel(new GridBagLayout());
+				
 				lblContenido1 = new JLabel("Contenido del parrafo:");
+				gridConst.gridwidth = 1;
 				gridConst.gridx = 0;
 				gridConst.gridy = 2;
-				this.add(lblContenido1, gridConst);
+				wrapper.add(lblContenido1, gridConst);
 				
 				txtDatos1= new JTextField ();
+				txtDatos1.setColumns(10);
 				gridConst.gridx = 1;
 				gridConst.gridy = 2;
-				gridConst.gridheight=2;
-				gridConst.gridwidth=2;
-				this.add(txtDatos1, gridConst);
+				wrapper.add(txtDatos1, gridConst);
+				
+				btnBuscarDocumento = new JButton("Buscar Material");
+				gridConst.gridx = 1;
+				gridConst.gridy = 3;
+				wrapper.add(btnBuscarDocumento, gridConst);
+				btnBuscarDocumento.addActionListener(e1 -> {
+					
+					List<MaterialCapacitacion> listaVertices = controller.filtrar();
+					
+					JDialog emergente = new JDialog(); 
+		        	GridBagConstraints gridConst1 = new GridBagConstraints();
+					emergente.setSize(500,300);
+					emergente.setAlwaysOnTop(true);
+					emergente.setModal(true); emergente.setLocationRelativeTo(null);
+					
+					JPanel pan = new JPanel(); pan.setLayout(new GridBagLayout());
+					
+					JList list = new JList(listaVertices.toArray());
+					list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+					//list.setLayoutOrientation(JList.HORIZONTAL_WRAP); 
+					JScrollPane listScroller = new JScrollPane(list);
+					listScroller.setBounds(list.getX(), list.getY(), 220, 80);
+					listScroller.setAlignmentX(CENTER_ALIGNMENT);
+					pan.add(listScroller);
+					
+					emergente.add(pan); emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); emergente.setVisible(true);
+					
+				});
 				
 				btnAgregar= new JButton("Agregar");
 				gridConst.gridx = 0;
-				gridConst.gridy = 4;
-				this.add(btnAgregar, gridConst);
-				
+				gridConst.gridy = 3;
+				wrapper.add(btnAgregar, gridConst);
 				btnAgregar.addActionListener(e1 -> {
 					Filtro f = new Filtro(txtDatos1.getText(),box1.getSelectedItem().toString(),TipoArbol.Parrafo.toString());
 					controller.addFiltro(f);
 				});
 				
+				gridConst.gridx=0;
+				gridConst.gridy=2;
+				gridConst.gridwidth=4;
+				this.add(wrapper,gridConst);
+				
+				this.repaint();
+				wrapper.repaint();
+				
+				this.doLayout();
+				wrapper.doLayout();
+				
 				break;}
 			case Capitulos:{
 				
+				this.remove(wrapper);
+				
+				wrapper = new JPanel(new GridBagLayout());
+				
 				lblFiltro1 = new JLabel("Filtrar por:");
+				gridConst.gridwidth = 1;
 				gridConst.gridx = 0;
 				gridConst.gridy = 2;
-				this.add(lblFiltro1, gridConst);
+				wrapper.add(lblFiltro1, gridConst);
 				
 				TipoArbol[] criterio2 = {TipoArbol.Capitulos, TipoArbol.Metadatos, TipoArbol.Seccion};
 				
 				btnBox2 = new JComboBox(criterio2);
 				gridConst.gridx = 1;
 				gridConst.gridy = 2;
-				this.add(btnBox2, gridConst);
-				
+				wrapper.add(btnBox2, gridConst);
+				btnBox2.addActionListener(e1 -> {
+					
 				switch((TipoArbol)btnBox2.getSelectedItem()) {
 					case Capitulos:{
+						
+						wrapper.remove(wrapper2);
+						
+						wrapper2 = new JPanel(new GridBagLayout());
+						
 						lblContenido1 = new JLabel("Contenido:");
+						gridConst.gridwidth = 1;
 						gridConst.gridx = 0;
 						gridConst.gridy = 3;
-						this.add(lblContenido1, gridConst);
+						wrapper2.add(lblContenido1, gridConst);
 						
 						txtDatos1 = new JTextField();
+						txtDatos1.setColumns(10);
 						gridConst.gridx = 1;
 						gridConst.gridy = 3;
-						gridConst.gridwidth = 2;
-						this.add(txtDatos1, gridConst);
+						wrapper2.add(txtDatos1, gridConst);
+						
+						btnBuscarDocumento = new JButton("Buscar Material");
+						gridConst.gridx = 1;
+						gridConst.gridy = 4;
+						wrapper2.add(btnBuscarDocumento, gridConst);
+						btnBuscarDocumento.addActionListener(e3 -> {
+							
+							List<MaterialCapacitacion> listaVertices = controller.filtrar();
+							
+							JDialog emergente = new JDialog(); 
+				        	GridBagConstraints gridConst1 = new GridBagConstraints();
+							emergente.setSize(500,300);
+							emergente.setAlwaysOnTop(true);
+							emergente.setModal(true); emergente.setLocationRelativeTo(null);
+							
+							JPanel pan = new JPanel(); pan.setLayout(new GridBagLayout());
+							
+							JList list = new JList(listaVertices.toArray());
+							list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+							//list.setLayoutOrientation(JList.HORIZONTAL_WRAP); 
+							JScrollPane listScroller = new JScrollPane(list);
+							listScroller.setBounds(list.getX(), list.getY(), 220, 80);
+							listScroller.setAlignmentX(CENTER_ALIGNMENT);
+							pan.add(listScroller);
+							
+							emergente.add(pan); emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); emergente.setVisible(true);
+							
+						});
 						
 						btnAgregar = new JButton("Agregar");
 						gridConst.gridx = 0;
-						gridConst.gridy = 5;
-						this.add(btnAgregar, gridConst);
-						btnAgregar.addActionListener(e1 -> {
+						gridConst.gridy = 4;
+						wrapper2.add(btnAgregar, gridConst);
+						btnAgregar.addActionListener(e2 -> {
 							
 							Filtro f = new Filtro(txtDatos1.getText(),box1.getSelectedItem().toString(),btnBox2.getSelectedItem().toString());
 							controller.addFiltro(f);
 							
 						});
+						
+						gridConst.gridx=0;
+						gridConst.gridy=3;
+						gridConst.gridwidth=4;
+						wrapper.add(wrapper2,gridConst);
+						
+						wrapper2.repaint();
+						
+						this.doLayout();
+						wrapper.doLayout();
+						wrapper2.doLayout();
+						
 						break;}
 					
 					case Metadatos:{
 						
+						wrapper.remove(wrapper2);
+						
+						wrapper2 = new JPanel(new GridBagLayout());
+						
 						lblFiltro2 = new JLabel("Tipo: ");
+						gridConst.gridwidth = 1;
 						gridConst.gridx = 0;
 						gridConst.gridy = 3;
-						this.add(lblFiltro2, gridConst);
+						wrapper2.add(lblFiltro2, gridConst);
 						
 						TipoArbol[] criterio3 = {TipoArbol.Palabras_Claves, TipoArbol.Sitios_Web_Relacionados, TipoArbol.Sitios_Web_Ejercicios_Relacionados};
 						
@@ -200,75 +341,167 @@ public class BusquedaPanel extends JPanel{
 						gridConst.gridx = 1;
 						gridConst.gridy = 3;
 						gridConst.gridwidth = 2;
-						this.add(btnBox3, gridConst);
+						wrapper2.add(btnBox3, gridConst);
 						
 						lblContenido2 = new JLabel("Contenido:");
 						gridConst.gridx = 0;
 						gridConst.gridy = 4;
-						this.add(lblContenido2, gridConst);
+						wrapper2.add(lblContenido2, gridConst);
 						
 						txtDatos1 = new JTextField();
+						txtDatos1.setColumns(10);
 						gridConst.gridx = 1;
 						gridConst.gridy = 4;
-						gridConst.gridwidth = 2;
-						this.add(txtDatos1, gridConst);
+						wrapper2.add(txtDatos1, gridConst);
+						
+						btnBuscarDocumento = new JButton("Buscar Material");
+						gridConst.gridx = 1;
+						gridConst.gridy = 5;
+						wrapper2.add(btnBuscarDocumento, gridConst);
+						btnBuscarDocumento.addActionListener(e3 -> {
+							
+							List<MaterialCapacitacion> listaVertices = controller.filtrar();
+							
+							JDialog emergente = new JDialog(); 
+				        	GridBagConstraints gridConst1 = new GridBagConstraints();
+							emergente.setSize(500,300);
+							emergente.setAlwaysOnTop(true);
+							emergente.setModal(true); emergente.setLocationRelativeTo(null);
+							
+							JPanel pan = new JPanel(); pan.setLayout(new GridBagLayout());
+							
+							JList list = new JList(listaVertices.toArray());
+							list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+							//list.setLayoutOrientation(JList.HORIZONTAL_WRAP); 
+							JScrollPane listScroller = new JScrollPane(list);
+							listScroller.setBounds(list.getX(), list.getY(), 220, 80);
+							listScroller.setAlignmentX(CENTER_ALIGNMENT);
+							pan.add(listScroller);
+							
+							emergente.add(pan); emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); emergente.setVisible(true);
+							
+						});
 						
 						btnAgregar = new JButton("Agregar");
 						gridConst.gridx = 0;
 						gridConst.gridy = 5;
-						this.add(btnAgregar, gridConst);
-						btnAgregar.addActionListener(e1 -> {
+						wrapper2.add(btnAgregar, gridConst);
+						btnAgregar.addActionListener(e2 -> {
 							
 							Filtro f = new Filtro(txtDatos1.getText(),box1.getSelectedItem().toString(),btnBox3.getSelectedItem().toString());
 							controller.addFiltro(f);
 							
 							});
 						
+						gridConst.gridx=0;
+						gridConst.gridy=3;
+						gridConst.gridwidth=4;
+						wrapper.add(wrapper2,gridConst);
 						
+						wrapper2.repaint();
+						
+						this.doLayout();
+						wrapper.doLayout();
+						wrapper2.doLayout();
 						
 						break;}
 					case Seccion:{
 						
+						wrapper.remove(wrapper2);
+						
+						wrapper2 = new JPanel(new GridBagLayout());
+						
 						lblFiltro2 = new JLabel("Tipo: ");
+						gridConst.gridwidth = 1;
 						gridConst.gridx = 0;
 						gridConst.gridy = 3;
-						this.add(lblFiltro2, gridConst);
+						wrapper2.add(lblFiltro2, gridConst);
 						
 						TipoArbol[] criterio3 = {TipoArbol.Seccion, TipoArbol.Parrafo};
 						
 						btnBox3 = new JComboBox(criterio3);
 						gridConst.gridx = 1;
 						gridConst.gridy = 3;
-						gridConst.gridwidth = 2;
-						this.add(btnBox3, gridConst);
+						wrapper2.add(btnBox3, gridConst);
 						
 						lblContenido2 = new JLabel("Contenido:");
 						gridConst.gridx = 0;
 						gridConst.gridy = 4;
-						this.add(lblContenido2, gridConst);
+						wrapper2.add(lblContenido2, gridConst);
 						
 						txtDatos1 = new JTextField();
+						txtDatos1.setColumns(10);
 						gridConst.gridx = 1;
 						gridConst.gridy = 4;
-						gridConst.gridwidth = 2;
-						this.add(txtDatos1, gridConst);
+						wrapper2.add(txtDatos1, gridConst);
+						
+						btnBuscarDocumento = new JButton("Buscar Material");
+						gridConst.gridx = 1;
+						gridConst.gridy = 5;
+						wrapper2.add(btnBuscarDocumento, gridConst);
+						btnBuscarDocumento.addActionListener(e3 -> {
+							
+							List<MaterialCapacitacion> listaVertices = controller.filtrar();
+							
+							JDialog emergente = new JDialog(); 
+				        	GridBagConstraints gridConst1 = new GridBagConstraints();
+							emergente.setSize(500,300);
+							emergente.setAlwaysOnTop(true);
+							emergente.setModal(true); emergente.setLocationRelativeTo(null);
+							
+							JPanel pan = new JPanel(); pan.setLayout(new GridBagLayout());
+							
+							JList list = new JList(listaVertices.toArray());
+							list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+							//list.setLayoutOrientation(JList.HORIZONTAL_WRAP); 
+							JScrollPane listScroller = new JScrollPane(list);
+							listScroller.setBounds(list.getX(), list.getY(), 220, 80);
+							listScroller.setAlignmentX(CENTER_ALIGNMENT);
+							pan.add(listScroller);
+							
+							emergente.add(pan); emergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); emergente.setVisible(true);
+							
+						});
 						
 						btnAgregar = new JButton("Agregar");
 						gridConst.gridx = 0;
 						gridConst.gridy = 5;
-						this.add(btnAgregar, gridConst);
-						btnAgregar.addActionListener(e1 -> {
+						wrapper2.add(btnAgregar, gridConst);
+						btnAgregar.addActionListener(e2 -> {
 							
 							Filtro f = new Filtro(txtDatos1.getText(),box1.getSelectedItem().toString(),btnBox3.getSelectedItem().toString());
 							controller.addFiltro(f);
 							
-							});
+						});
+				
 						
+						gridConst.gridx=0;
+						gridConst.gridy=3;
+						gridConst.gridwidth=4;
+						wrapper.add(wrapper2,gridConst);
 						
+						wrapper2.repaint();
+						
+						this.doLayout();
+						wrapper.doLayout();
+						wrapper2.doLayout();
 						
 						break;}
 				
+				
 				}
+				});
+				
+				gridConst.gridx=0;
+				gridConst.gridy=2;
+				gridConst.gridwidth=4;
+				this.add(wrapper,gridConst);
+				
+				this.repaint();
+				wrapper.repaint();
+				
+				this.doLayout();
+				wrapper.doLayout();
 				
 				break;}
 			
@@ -276,31 +509,17 @@ public class BusquedaPanel extends JPanel{
 			
 		});
 		
-		
-		
-		
-		
-		
 	}
 	
 
-	public MatController getController() {
+	public BusquedaController getController() {
 		return controller;
 	}
 
-	public void setController(MatController controller) {
+	public void setController(BusquedaController controller) {
 		this.controller = controller;
 	}
 	
-	public void setListaLibros(List<Libro> matLista,boolean actualizar) {
-		this.libroTableModel.setLibros(matLista);
-		if(actualizar) this.libroTableModel.fireTableDataChanged();
-	}
-	
-	public void setListaVideos(List<Video> matLista,boolean actualizar) {
-		this.videoTableModel.setVideos(matLista);
-		if(actualizar) this.videoTableModel.fireTableDataChanged();
-	}
 	
 	
 	private boolean esValido(String s) {

@@ -15,6 +15,7 @@ import frsf.isi.died.app.dao.util.CsvRecord;
 import frsf.isi.died.app.vista.arbol.Arbol;
 import frsf.isi.died.app.vista.arbol.ArbolN;
 import frsf.isi.died.app.vista.arbol.Nodo;
+import frsf.isi.died.app.vista.filtro.Filtro;
 import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.modelo.Biblioteca;
@@ -109,7 +110,8 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);				
 		biblioteca.agregar(mat);
-		this.Arboles.add(new ArbolN(new Nodo(this.Titulo,TipoArbol.Titulo)));;
+		Nodo n = new Nodo(mat.getTitulo(),TipoArbol.Titulo);
+		this.Arboles.add(new ArbolN(n));
 		try {
 			dataSource.agregarFilaAlFinal("videos.csv", mat);
 		} catch (IOException e) {
@@ -640,6 +642,23 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 				(a).addCapMetadatos(capitulo,n);
 			}
 		}
+	}
+	
+	public List<Arbol> filtrar(List<Filtro> filtro){
+		return filtrarMaster(new ArrayList(Arboles), filtro);
+	}
+	
+	private List<Arbol> filtrarMaster(List<Arbol> arboles, List<Filtro> filtro){
+		if(!filtro.isEmpty()) {
+			for(int i=0; i<arboles.size(); i++) {
+				if(!filtro.get(0).filtro(arboles.get(i))) {
+					arboles.remove(i);
+				}
+			}
+			filtro.remove(0);
+			return filtrarMaster(arboles,filtro);
+		}
+		return arboles;
 	}
 	
 }

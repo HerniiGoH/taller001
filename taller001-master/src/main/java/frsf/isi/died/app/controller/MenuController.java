@@ -14,6 +14,7 @@ import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.grafo.ControlPanel;
 import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.ArbolDatosPanel;
+import frsf.isi.died.app.vista.material.BusquedaPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
 import frsf.isi.died.app.vista.material.MatPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
@@ -67,6 +68,13 @@ public class MenuController {
 			ArbolController arbolController = new ArbolController(panelArbol);
 			arbolController.crearPanel();
 			framePrincipal.setContentPane(arbolController.getPanelArbol());
+			break;
+		case VER_DOC:
+			BusquedaPanel panelDoc = new BusquedaPanel();
+			BusquedaController docController = new BusquedaController(panelDoc);
+			docController.crearPanel();
+			framePrincipal.setContentPane(docController.getPanelBusqueda());
+			break;
 		default:
 			break;
 		}
