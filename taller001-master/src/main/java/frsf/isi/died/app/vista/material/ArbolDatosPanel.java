@@ -196,6 +196,32 @@ public class ArbolDatosPanel extends JPanel{
 					btnAgregar = new JButton("Agregar");
 					gridConst.gridx = 1; gridConst.gridy = 6;
 					wrapper.add(btnAgregar, gridConst);
+					btnAgregar.addActionListener(e1 -> {
+						switch((TipoArbol)btnAgregarMetadatos.getSelectedItem()) {
+						case Autor:
+							Nodo n1 = new Nodo(txtAgregarMetadatos.getText(), (TipoArbol)btnAgregarMetadatos.getSelectedItem());
+							controller.addMetadato(titulo,n1);
+							
+							break;
+						case Editorial:
+							Nodo n2 = new Nodo(txtAgregarMetadatos.getText(), (TipoArbol)btnAgregarMetadatos.getSelectedItem());
+							controller.addMetadato(titulo,n2);
+							
+							break;
+						case Fecha_Publicacion:
+							Nodo n3 = new Nodo(txtAgregarMetadatos.getText(), (TipoArbol)btnAgregarMetadatos.getSelectedItem());
+							controller.addMetadato(titulo,n3);
+							
+							break;
+						case Palabras_Claves:
+							Nodo n4 = new Nodo(txtAgregarMetadatos.getText(), (TipoArbol)btnAgregarMetadatos.getSelectedItem());
+							controller.addMetadato(titulo,n4);
+							
+							break;
+						default:
+							break;
+						}
+					});
 					
 					gridConst.gridx=0;
 					gridConst.gridy=4;
@@ -234,6 +260,12 @@ public class ArbolDatosPanel extends JPanel{
 					btnAgregar2 = new JButton("Agregar");
 					gridConst.gridx = 1; gridConst.gridy = 6;
 					wrapper.add(btnAgregar2, gridConst);
+					btnAgregar2.addActionListener(e2 ->{
+						
+						Nodo n = new Nodo(txtParrafo.getText(), TipoArbol.Parrafo);
+						controller.addResumen(titulo,n);
+						
+					});
 					
 					gridConst.gridx=0;
 					gridConst.gridy=4;
@@ -286,6 +318,10 @@ public class ArbolDatosPanel extends JPanel{
 								btnAgregar30 = new JButton("Agregar");
 								gridConst.gridx=0;gridConst.gridy=7;
 								wrapper2.add(btnAgregar30, gridConst);
+								btnAgregar30.addActionListener(e2->{
+									Nodo n = new Nodo(txtTitulo.getText(),TipoArbol.Capitulos);
+									controller.addCapitulo(titulo, n);
+								});
 								
 								gridConst.gridx=0;
 								gridConst.gridy=6;
@@ -312,7 +348,7 @@ public class ArbolDatosPanel extends JPanel{
 								wrapper2.add(lblSeleccionarNodo,gridConst);
 								
 								List<String> caps = new ArrayList();
-								//caps=controller.getCapitulos(titulo);
+								caps=controller.getCapitulos(titulo);
 								btnNodos = new JComboBox(caps.toArray());
 								gridConst.gridx=1;gridConst.gridy=6;
 								wrapper2.add(btnNodos,gridConst);
@@ -345,6 +381,12 @@ public class ArbolDatosPanel extends JPanel{
 											btnAgregarSeccion = new JButton("Agregar");
 											gridConst.gridx=2;gridConst.gridy=8;
 											wrapper3.add(btnAgregarSeccion,gridConst);
+											btnAgregarSeccion.addActionListener(e2 -> {
+												
+												Nodo n1 = new Nodo(txtSeccion.getText(), (TipoArbol)btnElejir.getSelectedItem());
+												controller.addCapSeccion(titulo, btnNodos.getSelectedItem().toString(),n1);
+												
+											});
 											
 											gridConst.gridx=0;
 											gridConst.gridy=8;
@@ -371,7 +413,7 @@ public class ArbolDatosPanel extends JPanel{
 											wrapper3.add(lblSeleccionarSeccion,gridConst);											
 											
 											List<String>sec=new ArrayList();
-											//sec = controller.getSecciones(titulo, btnNodos.getSelectedItem().toString());
+											sec = controller.getSecciones(titulo, btnNodos.getSelectedItem().toString());
 											btnElejir = new JComboBox(sec.toArray());
 											gridConst.gridx=1;gridConst.gridy=8;
 											wrapper3.add(btnElejir,gridConst);
@@ -388,6 +430,12 @@ public class ArbolDatosPanel extends JPanel{
 											btnAgregar31 = new JButton("Agregar");
 											gridConst.gridx=2;gridConst.gridy=9;
 											wrapper3.add(btnAgregar31,gridConst);
+											btnAgregar31.addActionListener(e2 ->{
+												
+												Nodo n = new Nodo(txtParrafo31.getText(), (TipoArbol)btnElejir.getSelectedItem());
+												controller.addCapSeccionParrafo(titulo, btnNodos.getSelectedItem().toString(),btnNodos2.getSelectedItem().toString(),n);
+												
+											});
 											
 											gridConst.gridx=0;
 											gridConst.gridy=8;
@@ -460,6 +508,29 @@ public class ArbolDatosPanel extends JPanel{
 								btnAgregar32 = new JButton("Agregar");
 								gridConst.gridx=2;gridConst.gridy=8;
 								wrapper2.add(btnAgregar32,gridConst);
+								btnAgregar32.addActionListener(e2 ->{
+									
+									switch((TipoArbol)btnAgregarMetadatos32.getSelectedItem()) {
+									case Sitios_Web_Relacionados:
+										Nodo n1 = new Nodo(txtAgregarMetadatos32.getText(), (TipoArbol)btnAgregarMetadatos32.getSelectedItem());
+										controller.addCapMetadato(titulo, btnNodos.getSelectedItem().toString(),n1);
+										
+										break;
+									case Sitios_Web_Ejercicios_Relacionados:
+										Nodo n2 = new Nodo(txtAgregarMetadatos32.getText(), (TipoArbol)btnAgregarMetadatos32.getSelectedItem());
+										controller.addCapMetadato(titulo, btnNodos.getSelectedItem().toString(),n2);
+										
+										break;
+									case Palabras_Claves:
+										Nodo n3 = new Nodo(txtAgregarMetadatos32.getText(), (TipoArbol)btnAgregarMetadatos32.getSelectedItem());
+										controller.addCapMetadato(titulo, btnNodos.getSelectedItem().toString(),n3);
+										
+										break;
+									default:
+										break;
+									}
+									
+								});
 								
 								gridConst.gridx=0;
 								gridConst.gridy=6;

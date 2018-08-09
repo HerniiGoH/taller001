@@ -15,6 +15,12 @@ public class ArbolN extends Arbol {
 		
 		raiz = r;
 		
+	}
+	
+	public ArbolN(String titulo) {
+		
+		Nodo n = new Nodo(titulo, TipoArbol.Titulo);
+		raiz = n;
 		Nodo n1 = new Nodo("Metadatos",TipoArbol.Metadatos);
 		this.add(n1);
 		Nodo n2 = new Nodo("Resumen", TipoArbol.Resumen);		

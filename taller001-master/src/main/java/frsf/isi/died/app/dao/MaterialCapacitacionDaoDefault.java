@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import frsf.isi.died.app.controller.TipoArbol;
 import frsf.isi.died.app.dao.util.CsvDatasource;
 import frsf.isi.died.app.dao.util.CsvRecord;
+import frsf.isi.died.app.vista.arbol.Arbol;
+import frsf.isi.died.app.vista.arbol.ArbolN;
 import frsf.isi.died.app.vista.arbol.Nodo;
 import frsf.isi.died.tp.estructuras.Arista;
 import frsf.isi.died.tp.estructuras.Grafo;
@@ -29,6 +32,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	private static Queue<Video> wishlistVideo = new PriorityQueue(MaterialCapacitacion.comparador);
 	private static String Tema;
 	private static String Titulo;
+	private static List<Arbol> Arboles = new ArrayList();
 	
 	private CsvDatasource dataSource;
 	
@@ -90,6 +94,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);	
 		biblioteca.agregar(mat);
+		this.Arboles.add(new ArbolN(this.Titulo));
 		try {
 			dataSource.agregarFilaAlFinal("libros.csv", mat);
 		} catch (IOException e) {
@@ -103,6 +108,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);				
 		biblioteca.agregar(mat);
+		this.Arboles.add(new ArbolN(this.Titulo));
 		try {
 			dataSource.agregarFilaAlFinal("videos.csv", mat);
 		} catch (IOException e) {
@@ -540,50 +546,93 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 	@Override
 	public List<String> getCapitulos(String titulo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> resultado = new ArrayList();
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				for(Arbol b : ((ArbolN)a).hijos()) {
+					if(((ArbolN)b).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Capitulos.toString().toLowerCase())) {
+						resultado.add(((ArbolN)b).getRaiz().getValor().toString());
+					}
+				}
+			}
+		}
+		return resultado;
 	}
 
 	@Override
 	public List<String> getSecciones(String titulo, String capitulo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> resultado = new ArrayList();
+		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				for(Arbol b : ((ArbolN)a).hijos()) {
+					if(((ArbolN)b).getRaiz().getValor().toString().toLowerCase().equals(capitulo.toLowerCase())) {
+						for(Arbol c : ((ArbolN)b).hijos()) {
+							if(((ArbolN)c).getRaiz().getTipo().toString().toLowerCase().equals(TipoArbol.Seccion.toString().toLowerCase())) {
+								resultado.add((((ArbolN)c).getRaiz().getValor().toString()));
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return resultado;
 	}
 
 	@Override
 	public void addMetadato(String titulo, Nodo n) {
-		// TODO Auto-generated method stub
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addMetadato(n);
+			}
+		}
 		
 	}
 
 	@Override
 	public void addResumen(String titulo, Nodo n) {
-		// TODO Auto-generated method stub
-		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addResumen(n);
+			}
+		}
 	}
 
 	@Override
 	public void addCapitulo(String titulo, Nodo n) {
-		// TODO Auto-generated method stub
-		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addCapitulo(n);
+			}
+		}
 	}
 
 	@Override
 	public void addCapSeccion(String titulo, String capitulo, Nodo n) {
-		// TODO Auto-generated method stub
-		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addCapSeccion(capitulo,n);
+			}
+		}
 	}
 
 	@Override
 	public void addCapSeccionParrafo(String titulo, String capitulo, String seccion, Nodo n) {
-		// TODO Auto-generated method stub
-		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addCapSeccionParrafo(capitulo,seccion,n);
+			}
+		}
 	}
 
 	@Override
 	public void addCapMetadato(String titulo, String capitulo, Nodo n) {
-		// TODO Auto-generated method stub
-		
+		for(Arbol a : Arboles) {
+			if(((ArbolN)a).getRaiz().getValor().toLowerCase().equals(titulo.toLowerCase())) {
+				((ArbolN)a).addCapMetadatos(capitulo,n);
+			}
+		}
 	}
 	
 }
